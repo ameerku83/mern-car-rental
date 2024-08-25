@@ -10,7 +10,7 @@ dotenv.config()
 //app.use(morgan("dev"))
   app.use(cors(
     {
-      origin:["http://localhost:3000"],
+      origin: ["https://ameerku83mern-car-rental.onrender.com", "http://localhost:3000"],
       credentials:true
     }
   ))
