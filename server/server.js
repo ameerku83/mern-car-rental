@@ -4,6 +4,7 @@ import mongoDb from "./config/mongoDb.js"
 import apiRouter from "./routes/index.js"
 import cookieParser from 'cookie-parser';
 import dotenv from "dotenv"
+import path from "path"
 //import morgan from "morgan"
 const app =express()
 dotenv.config()
@@ -28,7 +29,9 @@ mongoDb()
 
 app.use("/",apiRouter)
 
-
+app.get('*',(req,res)=>{
+  res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+})
 app.all("*",(req,res)=>{
   res.status(404).json({message:"end pont does not exist"})
 })
