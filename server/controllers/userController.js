@@ -29,7 +29,7 @@ export const userCreate = async (req, res, next) => {
         //create token
         const token = generateToken(email);
 
-        res.cookie("token", token,{ httpOnly:true,secure:false,sameSite:"None" } );
+        res.cookie("token", token,{ httpOnly:true,secure:true,sameSite:"None", } );
         res.json({ success: true, message: "user created successfully" });
    
 };
@@ -55,7 +55,7 @@ export const userLogin = async (req, res, next) => {
 
         const token = generateToken(email);
 
-        res.cookie("token", token,{ httpOnly:true,secure:false,sameSite:"None" } );
+        res.cookie("token", token,{ httpOnly:true,secure:true,sameSite:"None",  } );
 
         res.json({ success: true, message: "user login successfully" });
     
@@ -63,7 +63,8 @@ export const userLogin = async (req, res, next) => {
 export const userLogout = async (req, res, next) => {
     
         res.clearCookie("token");
-
+        req.session.destroy();
+    
         res.json({ success: true, message: "user logout successfully" });
    
 };
