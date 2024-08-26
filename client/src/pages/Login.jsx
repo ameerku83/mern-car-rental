@@ -20,7 +20,7 @@ const Login = () => {
     navigate('/user/home')
     } catch (error) {
       toast.error("error login");
-      console.log(error.response);
+      console.log(error);
       
     }
   };
