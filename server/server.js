@@ -5,13 +5,15 @@ import apiRouter from "./routes/index.js"
 import cookieParser from 'cookie-parser';
 import dotenv from "dotenv"
 import path from "path"
+import { fileURLToPath } from "url";
+
 //import morgan from "morgan"
 const app =express()
 dotenv.config()
 //app.use(morgan("dev"))
   app.use(cors(
     {
-      origin: ["https://ameerku83mern-car-rental.onrender.com", "http://localhost:3000"],
+      origin: ["https://ameerku83mern-car-rental.onrender.com", "http://localhost:3001"],
       credentials:true
     }
   ))
@@ -19,7 +21,7 @@ dotenv.config()
 
 app.use(express.json())
 app.use(cookieParser())
-const port = process.env.PORT;
+const port = process.env.PORT ;
 mongoDb()
 
 
@@ -29,8 +31,13 @@ mongoDb()
 
 app.use("/",apiRouter)
 
+const __filname=fileURLToPath(import.meta.url)
+const __dirname= path.dirname(__filname)
+
+app.use(express.static(path.join(__dirname,'client/build')))
+
 app.get('*',(req,res)=>{
-  res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+  res.sendFile(path.join(__dirname,'client/build','index.html'))
 })
 app.all("*",(req,res)=>{
   res.status(404).json({message:"end pont does not exist"})
