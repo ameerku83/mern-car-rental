@@ -13,7 +13,7 @@ dotenv.config()
 //app.use(morgan("dev"))
   app.use(cors(
     {
-      origin: "https://ameerku83mern-car-rental.vercel.app/",
+      origin:[ "https://ameerku83mern-car-rental.vercel.app","http://localhost:3001"],
       credentials:true
     }
   ))
@@ -23,11 +23,6 @@ app.use(express.json())
 app.use(cookieParser())
 const port = process.env.PORT ;
 mongoDb()
-
-
-
-
-
 
 app.use("/",apiRouter)
 

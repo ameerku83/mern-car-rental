@@ -19,7 +19,7 @@ const Login = () => {
       toast.success('Logged in successfully');
     navigate('/user/home')
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error("error login");
       console.log(error.response);
       
     }
