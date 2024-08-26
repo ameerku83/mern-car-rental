@@ -32,7 +32,7 @@ export const adminCreate = async (req, res, next) => {
         //create token
         const token = generateToken(email, "admin");
 
-        res.cookie("token", token,{ httpOnly:true,secure:true,sameSite:"None" } );
+        res.cookie("token", token,{ httpOnly:true,} );
         res.json({ success: true, message: "Admin created successfully" });
    
 };
@@ -55,7 +55,7 @@ export const adminLogin = async (req, res, next) => {
         }
         const token = generateToken(email, "admin");
 
-        res.cookie("token", token, { httpOnly:true,secure:true,sameSite:"None" } );
+        res.cookie("token", token, { httpOnly:true,} );
         
         res.json({ success: true, message: "Admin login successfully" });
    

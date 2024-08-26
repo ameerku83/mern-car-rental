@@ -38,9 +38,9 @@ const UserNavbar = () => {
          
 
           
-            <li><a href="/services">Services</a></li>
-            <li><a href="/user/rent">Rent a car</a></li>
-            <li><a href="/user/contact">Contact us</a></li>
+          <li><Link  to={"/user/services"}>Services</Link  ></li>
+          <li><Link to={"/user/rent"} >Rent a car</Link></li>
+          <li><Link to={"/user/contact"} >Contact us</Link></li>
           </ul>
         </div>
 
