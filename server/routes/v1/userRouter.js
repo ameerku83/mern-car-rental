@@ -12,7 +12,7 @@ router.post("/create", errorHandler(userCreate));
 router.post("/login", userLogin);
 router.get("/profile", authUser, errorHandler(userProfile));
 router.put("/update/:id", authUser, errorHandler(updateUser));
-router.get("/logout", authUser, errorHandler(userLogout));
+router.put("/logout", authUser, errorHandler(userLogout));
 router.get("/check-user", authUser, errorHandler(checkUser));
 //bookin
 router.post("/booking", authUser, errorHandler(createBooking));

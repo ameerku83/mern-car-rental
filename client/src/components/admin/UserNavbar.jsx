@@ -13,7 +13,7 @@ const UserNavbar = () => {
   const navigate = useNavigate()
   const logout = async () => {
     try {
-      await axiosInstance.get('user/logout',);
+      await axiosInstance.put('user/logout',);
       toast.success('Logged out successfully');
       navigate('/login')
     //navigate('/user/home')

@@ -32,7 +32,7 @@ export const adminCreate = async (req, res, next) => {
         //create token
         const token = generateToken(email, "admin");
 
-        res.cookie("token", token,{ httpOnly:true,sameSite:"None"} );
+        res.cookie("token", token,{ httpOnly:true,secure:true,sameSite:"None",} );
         res.json({ success: true, message: "Admin created successfully" });
    
 };
@@ -55,7 +55,7 @@ export const adminLogin = async (req, res, next) => {
         }
         const token = generateToken(email, "admin");
 
-        res.cookie("token", token, { httpOnly:true,sameSite:"None"} );
+        res.cookie("token", token, { httpOnly:true,secure:true,sameSite:"None"} );
         
         res.json({ success: true, message: "Admin login successfully" });
    
@@ -87,11 +87,12 @@ export const checkAdmin = async (req, res, next) => {
 export const userCreatedByAdmin = async (req, res, next) => {
     
     const { name, email, password,mobile  } = req.body
+    await userValidate.validateAsync( { name, email, password,mobile } );
     
     if (!name || !email || !password,!mobile ) {
         return res.status(400).json({ success: false, message: "all fields required" });
     }
-    await userValidate.validateAsync( { name, email, password,mobile } );
+   
 
     const userExist = await User.findOne({ email });
 
@@ -111,7 +112,7 @@ export const userCreatedByAdmin = async (req, res, next) => {
     const token = generateToken(email);
 
     res.cookie("token", token);
-    res.json({ success: true, message: "user created by admin" });
+    res.json({ success: true, message: "user created by admin", data:newUser});
 
 };
 

@@ -63,7 +63,7 @@ export const userLogin = async (req, res, next) => {
 export const userLogout = async (req, res, next) => {
     
         res.clearCookie("token");
-        req.session.destroy();
+       
     
         res.json({ success: true, message: "user logout successfully" });
    
@@ -72,7 +72,7 @@ export const userLogout = async (req, res, next) => {
 export const userProfile = async (req, res, next) => {
     
         const user = req.user;
-        const userData = await User.find({email:user.email}).select("-password");
+        const userData = await User.findOne({email:user.email}).select("-password");
 
         res.json({ success: true, message: "user data fetched", data: userData });
     

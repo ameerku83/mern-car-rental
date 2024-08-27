@@ -33,6 +33,11 @@ export const router=createBrowserRouter([
                 
             },
             {
+                path:'/editprofile/:id',
+                element:<Signup/>
+                
+            },
+            {
                 path:'/login',
                 element:<Login/>
                 

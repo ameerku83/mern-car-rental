@@ -14,7 +14,7 @@ export const AdminAuth = ({ children }) => {
             const response = await axiosInstance.get("admin/check-admin",);
             setUser(true);
         } catch (error) {
-            navigate(`${process.env.REACT_APP_ADMIN}`);
+            navigate('/login');
             console.log(error);
         }
     };

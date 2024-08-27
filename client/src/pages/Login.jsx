@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'; // Install react-toastify for notificati
 
 import { Link, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../config/axiosInstance';
+import Btn from '../components/ui/Btn';
 
 
 const Login = () => {
@@ -27,7 +28,7 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center h-screen ">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
+      <div className="bg-purple-100 p-8 rounded shadow-md w-full max-w-sm">
         <h2 className="text-2xl font-bold mb-4">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
@@ -56,7 +57,8 @@ const Login = () => {
             </span>
             {errors.password && <p className="text-red-500">{errors.password.message}</p>}
           </div>
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded w-full">Login</button>
+          <div className='flex justify-center' > <Btn type="submit" > Login </Btn></div> 
+
           <label  > <Link to={ "/signup" } className='text-blue-800 flex justify-center text-sm mt-3 hover:underline '>New Sign up Now </Link>  </label>
         </form>
       </div>
