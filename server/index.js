@@ -17,9 +17,10 @@ dotenv.config()
       credentials:true
     }
   ))
-  //"https://ameer83mern-car-rental.onrender.com", 
-
+  
+ 
 app.use(express.json())
+
 app.use(cookieParser())
 const port = process.env.PORT ;
 mongoDb()

@@ -29,7 +29,7 @@ export const UserProfile = () => {
 
   return (
    
-      <div className='flex justify-around text-center pt-24 align-center ' >
+      <div className='flex md:justify-around text-center pt-24 align-center ' >
         <div>
         <h2 className=' text-xl '>Name:{user.name} </h2> 
         <h4 className=' text-xl ' >Email:{user.email} </h4> 

@@ -37,8 +37,8 @@ const UserNavbar = () => {
             
          
 
-          
-          <li><Link  to={"/user/services"}>Services</Link  ></li>
+          <li><Link  to={"/user/about"}> About</Link  ></li>
+          <li><Link  to={"/user/services"}> Our Services</Link  ></li>
           <li><Link to={"/user/rent"} >Rent a car</Link></li>
           <li><Link to={"/user/contact"} >Contact us</Link></li>
           </ul>
@@ -50,8 +50,8 @@ const UserNavbar = () => {
       {/* Navbar Center */}
       <div className="navbar-center hidden lg:flex  ">
         <ul className="menu menu-horizontal px-1 gap-2">
-        
-          <li><Btn><Link  to={"/user/services"}>Services</Link  ></Btn></li>
+        <li><Btn><Link  to={"/user/about"}>About</Link  ></Btn></li>
+          <li><Btn><Link  to={"/user/services"}>Our Services</Link  ></Btn></li>
           <li><Btn ><Link to={"/user/rent"} >Rent a car</Link></Btn></li>
           <li><Btn ><Link to={"/user/contact"} >Contact us</Link></Btn></li>
         </ul>

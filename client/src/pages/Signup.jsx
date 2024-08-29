@@ -64,7 +64,7 @@ const Signup = () => {
 
   return (
     <div className="flex items-center justify-center pt-24 ">
-      <div className="bg-purple-100 p-3 py-1 rounded shadow w-full max-w-sm">
+      <div className="bg-base-200 p-3 py-1 rounded shadow w-full max-w-sm border-purple-600 border-s-2 ">
         <h2 className="text-2xl font-bold mb-2 text-center">Sign up</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-2">
@@ -113,7 +113,7 @@ const Signup = () => {
             </span>
             {errors.password && <p className="text-red-500">{errors.password.message}</p>}
           </div>
-        <div className='flex justify-center' > <Btn type="submit" className="bg-blue-500 text-white p-2 rounded w-full">{ id ? "update": "Sign up" }</Btn></div> 
+        <div className='flex justify-center' > <Btn type="submit" className=" p-2 rounded w-full">{ id ? "update": "Sign up" }</Btn></div> 
           {id?null: <span  > <Link className='text-blue-800 flex justify-center text-sm mt-3 hover:underline ' to={ "/login" } >Login Now </Link>  </span>}
         </form>
       </div>

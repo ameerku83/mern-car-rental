@@ -105,12 +105,12 @@ const HomePage = () => {
             Discover the epitome of premium cars.,<br />  Unleash the thrill of driving around the world.<br/> Best maintenance, wide selection of vehicles.
           </p>
           <div className="space-x-4">
-            <button className="btn btn-primary">Book a car</button>
+            <Btn className="btn btn-primary">Book a car</Btn>
             <button className="btn btn-outline">Learn more</button>
           </div>
         </div>
         <div className="lg:w-3/4 mt-14">
-          <div className="relative bg-purple-300 rounded-l-full">
+          <div className="relative bg-purple-200 rounded-l-full">
             <div className=" w-2/5 h-4/5 top-1/4 left-11 right-28 "></div>
             <img src={audiq7} alt="Car" className="relative scale-x-[-1] py-20 lg:right-28 "/>
           </div>
@@ -138,7 +138,7 @@ const HomePage = () => {
         </div>
       </div> */}
 
-  <section className="bg-white p-5 rounded-lg shadow-lg mt-10 mx-5 md:mx-auto md:max-w-4xl">
+  <section className="bg-base-200 p-5 rounded-lg shadow-lg mt-10 mx-5 md:mx-auto md:max-w-4xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block mb-2 text-sm text-gray-700">Pickup Location</label>
@@ -152,7 +152,7 @@ const HomePage = () => {
             </div>
           </div>
           <div>
-            <label className="block mb-2 text-sm text-gray-700">Pickup Date</label>
+            <label className="block mb-2 text-sm ">Pickup Date</label>
             <div className="relative">
               <FaCalendarAlt className="absolute left-2 top-2 text-gray-400" />
               <input
@@ -181,7 +181,7 @@ const HomePage = () => {
 
       
     </div>
-    <CarCollections/>
+   
 
     <input type="date" />
     </div>

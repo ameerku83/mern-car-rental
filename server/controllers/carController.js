@@ -63,11 +63,7 @@ export const createCars =async(req,res,next)=>{
         }
        
         await newCar.save();
-
-
-
-
-        
+    
  res.json({success:true,message:' new car created scuessfully!',data:newCar})
  
 
@@ -76,22 +72,20 @@ export const createCars =async(req,res,next)=>{
 export const updateCar =async(req,res,next)=>{
 
    
-    const {brand,model,year,images,pricePerDay,capacity,transmission,
+    const {brand,model,year,image,pricePerDay,capacity,transmission,
         fuelType,mileage,availability,
         }=req.body;
 
         const {id}=req.params;
 
         const updatedCars=await Car.findByIdAndUpdate(id,{
-            brand,model,year,images,pricePerDay,capacity,transmission,
+            brand,model,year,image,pricePerDay,capacity,transmission,
         fuelType,mileage,availability
         },{new:true})
 
         res.json({success:true,message:'car updated scuessfully!',data:updatedCars})
 
 }
-
-
 export const deleteCar =async(req,res,next)=>{
     const {id} =req.params
 

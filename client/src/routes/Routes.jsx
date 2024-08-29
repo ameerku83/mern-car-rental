@@ -9,6 +9,11 @@ import { UserAuth } from "./privetRoute/AuthUser";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import { UserProfile } from "../pages/user/UserProfile";
+import CarForm from "../pages/admin/CarForm";
+import { CarCategories } from "../pages/CarCategories";
+import { AdminCarList } from "../pages/admin/AdminCarList";
+import Services from "../pages/Services";
+import AboutPage from "../pages/AboutPage";
 
 const adminPath=process.env.REACT_APP_ADMIN
 export const router=createBrowserRouter([
@@ -43,10 +48,21 @@ export const router=createBrowserRouter([
                 
             },
             {
+                path:'/about',
+                element:<AboutPage/>
+                
+            },
+            {
                 path:'/services',
-                element:<h1 className="pt-28" >servic</h1>
+                element:<Services/>
+                
+            },
+            {
+                path:'/rent',
+                element:<CarCategories/>
                 
             }
+
 
         ]
 
@@ -65,15 +81,15 @@ export const router=createBrowserRouter([
         },
         {
             path:"addcar",
-            element:<h1 className=" mt-24" >add car</h1>
+            element:<CarForm/>
         },
         {
-            path:"editcar",
-            element:<h1 className=" mt-24" >edit car</h1>
+            path:"edit/:id",
+            element:<CarForm/>
         },
         {
             path:"carlist",
-            element:<h1 className=" mt-24" >list car</h1>
+            element:<AdminCarList/>
         },
         
     ]
@@ -93,13 +109,14 @@ export const router=createBrowserRouter([
                 element:<UserProfile/>
                 
             },
-
-
             {
-                path:"rent",
-                element:<h1 className="pt-28"  >rent</h1>
-
+                path:'about',
+                element:<AboutPage/>
+                
             },
+
+
+           
             {
                 path:"contact",
                 element:<h1 className="pt-28"  >contact</h1>
@@ -107,7 +124,7 @@ export const router=createBrowserRouter([
             },
             {
                 path:"services",
-                element:<h1 className="pt-28"  >service</h1>
+                element:<Services/>
 
             }
 
