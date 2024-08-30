@@ -6,7 +6,6 @@ import { User } from "../models/userModel.js";
 
 export const createReview = async (req, res, next) => {
   
-    // Validate request body using Joi
     
 
     const { userId, carId, rating, comment } = req.body;

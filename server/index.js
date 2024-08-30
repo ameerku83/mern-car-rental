@@ -1,23 +1,29 @@
+import dotenv from "dotenv"
+dotenv.config()
 import express from "express"
 import cors from "cors"
 import mongoDb from "./config/mongoDb.js"
 import apiRouter from "./routes/index.js"
 import cookieParser from 'cookie-parser';
-import dotenv from "dotenv"
+
 // import path from "path"
 // import { fileURLToPath } from "url";
 
 //import morgan from "morgan"
+
 const app =express()
-dotenv.config()
+
 //app.use(morgan("dev"))
   app.use(cors(
     {
-      origin:[ "https://ameerku83mern-car-rental.vercel.app","http://localhost:3001"],
+      origin: [ "https://ameerku83mern-car-rental.vercel.app","http://localhost:3001"],
       credentials:true
     }
   ))
-  
+
+  app.use(express.urlencoded({ extended: true }));
+
+ 
  
 app.use(express.json())
 

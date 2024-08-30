@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 import { AdminCarCard } from '../../components/admin/AdminCarCard'
 import { axiosInstance } from '../../config/axiosInstance'
+import { CarCardSkeliton } from '../../components/ui/CarCardSkeliton'
 
 export const AdminCarList = () => {
     const [cars,setCars]=useState([])
@@ -10,7 +11,7 @@ export const AdminCarList = () => {
         const fetchCar= async()=>{
             try {
                 const response = await axiosInstance.get("car/car-list",)
-                //{headers: {'Content-Type': 'multipart/form-data',}}
+                //
                
                 setCars(response?.data?.data);
 
@@ -27,13 +28,22 @@ export const AdminCarList = () => {
         setCars(cars.filter((car) => car._id !== id));
       };
 
- 
+    if(cars.length===0) return(
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" >
+       <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
+       <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
+       <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
+       <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
+        </div>
+    )
+    
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-       { cars.map(( car )=>(
+        
+     { cars.map(( car )=>(
 
-        <AdminCarCard car={car} onDelete={handleDelete} />
+        <AdminCarCard key={car._id} car={car} onDelete={handleDelete} />
        ))   } 
 
     </div>

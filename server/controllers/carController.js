@@ -45,10 +45,6 @@ export const createCars =async(req,res,next)=>{
         if (!req.file) {
             return res.status(400).json({ message: "image not visible" });
         }
-
-        
-
-
         // Upload an image
         const uploadResult = await cloudinaryInstance.uploader.upload(req.file.path,{folder:"cars"})
         .catch((error) => {
@@ -65,27 +61,25 @@ export const createCars =async(req,res,next)=>{
         await newCar.save();
     
  res.json({success:true,message:' new car created scuessfully!',data:newCar})
- 
-
 }
 
-export const updateCar =async(req,res,next)=>{
+export const updateCar = async (req, res) => {
+    
+    const { brand, model, year, pricePerDay, capacity, transmission, fuelType, mileage, availability } = req.body;
+    const { id } = req.params;
+          let image
+            if (req.file) {
+            let uploadResult = await cloudinaryInstance.uploader.upload(req.file.path, { folder: "cars" });
+             image=  uploadResult.url;
+        }
 
-   
-    const {brand,model,year,image,pricePerDay,capacity,transmission,
-        fuelType,mileage,availability,
-        }=req.body;
+    const updatedCar = await Car.findByIdAndUpdate(id, {
+        brand, model, year, pricePerDay, capacity, transmission, fuelType, mileage,image:image, availability
+    }, { new: true });
 
-        const {id}=req.params;
+    res.json({ success: true, message: 'Car updated successfully!', data: updatedCar });
+} 
 
-        const updatedCars=await Car.findByIdAndUpdate(id,{
-            brand,model,year,image,pricePerDay,capacity,transmission,
-        fuelType,mileage,availability
-        },{new:true})
-
-        res.json({success:true,message:'car updated scuessfully!',data:updatedCars})
-
-}
 export const deleteCar =async(req,res,next)=>{
     const {id} =req.params
 

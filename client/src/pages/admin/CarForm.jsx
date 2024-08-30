@@ -11,9 +11,13 @@ const CarForm = () => {
 
   useEffect(() => {
     const fetchCar = async ()=>{
-        if (id) { 
+        if (id) {
+            
+             
+            
              try {
-               const response = await axiosInstance.get(`car/single-car/${id}` )
+               const response = await axiosInstance.get(`car/single-car/${id}`,{
+                 })
                  const carData=response?.data?.data
                  setValue("brand", carData.brand);
                  setValue("model", carData.model);
@@ -24,6 +28,9 @@ const CarForm = () => {
                  setValue("fuelType", carData.fuelType);
                  setValue("mileage", carData.mileage);
                  
+                
+                 
+                 
              } catch (error) {
                  toast.error("Error fetching car data");
                  console.log(error);
@@ -32,6 +39,7 @@ const CarForm = () => {
            
          }
     }
+
 
     fetchCar()
   }, [id, setValue]);
@@ -48,25 +56,19 @@ const CarForm = () => {
         formData.append('transmission', data.transmission);
         formData.append('fuelType', data.fuelType);
         formData.append('mileage', data.mileage);
-        if (data.image?.length > 0) {
-            formData.append('image', data.image[0]);
-          }
-        
+          formData.append('image', data.image[0]);
           if (id) {
             // If ID exists, update the car
             await axiosInstance.put(`car/update/${id}`, formData, {
-            //   headers: {
-            //     'Content-Type': 'multipart/form-data',
-            //   }
+             
             });
             toast.success('Car updated successfully');
           } else {
-            await axiosInstance.post('car/create', formData, );
+            await axiosInstance.post('car/create', formData,{ 
+               } );
         toast.success('Car created successfully');
-           //{ headers: {'Content-Type': 'multipart/form-data',  }}
+           
           }
-   
-       
       } catch (error) {
         toast.error( id ? "Error updating car":"error creating car");
         console.log(error);
@@ -140,9 +142,7 @@ const CarForm = () => {
            
             className="input input-bordered w-full"
             placeholder="Enter comma-separated URLs"
-            {...register("image", {
-              required: "Image is required",})}
-          />
+            {...register("image",)}  />
           {errors.image && (
             <span className="text-red-500">{errors.image.message}</span>
           )}
