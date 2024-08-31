@@ -37,9 +37,9 @@ export const createCars =async(req,res,next)=>{
    
      
           
-    const {brand,model,year,pricePerDay,capacity,transmission, fuelType,mileage,availability}=req.body;
+    const {brand,model,year,pricePerDay,capacity,transmission, fuelType,mileage,availability,category}=req.body;
 
-        await carValidation.validateAsync( {brand,model,year,pricePerDay,capacity,transmission, fuelType,mileage,availability} );
+        await carValidation.validateAsync( {brand,model,year,pricePerDay,capacity,transmission, fuelType,mileage,availability,category} );
         
        
         if (!req.file) {
@@ -53,7 +53,7 @@ export const createCars =async(req,res,next)=>{
 
         //console.log(uploadResult);
 
-        const newCar = new Car({brand,model,year,pricePerDay,capacity,transmission, fuelType,mileage,availability});
+        const newCar = new Car({brand,model,year,pricePerDay,capacity,transmission, fuelType,mileage,availability,category});
         if (uploadResult?.url) {
             newCar.image = uploadResult.url;
         }
@@ -65,7 +65,7 @@ export const createCars =async(req,res,next)=>{
 
 export const updateCar = async (req, res) => {
     
-    const { brand, model, year, pricePerDay, capacity, transmission, fuelType, mileage, availability } = req.body;
+    const { brand, model, year, pricePerDay, capacity, transmission, fuelType, mileage, availability,category } = req.body;
     const { id } = req.params;
           let image
             if (req.file) {
@@ -74,7 +74,7 @@ export const updateCar = async (req, res) => {
         }
 
     const updatedCar = await Car.findByIdAndUpdate(id, {
-        brand, model, year, pricePerDay, capacity, transmission, fuelType, mileage,image:image, availability
+        brand, model, year, pricePerDay, capacity, transmission, fuelType, mileage,image:image, availability,category
     }, { new: true });
 
     res.json({ success: true, message: 'Car updated successfully!', data: updatedCar });

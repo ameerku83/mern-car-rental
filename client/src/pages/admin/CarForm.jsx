@@ -27,6 +27,7 @@ const CarForm = () => {
                  setValue("transmission", carData.transmission);
                  setValue("fuelType", carData.fuelType);
                  setValue("mileage", carData.mileage);
+                 setValue("category", carData.category);
                  
                 
                  
@@ -39,8 +40,6 @@ const CarForm = () => {
            
          }
     }
-
-
     fetchCar()
   }, [id, setValue]);
 
@@ -56,6 +55,7 @@ const CarForm = () => {
         formData.append('transmission', data.transmission);
         formData.append('fuelType', data.fuelType);
         formData.append('mileage', data.mileage);
+        formData.append('category', data.category);
           formData.append('image', data.image[0]);
           if (id) {
             // If ID exists, update the car
@@ -185,6 +185,23 @@ const CarForm = () => {
           />
           {errors.capacity && (
             <span className="text-red-500">{errors.capacity.message}</span>
+          )}
+        </div>
+        <div className="form-control">
+          <label className="label" htmlFor="transmission">
+            <span className="label-text">Category</span>
+          </label>
+          <select
+            className="select select-bordered w-full"
+            {...register("category", { required: "category is required" })}
+          >
+            <option value="SUV">SUV</option>
+            <option value="Sedan">Sedan</option>
+            <option value="Hatchback">Hatchback</option>
+            <option value="Luxury">Luxury</option>
+          </select>
+          {errors.transmission && (
+            <span className="text-red-500">{errors.category.message}</span>
           )}
         </div>
 

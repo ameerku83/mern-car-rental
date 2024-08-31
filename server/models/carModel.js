@@ -39,6 +39,10 @@ const carSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  category: {
+    type: String,
+    required: true,
+  },
  
   availability: {
     type: Boolean,

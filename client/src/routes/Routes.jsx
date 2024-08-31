@@ -14,6 +14,7 @@ import { CarCategories } from "../pages/CarCategories";
 import { AdminCarList } from "../pages/admin/AdminCarList";
 import Services from "../pages/Services";
 import AboutPage from "../pages/AboutPage";
+import { Cardetails } from "../components/user/Cardetails";
 
 const adminPath=process.env.REACT_APP_ADMIN
 export const router=createBrowserRouter([
@@ -114,8 +115,16 @@ export const router=createBrowserRouter([
                 element:<AboutPage/>
                 
             },
-
-
+            {
+                path:'rent',
+                element:<CarCategories/>
+                
+            },
+            {
+                path:'cardetails/:id',
+                element:<Cardetails/>
+                
+            },
            
             {
                 path:"contact",

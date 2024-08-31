@@ -19,13 +19,14 @@ export const AdminCarCard = ({car,onDelete}) => {
   
   return (
     <div>
-        <div className="border border-gray-200 rounded-lg  shadow-md p-4 mx-4 mt-24 md:mt-10 sm:mt-5">
+        <div className="border border-gray-200 rounded-lg  shadow-md p-4 mx-4 mt-4 md:mt-6 sm:mt-5">
       <img src={car.image} alt={car.model} className="w-full h-40 object-contain rounded-md" />
       <div className=' text-center mt-2 ' >
-      <h3 className="text-2xl font-bold mt-4">{car.model}</h3>
+      <h3 className="text-2xl font-bold mt-4"> {car.brand} {car.model}</h3>
       <div className='text-xl font-semibold'>
       <h5>price : {car.pricePerDay}/day</h5>
       <h5>year : {car.year}</h5>
+      <h5>category : {car.category}</h5>
       <h5>transmission : {car.transmission}</h5>
       <h5> fuel type : {car.fuelType}</h5>
       <h5>capacity : {car.capacity}</h5>
