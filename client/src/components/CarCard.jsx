@@ -18,7 +18,10 @@ const CarCard = ({ rating ,car}) => {
       <h3 className="text-lg font-semibold mt-4">{car.model}</h3>
       <StarRating rating={rating} />
       <div className="flex justify-between items-center mt-2">
-        <Btn > <Link to={`/user/cardetails/${car._id}`} >Book now</Link> </Btn>
+      <button className={` btn mt-4 p-2 ${car.availability ? ' btn-success' : 'btn-error'} text-white rounded-md text-center`}>
+   <Link to={`/user/cardetails/${car._id}`} > {car.availability ? 'Book Now' : 'Not Available'} </Link>
+  </button>
+        
         <span className="btn border border-purple-600">{car.pricePerDay}/Day</span>
       </div>
     </div>

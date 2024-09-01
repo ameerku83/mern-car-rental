@@ -15,6 +15,8 @@ import { AdminCarList } from "../pages/admin/AdminCarList";
 import Services from "../pages/Services";
 import AboutPage from "../pages/AboutPage";
 import { Cardetails } from "../components/user/Cardetails";
+import { BookingDetails } from "../pages/user/BookingDetails";
+import MyBookings from "../pages/user/MyBookings";
 
 const adminPath=process.env.REACT_APP_ADMIN
 export const router=createBrowserRouter([
@@ -129,6 +131,16 @@ export const router=createBrowserRouter([
             {
                 path:"contact",
                 element:<h1 className="pt-28"  >contact</h1>
+
+            },
+            {
+                path:"booking/:id",
+                element:<BookingDetails/>
+
+            },
+            {
+                path:"bookings",
+                element:<MyBookings/>
 
             },
             {

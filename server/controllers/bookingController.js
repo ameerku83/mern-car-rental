@@ -3,11 +3,11 @@ import {Booking} from '../models/bookingModel.js';
 import { Car } from '../models/carModel.js';
 import { User } from '../models/userModel.js';
 import { sendClient } from '../utils/sendMail.js';
-import m from "moment"
+//import m from "moment"
 
 export const createBooking = async (req, res) => {
     
-        const { user, car, startDate, endDate,address,pickupLocation,mobile } = req.body;
+        const { car,user, startDate, endDate,address,pickupLocation,mobile } = req.body;
         await bookingValiadation.validateAsync({ startDate, endDate,address,pickupLocation,mobile })
        const isCar= await Car.findById(car)
        const isUser= await User.findById(user)
@@ -20,13 +20,13 @@ export const createBooking = async (req, res) => {
             return res.status(400).json({ error: 'car not found' });
           }
 
-          const startFormat = m(startDate,'DD/MM/YYYY').format("YYYY-MM-DD")
-          const endFormat = m(endDate,'DD/MM/YYYY').format("YYYY-MM-DD")
+          // const startFormat = m(startDate,'DD/MM/YYYY').format("YYYY-MM-DD")
+          // const endFormat = m(endDate,'DD/MM/YYYY').format("YYYY-MM-DD")
 
 
 
          
-          const totalDays=Math.ceil((new Date(endFormat)-new Date(startFormat))/ (1000 * 60 * 60*24 ))
+          const totalDays=Math.ceil((new Date(endDate)-new Date(startDate))/ (1000 * 60 * 60*24 ))
 
         const totalCost = (totalDays+1) * (isCar.pricePerDay) 
 

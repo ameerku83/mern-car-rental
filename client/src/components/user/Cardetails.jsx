@@ -1,12 +1,39 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FaCar, FaGasPump, FaCogs, FaTachometerAlt } from 'react-icons/fa';
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
 
 export const Cardetails = () => {
+    const navigate = useNavigate()
     const {id}=useParams()
     const [car,setCar]=useState([])
+    const { register, handleSubmit } = useForm();
+    const formatDate = (dateStr) => {
+    const [day, month, year] = dateStr.split('/'); // Split the date string
+    return `${year}-${month}-${day}`; // Rearrange to yyyy-mm-dd
+   };
+   const [user,setUser]=useState({})
+
+     useEffect(() => {
+      
+        const fetchUser = async () => {
+            try {
+             const response= await axiosInstance.get('user/profile',);
+              setUser(response?.data?.data)
+              //toast.success('account created suc');
+            
+            } catch (error) {
+             // toast.error(error.response.data.message);
+              console.log(error);
+              
+            }
+          };
+          fetchUser()
+      
+    }, [])
+    
     useEffect(() => {
         const fetchCar = async ()=>{
             
@@ -25,6 +52,36 @@ export const Cardetails = () => {
         
         fetchCar()
       }, [id]);
+
+      const onSubmit = async (data) => {
+        try {
+             const startDateFormatted = formatDate(data.startDate);
+        const endDateFormatted = formatDate(data.endDate);
+            const bookingData = {
+                 // Replace with actual user ID from authentication context
+                car:id,
+                user:user._id,
+                startDate: startDateFormatted,
+                endDate: endDateFormatted,
+                address:data.address,
+                mobile:data.mobile,
+                pickupLocation:data.pickupLocation
+               
+            };
+            console.log(id);
+
+
+            const response = await axiosInstance.post('user/booking', bookingData);
+            console.log(response?.data?.data);
+              navigate(`/user/booking/${response?.data?.data._id}`)
+                toast.success('Car booked successfully!');
+             
+            
+        } catch (error) {
+            toast.error('Error booking the car');
+            console.log(error);
+        }
+    };
   return (
     
         
@@ -61,7 +118,59 @@ export const Cardetails = () => {
 
      
     </div>
+
+    {car.availability && (
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
+            <div>
+                <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Start Date</label>
+                <input
+                    type="date"
+                    id="startDate"
+                    {...register('startDate', { required: true })}
+                    className="mt-1 p-2 w-full border rounded-md"
+                />
+            </div>
+            <div className="mt-4">
+                <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">End Date</label>
+                <input
+                    type="date"
+                    id="endDate"
+                    {...register('endDate', { required: true })}
+                    className="mt-1 p-2 w-full border rounded-md"
+                />
+            </div>
+            <input
+                    type="text"
+                    id=""
+                    placeholder='address'
+                    {...register('address', { required: true })}
+                    className="mt-1 p-2 w-full border rounded-md"
+                />
+                 <input
+                    type="text"
+                    id=""
+                    placeholder='mobile'
+                    {...register('mobile', { required: true })}
+                    className="mt-1 p-2 w-full border rounded-md"
+                />
+                  <input
+                    type="text"
+                    placeholder='pick'
+                    id=""
+                    {...register('pickupLocation', { required: true })}
+                    className="mt-1 p-2 w-full border rounded-md"
+                />
+                
+            <button
+                type="submit"
+                className="mt-4 bg-blue-500 text-white p-2 rounded-md w-full"
+            >
+                Book Now
+            </button>
+        </form>
+    )}
     </div> 
+    
     
   )
 }
