@@ -3,7 +3,7 @@ import { AiOutlineHeart, AiOutlineMenu } from 'react-icons/ai'; // Importing ico
 import { FaUserCircle } from 'react-icons/fa';
 import Btn from './Btn';
 import { DarkMode } from './DarkMode';
-import car from '../../asets/images/car.png'
+import car from '../../asets/images/carlogo.png'
 import { Link } from 'react-router-dom';
 const NavBar = () => {
     
@@ -24,8 +24,13 @@ const NavBar = () => {
             
           </ul>
         </div>
-
-        <a className="text-xl font-bold" href="/"> <img className='h-12 w-32 object-cover rounded-full ' src={car} alt="" /> </a>
+         <div>
+        <Link to={'/'} >
+  
+        <img className=' h-8 object-contain' src={car} alt="" /> 
+        </Link>
+        <i className=' text-sm text-purple-700 font-bold' > FLY WHEELS</i>
+        </div>
       </div>
 
       {/* Navbar Center */}

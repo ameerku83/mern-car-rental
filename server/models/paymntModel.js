@@ -7,6 +7,11 @@ const paymentSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
+    car: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Car',
+        required: true,
+    },
     booking: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Booking',
@@ -18,8 +23,8 @@ const paymentSchema = new mongoose.Schema({
     },
     paymentMethod: {
         type: String,
-        enum: ['Credit Card', 'Debit Card', 'PayPal', 'UPI'],
-        required: true,
+        
+        
     },
     paymentDate: {
         type: Date,

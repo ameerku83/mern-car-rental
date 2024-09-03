@@ -3,18 +3,16 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../../config/axiosInstance";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CarForm = () => {
   const { register, handleSubmit, formState: { errors },setValue} = useForm();
   const {id}=useParams()
+  const navigate=useNavigate()
 
   useEffect(() => {
     const fetchCar = async ()=>{
-        if (id) {
-            
-             
-            
+        if (id) {   
              try {
                const response = await axiosInstance.get(`car/single-car/${id}`,{
                  })
@@ -69,6 +67,9 @@ const CarForm = () => {
         toast.success('Car created successfully');
            
           }
+
+          navigate("/admin/carlist")
+
       } catch (error) {
         toast.error( id ? "Error updating car":"error creating car");
         console.log(error);
@@ -77,7 +78,10 @@ const CarForm = () => {
   };
 
   return (
-    <form className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md"  onSubmit={handleSubmit(onSubmit)}  >
+    <div className=" pt-6 ">
+        <h3 className=" text-center text-4xl pb-4">  {id? "Update car":"Add car"}  </h3>
+    <form className="max-w-4xl mx-auto p-6 bg-base-200 rounded-lg shadow-md"  onSubmit={handleSubmit(onSubmit)}  >
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6" >
         <div className="form-control">
           <label className="label" htmlFor="brand">
@@ -188,7 +192,7 @@ const CarForm = () => {
           )}
         </div>
         <div className="form-control">
-          <label className="label" htmlFor="transmission">
+          <label className="label" htmlFor="category">
             <span className="label-text">Category</span>
           </label>
           <select
@@ -200,7 +204,7 @@ const CarForm = () => {
             <option value="Hatchback">Hatchback</option>
             <option value="Luxury">Luxury</option>
           </select>
-          {errors.transmission && (
+          {errors.category  && (
             <span className="text-red-500">{errors.category.message}</span>
           )}
         </div>
@@ -266,6 +270,7 @@ const CarForm = () => {
         </button>
       </div>
     </form>
+    </div>
   );
 };
 

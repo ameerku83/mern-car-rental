@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
-
+import { loadStripe } from "@stripe/stripe-js"
 export const BookingDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -32,8 +32,37 @@ export const BookingDetails = () => {
         }
     };
     const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('en-CA'); // Format YYYY-MM-DD
+        return new Date(dateString).toLocaleDateString('en-CA'); 
     };
+   const makePayment = async()=>{
+    try {
+
+        const stripe=await loadStripe("pk_test_51PrCMS04oHGbi1WXUldePfVqBpsFGQVzUcCtebG6jXAZsqPjRyyE3jGHk2m51ybZ2WzNzVJBcS0KD4ZMe4BVnmyn00hEBGGuXn")
+
+        const paymentData={
+            car:booking.car._id,
+            booking:booking._id,
+            user:booking.user._id,
+            paymentDate:formatDate(booking.startDate),
+           
+
+        }
+
+        const response = await axiosInstance.post("user/payment",paymentData);
+        const sessionId=response?.data?.sessionId;
+       const result = stripe.redirectToCheckout({
+        sessionId:sessionId
+       })
+
+       console.log(response);
+       
+
+
+    } catch (error) {
+        console.log(error);
+        
+    }
+   }
    
 
     return ( <div>
@@ -62,12 +91,16 @@ export const BookingDetails = () => {
                         )}
                      </div>
                     
-                  
+
                 </div>
             ) : (
                 <p>Loading booking details...</p>
             )}
         </div>
+
+        <button onClick={makePayment}>pay Now</button>
+
+
         </div>
     );
 };

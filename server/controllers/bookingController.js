@@ -105,7 +105,7 @@ const booking = await Booking.findById(id);
 export const getBookingById = async (req, res) => {
     
   const { id } = req.params;
-  const booking = await Booking.findById(id).populate('car');
+  const booking = await Booking.findById(id).populate('car').populate('user');
   
   if (!booking) {
       return res.status(404).json({ success: false, message: 'Car not found' });

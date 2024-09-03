@@ -32,7 +32,7 @@ export const adminCreate = async (req, res, next) => {
         //create token
         const token = generateToken(email, "admin");
 
-        res.cookie("token", token,{ httpOnly:true,secure:true,sameSite:"None",} );
+        res.cookie("admin", token,{ httpOnly:true,secure:true,sameSite:"None",} );
         res.json({ success: true, message: "Admin created successfully" });
    
 };
@@ -55,7 +55,7 @@ export const adminLogin = async (req, res, next) => {
         }
         const token = generateToken(email, "admin");
 
-        res.cookie("token", token, { httpOnly:true,secure:true,sameSite:"None"} );
+        res.cookie("admin", token, { httpOnly:true,secure:true,sameSite:"None"} );
         
         res.json({ success: true, message: "Admin login successfully" });
    
@@ -120,7 +120,7 @@ export const userCreatedByAdmin = async (req, res, next) => {
 
 export const userList =async(req,res,next)=>{
 
-    const userList=await User.find();
+    const userList=await User.find().select("-password");
     res.json({success:true,message:'user list fetched',data:userList})
 
 
@@ -140,7 +140,7 @@ export const deleteUserById = async (req, res, next) => {
 //admin controll booking
 export const admingetAllBookings = async (req, res, next) => {
   
-    const bookings = await Booking.find().populate('user', 'name email ').populate('car', 'brand model');
+    const bookings = await Booking.find().populate('user').populate('car');
     if (!bookings) {
         return res.status(400).json({ success: false, message: "users bookings  not found" });
     }

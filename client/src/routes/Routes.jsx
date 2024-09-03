@@ -17,6 +17,10 @@ import AboutPage from "../pages/AboutPage";
 import { Cardetails } from "../components/user/Cardetails";
 import { BookingDetails } from "../pages/user/BookingDetails";
 import MyBookings from "../pages/user/MyBookings";
+import UserList from "../pages/admin/UserList";
+import { AdminUserBookings } from "../pages/admin/AdminUserBookings";
+import { PaymentSucces } from "../pages/user/PaymentSucces";
+import { PaymentCancell } from "../pages/user/PaymentCancell";
 
 const adminPath=process.env.REACT_APP_ADMIN
 export const router=createBrowserRouter([
@@ -75,8 +79,8 @@ export const router=createBrowserRouter([
         element:<AdminAuth> <AdminLayout/> </AdminAuth>,
         children:[
         {
-            path:"users",
-            element:<h1>hello</h1>
+            path:"userlist",
+            element:<UserList/>
         },
         {
             path:"home",
@@ -93,6 +97,10 @@ export const router=createBrowserRouter([
         {
             path:"carlist",
             element:<AdminCarList/>
+        },
+        {
+            path:"bookings",
+            element:<AdminUserBookings/>
         },
         
     ]
@@ -141,6 +149,16 @@ export const router=createBrowserRouter([
             {
                 path:"bookings",
                 element:<MyBookings/>
+
+            },
+            {
+                path:"payment/success",
+                element:<PaymentSucces/>
+
+            },
+            {
+                path:"payment/cancel",
+                element:<PaymentCancell/>
 
             },
             {

@@ -3,7 +3,7 @@ import { AiOutlineHeart, AiOutlineMenu } from 'react-icons/ai'; // Importing ico
 import { FaUserCircle } from 'react-icons/fa';
 
 
-import car from '../../asets/images/car.png'
+import car from '../../asets/images/carlogo.png'
 import Btn from '../ui/Btn';
 import { DarkMode } from '../ui/DarkMode';
 import { Link, useNavigate } from 'react-router-dom';
@@ -36,20 +36,27 @@ const UserNavbar = () => {
           <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
             
          
-
+          <li><Link  to={"/user/home"}> Home</Link  ></li>
           <li><Link  to={"/user/about"}> About</Link  ></li>
           <li><Link  to={"/user/services"}> Our Services</Link  ></li>
           <li><Link to={"/user/rent"} >Rent a car</Link></li>
           <li><Link to={"/user/contact"} >Contact us</Link></li>
           </ul>
         </div>
+        <div>
+        <Link to={'/user/home'} >
+  
+        <img className=' h-8 object-contain' src={car} alt="" /> 
+        </Link>
+        <i className=' text-sm text-purple-700 font-bold sm:text-sm' > FLY WHEELS</i>
+        </div>
 
-        <Link className="text-xl font-bold" to={"/user/home"}> <img className='h-12 w-32 object-cover rounded-full ' src={car} alt="" /> </Link>
       </div>
 
-      {/* Navbar Center */}
+     
       <div className="navbar-center hidden lg:flex  ">
         <ul className="menu menu-horizontal px-1 gap-2">
+        <li> <Btn><Link  to={"/user/home"}> Home</Link  > </Btn> </li>
         <li><Btn><Link  to={"/user/about"}>About</Link  ></Btn></li>
           <li><Btn><Link  to={"/user/services"}>Our Services</Link  ></Btn></li>
           <li><Btn ><Link to={"/user/rent"} >Rent a car</Link></Btn></li>
@@ -57,8 +64,8 @@ const UserNavbar = () => {
         </ul>
       </div>
 
-      {/* Navbar End */}
-      <div className="navbar-end flex items-center space-x-2">
+      
+      <div className="navbar-end flex items-center ">
       <label tabIndex={0} className="btn btn-ghost btn-circle m-0 ">
            <DarkMode   />
           </label>
@@ -78,9 +85,9 @@ const UserNavbar = () => {
             < FaUserCircle className="h-6 w-6" />
           </label>
           <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-40">
-            <li className='text-xl' ><Link to={ "/user/profile" }> Profile</Link>  </li>
-            <li><a href="/wishlist">Wishlist Item 2</a></li>
-            <li> <button className='btn bg-red-500 cursor-pointer' onClick={logout} > Log out </button> </li>
+            <li className='text-md font-bold' ><Link to={ "/user/profile" }> Profile</Link>  </li>
+            <li className='text-md font-bold' ><Link to={ "/user/bookings"}>My Bookings </Link></li>
+            <li> <button className='btn bg-red-500 cursor-pointer btn-sm' onClick={logout} > Log out </button> </li>
           </ul>
         </div> 
         

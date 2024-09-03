@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaCar, FaGasPump, FaCogs, FaTachometerAlt } from 'react-icons/fa';
+import { AiOutlineCalendar, AiOutlineHome, AiOutlinePhone, AiOutlineEnvironment } from 'react-icons/ai';
+
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
+import Btn from '../ui/Btn';
 
 export const Cardetails = () => {
     const navigate = useNavigate()
@@ -85,14 +88,15 @@ export const Cardetails = () => {
   return (
     
         
-      <div className='pt-28 ' > 
+      <div className='pt-24 ' > 
+      <h3  className=' text-center text-3xl my-2 font-bold' >Car details</h3>
 
      <div className="max-w-4xl lg:mx-auto bg-scale-300 shadow-md rounded-lg overflow-hidden md:flex border border-purple-200 pt-5 px-5 mx-5">
         <div>
         <img className="w-full  h-64 object-contain" src={car.image} alt={`${car.brand} ${car.model}`} />
         </div>
         <div>
-        <div className="p-6">
+        <div className="p-2 mx-2">
              <h2 className="text-2xl font-bold ">{car.brand} {car.model}</h2>
               <p className="">Year: {car.year}</p>
               <p className="">Price Per Day: <b>{car.pricePerDay}/-</b> </p>
@@ -120,54 +124,101 @@ export const Cardetails = () => {
     </div>
 
     {car.availability && (
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
-            <div>
-                <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Start Date</label>
-                <input
-                    type="date"
-                    id="startDate"
-                    {...register('startDate', { required: true })}
-                    className="mt-1 p-2 w-full border rounded-md"
-                />
-            </div>
-            <div className="mt-4">
-                <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">End Date</label>
-                <input
-                    type="date"
-                    id="endDate"
-                    {...register('endDate', { required: true })}
-                    className="mt-1 p-2 w-full border rounded-md"
-                />
-            </div>
-            <input
-                    type="text"
-                    id=""
-                    placeholder='address'
-                    {...register('address', { required: true })}
-                    className="mt-1 p-2 w-full border rounded-md"
-                />
-                 <input
-                    type="text"
-                    id=""
-                    placeholder='mobile'
-                    {...register('mobile', { required: true })}
-                    className="mt-1 p-2 w-full border rounded-md"
-                />
-                  <input
-                    type="text"
-                    placeholder='pick'
-                    id=""
-                    {...register('pickupLocation', { required: true })}
-                    className="mt-1 p-2 w-full border rounded-md"
-                />
-                
-            <button
-                type="submit"
-                className="mt-4 bg-blue-500 text-white p-2 rounded-md w-full"
-            >
-                Book Now
-            </button>
-        </form>
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-6 max-w-lg mx-auto p-4 bg-base-200 shadow-md rounded-md">
+      <div className="mb-4">
+          <label htmlFor="startDate" className="block text-sm font-medium">
+              Start Date
+          </label>
+          <div className="relative mt-1">
+              <input
+                  type="date"
+                  id="startDate"
+                  {...register('startDate', { required: true })}
+                  className="p-2 w-full border rounded-md pl-10"
+              />
+              <AiOutlineCalendar className="absolute left-3 top-3 text-gray-400" />
+          </div>
+      </div>
+
+      <div className="mb-4">
+          <label htmlFor="endDate" className="block text-sm font-medium">
+              End Date
+          </label>
+          <div className="relative mt-1">
+              <input
+                  type="date"
+                  id="endDate"
+                  {...register('endDate', { required: true })}
+                  className="p-2 w-full border rounded-md pl-10"
+              />
+              <AiOutlineCalendar className="absolute left-3 top-3 text-gray-400" />
+          </div>
+      </div>
+
+      <div className="mb-4">
+          <label htmlFor="address" className="block text-sm font-medium">
+              Address
+          </label>
+          <div className="relative mt-1">
+              <input
+                  type="text"
+                  id="address"
+                  placeholder="Enter your address"
+                  {...register('address', { required: true })}
+                  className="p-2 w-full border rounded-md pl-10"
+              />
+              <AiOutlineHome className="absolute left-3 top-3 text-gray-400" />
+          </div>
+      </div>
+
+      <div className="mb-4">
+          <label htmlFor="mobile" className="block text-sm font-medium">
+              Mobile
+          </label>
+          <div className="relative mt-1">
+              <input
+                  type="text"
+                  id="mobile"
+                  placeholder="Enter your mobile number"
+                  {...register('mobile', { required: true })}
+                  className="p-2 w-full border rounded-md pl-10"
+              />
+              <AiOutlinePhone className="absolute left-3 top-3 text-gray-400" />
+          </div>
+      </div>
+
+      <div className="mb-4">
+          <label htmlFor="pickupLocation" className="block text-sm font-medium">
+              Pickup Location
+          </label>
+          <div className="relative mt-1">
+              <select
+                  id="pickupLocation"
+                  {...register('pickupLocation', { required: true })}
+                  className="p-2 w-full border rounded-md pl-10"
+              >
+                  <option value="Bitherkad">Bitherkad</option>
+                  <option value="Nelakota">Nelakota</option>
+                  <option value="Devarshola">Devarshola</option>
+                  <option value="Gudalure">Gudalure</option>
+                  <option value="Patavayal">Patavayal</option>
+                  <option value="Padanthorai">Padanthorai</option>
+                  <option value="Cholady">Cholady</option>
+                  <option value="Uppatty">Uppatty</option>
+                  <option value="Panthalure">Panthalure</option>
+                  <option value="Pakkana">Pakkana</option>
+                  <option value="Ooty">Ooty</option>
+                  <option value="Chrambady">Chrambady</option>
+                  <option value="Oorkadavu">Oorkadavu</option>
+              </select>
+              <AiOutlineEnvironment className="absolute left-3 top-3 text-gray-400" />
+          </div>
+      </div>
+
+        <div className=' flex justify-center' >
+        <Btn type="submit"  className="mt-4  p-2 rounded-md w-full " >  Book Now </Btn>
+        </div> 
+  </form>
     )}
     </div> 
     

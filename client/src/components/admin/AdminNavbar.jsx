@@ -3,7 +3,7 @@ import React from 'react';
 import { AiOutlineHeart, AiOutlineMenu } from 'react-icons/ai'; // Importing icons from react-icons
 import { FaUserCircle } from 'react-icons/fa';
 
-import car from '../../asets/images/car.png'
+import car from '../../asets/images/carlogo.png'
 import { DarkMode } from '../ui/DarkMode';
 import Btn from '../ui/Btn';
 import { Link } from 'react-router-dom';
@@ -28,8 +28,14 @@ const AdminNavbar = () => {
 
           </ul>
         </div>
+        <div>
+        <Link to={'/admin/home'} >
+  
+        <img className=' h-8 object-contain' src={car} alt="" /> 
+        </Link>
+        <i className='  text-sm text-purple-700 font-bold sm:text-sm' > FLY WHEELS</i>
+        </div>
 
-        <Link className="text-xl font-bold" to="/admin/home"> <img className='h-12 w-32 object-cover rounded-full ' src={car} alt="" /> </Link>
       </div>
 
       {/* Navbar Center */}
@@ -50,11 +56,11 @@ const AdminNavbar = () => {
           </label>
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle ">
-          <Link to={'/admin/users'} ><h5>users</h5></Link>  
+          <h4>users</h4>    
           </label>
           <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-40">
-            <li><a href="/wishlist">Wishlist Item 1</a></li>
-            <li><a href="/wishlist">Wishlist Item 2</a></li>
+            <li> <Link to={'/admin/userlist'} > Users list</Link> </li>
+            <li><Link to={"/admin/bookings"}>Users Bookings</Link></li>
             <li><a href="/wishlist">Wishlist Item 3</a></li>
           </ul>
         </div>

@@ -13,8 +13,8 @@ export const getCarList =async(req,res,)=>{
 }
 export const getCarsByBrand = async (req, res) => {
     
-      const { brand } = req.params;
-      const cars = await Car.find({ brand: new RegExp(brand, 'i') });
+      const { category } = req.params;
+      const cars = await Car.find({ category: new RegExp(category, 'i') });
       res.status(200).json({ message:'car list fetched by brand',  data:cars});
     
   };
@@ -48,7 +48,7 @@ export const createCars =async(req,res,next)=>{
         // Upload an image
         const uploadResult = await cloudinaryInstance.uploader.upload(req.file.path,{folder:"cars"})
         .catch((error) => {
-            console.log(error);
+            console.log(error);h
         });
 
         //console.log(uploadResult);

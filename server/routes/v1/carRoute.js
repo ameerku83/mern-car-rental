@@ -11,7 +11,7 @@ const carRoute = e.Router();
 
 carRoute.post("/create", upload.single("image"), authAdmin,errorHandler(createCars));
 carRoute.get("/car-list",  errorHandler(getCarList));
-carRoute.get("/cars/:brand",  errorHandler(getCarsByBrand));
+carRoute.get("/cars/:category",  errorHandler(getCarsByBrand));
 carRoute.get("/single-car/:id",  errorHandler(getCarById));
 carRoute.put("/update/:id", upload.single("image"), authAdmin,errorHandler(updateCar));
 carRoute.delete("/delete/:id",  authAdmin,errorHandler(deleteCar));
