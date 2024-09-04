@@ -21,6 +21,8 @@ import UserList from "../pages/admin/UserList";
 import { AdminUserBookings } from "../pages/admin/AdminUserBookings";
 import { PaymentSucces } from "../pages/user/PaymentSucces";
 import { PaymentCancell } from "../pages/user/PaymentCancell";
+import { UsersReviews } from "../pages/admin/UsersReviews";
+import { UsersPayments } from "../pages/admin/UsersPayments";
 
 const adminPath=process.env.REACT_APP_ADMIN
 export const router=createBrowserRouter([
@@ -33,11 +35,10 @@ export const router=createBrowserRouter([
                 element:<HomePage/>
                 
             },
-            
             {
                 path:adminPath,
                 element:<AdminLogin/>
-                
+   
             },
             {
                 path:'/signup',
@@ -101,6 +102,14 @@ export const router=createBrowserRouter([
         {
             path:"bookings",
             element:<AdminUserBookings/>
+        },
+        {
+            path:"reviews",
+            element:<UsersReviews/>
+        },
+        {
+            path:"payments",
+            element:<UsersPayments/>
         },
         
     ]

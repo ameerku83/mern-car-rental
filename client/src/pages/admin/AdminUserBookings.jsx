@@ -40,7 +40,7 @@ export const AdminUserBookings = () => {
         };
         const deleteBooking = async (id) => {
             try {
-                 await axiosInstance.delete(`user/delete-booking/${id}`);
+                 await axiosInstance.delete(`admin/delete-booking/${id}`);
                  setBookings(( bookings.filter((booking)=>booking._id !== id))
                 );
                 toast.success("booking deleted")
@@ -56,7 +56,7 @@ export const AdminUserBookings = () => {
             <h1 className=' text-center mt-3 text-3xl font-bold'> Users bookings</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                
-            {bookings.length > 0 ? (
+            {bookings.length > 0 ? ( 
                    
                    bookings.map((booking)=>(
                     <div className="border border-gray-200 rounded-lg  shadow-md p-4 mx-4 mt-4 md:mt-6 sm:mt-5">
@@ -76,7 +76,7 @@ export const AdminUserBookings = () => {
                     <h5>capacity : {booking.capacity}</h5>
                     <h5>mileage : {booking.mileage}</h5> */}
                    
-                    </div>
+                    </div> 
                     </div>
                     <div className="flex justify-center items-center mt-2">
                     

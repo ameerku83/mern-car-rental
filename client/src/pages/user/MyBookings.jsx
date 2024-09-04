@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { axiosInstance } from '../../config/axiosInstance';
 
 import Btn from '../../components/ui/Btn';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const MyBookings = () => {
@@ -55,8 +55,7 @@ const MyBookings = () => {
     const cancelBooking = async (id) => {
         try {
              await axiosInstance.put(`user/cancel-booking/${id}`);
-             setBookings(( bookings.map(booking => booking._id === id ? { ...booking, status: 'canceled' } : booking))
-            );
+             setBookings(( bookings.map(booking => booking._id === id ? { ...booking, status: 'canceled' } : booking)) );
             toast.success("booking cancelled")
             
         } catch (error) {
@@ -103,10 +102,11 @@ const MyBookings = () => {
                    
                     </div>
                     </div>
-                    <div className="flex justify-center items-center mt-2">
+                    <div className="flex justify-between mt-2">
                     
-                   { booking.status=="booked" && <Btn onClick={()=>cancelBooking(booking._id)} > cancel booking </Btn>}
-                   {booking.status=="canceled" &&   <button className='btn btn-error' onClick={()=>deleteBooking(booking._id)} >delete</button>  }
+                   { booking.status=="booked" && < button className=' btn  btn-error' onClick={()=>cancelBooking(booking._id)} > cancel booking </button>}
+                   {booking.status=="canceled" &&   <button className='btn  btn-error' onClick={()=>deleteBooking(booking._id)} >delete</button>  }
+                   <Btn ><Link to={`/user/booking/${booking._id}`} > Add Review </Link></Btn>
                     </div>
                   </div>
 

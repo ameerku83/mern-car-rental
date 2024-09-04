@@ -22,7 +22,8 @@ export const BookingDetails = () => {
         };
         fetchBooking();
     }, [id]);
-
+  
+  
     const CancelBooking = async (id) => {
         try {
             const response = await axiosInstance.put(`user/cancel-booking/${id}`);
@@ -50,7 +51,6 @@ export const BookingDetails = () => {
             user:booking.user._id,
             paymentDate:formatDate(booking.startDate),
            
-
         }
 
         const response = await axiosInstance.post("user/payment",paymentData);
@@ -97,10 +97,8 @@ export const BookingDetails = () => {
                         )}
                       {booking.status === 'booked' && <Btn onClick={makePayment} > Pay Now</Btn>}  
                      </div>
-                    
-                  
                 </div>
-                  <Review/>
+                  <Review  userId={booking.user._id} carId={booking.car._id} />
                  </div>
             ) : (
                 <p>Loading booking details...</p>

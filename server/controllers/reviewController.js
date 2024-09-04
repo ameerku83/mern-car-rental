@@ -71,7 +71,7 @@ export const getReviews= async (req, res, next) => {
 export const getReviewById = async (req, res, next) => {
   
     const { id } = req.params;
-    const reviewById = await Review.findById(id);
+    const reviewById = await Review.findById(id).populate('user').populate('car');
 
     if (!reviewById) {
       return res.status(404).json({ success: false, message: 'Review not found' });

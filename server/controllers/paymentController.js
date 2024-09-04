@@ -39,7 +39,8 @@ export const createPayment = async (req, res) => {
     const payment =  Payment({ car,user, booking,amount:fetchBooking.totalPrice,  paymentDate, status:"paid"  });
     
 
-    fetchBooking.paymentStatus="completed"
+    fetchBooking.payment="completed"
+    await fetchBooking.save()
       await payment.save()    
     res.status(200).json({ message:"payment success", data:payment,sessionId:session.id});
 
@@ -62,7 +63,7 @@ export const createPayment = async (req, res) => {
      
      export const getPayments = async (req, res, next) => {
         const {userId}= req.params
-        const payments = await Payment.find({user:userId}).populate("car");
+        const payments = await Payment.find({user:userId}).populate("car").populate('user');
         
         if (!payments) {
             return res.status(404).json({ success: false, message: 'payment not found' });

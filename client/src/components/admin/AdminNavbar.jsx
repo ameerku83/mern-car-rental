@@ -61,7 +61,8 @@ const AdminNavbar = () => {
           <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-40">
             <li> <Link to={'/admin/userlist'} > Users list</Link> </li>
             <li><Link to={"/admin/bookings"}>Users Bookings</Link></li>
-            <li><a href="/wishlist">Wishlist Item 3</a></li>
+            <li><Link  to={"/admin/reviews"} >Users Reviews</Link></li>
+            <li><Link  to={"/admin/payments"} >Users Payments</Link></li>
           </ul>
         </div>
 

@@ -208,13 +208,13 @@ export const admingetBookingById = async (req, res) => {
          // Cancel a paymen
   export const adminGetPayments = async (req, res, next) => {
             
-            const payments = await Payment.find();
+            const payments = await Payment.find().populate('user').populate('car').populate('booking');
             
             if (!payments) {
                 return res.status(404).json({ success: false, message: 'payment not found' });
             }
             
-            res.json({ success: true, message: 'payment deleted successfully!', data: payments });
+            res.json({ success: true, message: 'payments fetched successfully!', data: payments });
             }
              
      export const admingetUserPayments = async (req, res, next) => {
@@ -241,9 +241,8 @@ export const admingetBookingById = async (req, res) => {
  // Get all reviews
  export const adminGetReviews = async (req, res, next) => {
   
-    const reviewList = await Review.find();
-    res.json({ success: true, message: 'Review list fetched', data: reviewList });
-  }
+    const reviewList = await Review.find().populate('user').populate('car');
+    res.json({ success: true, message: 'Review list fetched', data: reviewList });}
   export const admingetUserReviews = async (req, res, next) => {
     const {userId}= req.params
     const reviewList = await Review.find({user:userId});

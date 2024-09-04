@@ -2,18 +2,34 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import Btn from '../ui/Btn';
+import { axiosInstance } from '../../config/axiosInstance';
+import { toast } from 'react-toastify';
 
-const Review = () => {
+const Review = ({userId,carId}) => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const onSubmit = async (data) => {
+
+    const reviewData = {
+        userId:userId,
+        carId:carId,
+        rating:data.rating,
+        comment:data.comment
+    }
+   
+  
     try {
-      await axios.post('/api/reviews', { ...data,});
+     const response = await axiosInstance.post('user/review',reviewData);
       reset(); 
-      alert('Review submitted successfully!');
+      toast.success('Review  successfully!');
+      console.log(response?.data);
+      
     } catch (error) {
       console.error('Error submitting review:', error);
-      alert('Failed to submit review');
+      toast.error( 'Failed to submit review');
+      console.log(error);
+      
     }
   };
 
@@ -57,7 +73,7 @@ const Review = () => {
 
         {/* Submit Button */}
         <div className="text-center">
-          <button type="submit" className="btn btn-primary w-full">Submit Review</button>
+          <Btn type="submit" className="btn btn-primary w-full">Submit Review</Btn>
         </div>
       </form>
     </div>
