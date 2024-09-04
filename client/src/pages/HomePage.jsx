@@ -65,11 +65,30 @@ const HomePage = () => {
             <label className="block mb-2 text-sm text-gray-700">Pickup Location</label>
             <div className="relative">
               <FaLocationArrow className="absolute left-2 top-2 text-gray-400" />
-              <input
+              {/* <input
                 type="text"
                 placeholder="Enter location"
                 className="input input-bordered w-full pl-10"
-              />
+              /> */}
+               <select
+                  id="pickupLocation"
+                  
+                  className="input input-bordered w-full pl-10"
+              >
+                  <option value="Bitherkad">Bitherkad</option>
+                  <option value="Nelakota">Nelakota</option>
+                  <option value="Devarshola">Devarshola</option>
+                  <option value="Gudalure">Gudalure</option>
+                  <option value="Patavayal">Patavayal</option>
+                  <option value="Padanthorai">Padanthorai</option>
+                  <option value="Cholady">Cholady</option>
+                  <option value="Uppatty">Uppatty</option>
+                  <option value="Panthalure">Panthalure</option>
+                  <option value="Pakkana">Pakkana</option>
+                  <option value="Ooty">Ooty</option>
+                  <option value="Chrambady">Chrambady</option>
+                  <option value="Oorkadavu">Oorkadavu</option>
+              </select>
             </div>
           </div>
           <div>
