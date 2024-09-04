@@ -4,6 +4,7 @@ import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
 import { loadStripe } from "@stripe/stripe-js"
 import Btn from '../../components/ui/Btn';
+import Review from '../../components/user/Review';
 export const BookingDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -72,6 +73,7 @@ export const BookingDetails = () => {
     return ( <div>
         <div className="pt-28">
             {booking ? (
+                <div>
                 <div className="max-w-4xl lg:mx-auto bg-scale-300 shadow-md rounded-lg overflow-hidden border border-purple-200 pt-5 px-5 mx-5 md:flex gap-x-6 pb-4">
                
                     <div>
@@ -96,7 +98,10 @@ export const BookingDetails = () => {
                       {booking.status === 'booked' && <Btn onClick={makePayment} > Pay Now</Btn>}  
                      </div>
                     
+                  
                 </div>
+                  <Review/>
+                 </div>
             ) : (
                 <p>Loading booking details...</p>
             )}

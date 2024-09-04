@@ -43,12 +43,12 @@ const UserNavbar = () => {
           <li><Link to={"/user/contact"} >Contact us</Link></li>
           </ul>
         </div>
-        <div>
+        <div className=' relative'>
         <Link to={'/user/home'} >
   
         <img className=' h-8 object-contain' src={car} alt="" /> 
         </Link>
-        <i className=' text-sm text-purple-700 font-bold sm:text-sm' > FLY WHEELS</i>
+        <i className=' text-sm text-purple-700 font-bold sm:text-sm mt-0 pt-0 absolute top-6' > FLY WHEELS</i>
         </div>
 
       </div>
