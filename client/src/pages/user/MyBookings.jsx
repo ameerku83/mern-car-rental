@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { axiosInstance } from '../../config/axiosInstance';
-import { MyBookingsCard } from '../../components/user/MyBookingsCard';
+
 import Btn from '../../components/ui/Btn';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -84,7 +84,7 @@ const MyBookings = () => {
      
      <div>
             <h1>Your Bookings</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-12">
             {bookings.length > 0 ? (
                    
                    bookings.map((booking)=>(

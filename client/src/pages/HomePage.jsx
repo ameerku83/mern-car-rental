@@ -1,103 +1,24 @@
 
 // src/App.js
 import React from "react";
-import { FaCalendarAlt, FaLocationArrow } from "react-icons/fa";
+import { FaCalendarAlt, FaCar, FaHeadset, FaLocationArrow, FaMapMarkedAlt, FaUserShield } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
 import NavBar from "../components/ui/NavBar";
 import audiq7 from ".././asets/images/audi q7.png"
 import Btn from "../components/ui/Btn";
 import CarCollections from "../components/CarCollections";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
-    // <div className="min-h-screen bg-gray-50">
-     
-
-    //   {/* Main Section */}
-    //   {/* <main className="container mx-auto p-5 flex flex-col md:flex-row items-center justify-between">
-    //     {/* Text Section */}
-    //     <div className="text-center md:text-left max-w-lg space-y-4">
-    //       <h1 className="text-4xl font-bold text-purple-500">
-    //         Book a car today <br />
-    //         save upto <span className="text-red-500">50%</span>
-    //       </h1>
-    //       <p className="text-gray-700">
-    //         Discover the epitome of premium, unleash the thrill of driving
-    //         around the world. Best maintenance, provide wide selection of
-    //         vehicles.
-    //       </p>
-    //       <div className="space-x-4">
-    //         <button className="btn bg-purple-500 text-white hover:bg-purple-600">
-    //           Book a car
-    //         </button>
-    //         <button className="btn bg-gray-200 text-purple-500 hover:bg-gray-300">
-    //           Learn more
-    //         </button>
-    //       </div>
-    //     </div>
-
-    //     {/* Car Image Section */}
-    //     <div className="mt-10 md:mt-0">
-    //       <div className="relative">
-    //         <div className="bg-purple-200 rounded-full w-96 h-96 absolute -top-10 -right-10 transform"></div>
-    //         <img
-    //           src="https://your-car-image-url.com/car.png"
-    //           alt="Car"
-    //           className="relative w-full h-auto max-w-lg"
-    //         />
-    //       </div>
-    //     </div>
-    //   {/* </main> */}
-
-    //   {/* Booking Section */}
-    //   <section className="bg-white p-5 rounded-lg shadow-lg mt-10 mx-5 md:mx-auto md:max-w-4xl">
-    //     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-    //       <div>
-    //         <label className="block mb-2 text-sm text-gray-700">Pickup Location</label>
-    //         <div className="relative">
-    //           <FaLocationArrow className="absolute left-2 top-2 text-gray-400" />
-    //           <input
-    //             type="text"
-    //             placeholder="Enter location"
-    //             className="input input-bordered w-full pl-10"
-    //           />
-    //         </div>
-    //       </div>
-    //       <div>
-    //         <label className="block mb-2 text-sm text-gray-700">Pickup Date</label>
-    //         <div className="relative">
-    //           <FaCalendarAlt className="absolute left-2 top-2 text-gray-400" />
-    //           <input
-    //             type="date"
-    //             className="input input-bordered w-full pl-10"
-    //           />
-    //         </div>
-    //       </div>
-    //       <div>
-    //         <label className="block mb-2 text-sm text-gray-700">Return Date</label>
-    //         <div className="relative">
-    //           <FaCalendarAlt className="absolute left-2 top-2 text-gray-400" />
-    //           <input
-    //             type="date"
-    //             className="input input-bordered w-full pl-10"
-    //           />
-    //         </div>
-    //       </div>
-    //     </div>
-    //     <div className="text-right mt-4">
-    //       <button className="btn bg-purple-500 text-white hover:bg-purple-600">
-    //         Search
-    //       </button>
-    //     </div>
-    //   </section> */}
-  
+    
   <div>
    
     <div className=" mx-auto py-10 pt-16">
       {/* Hero Section */}
       <div className="flex flex-col lg:flex-row items-center lg:px-6 ">
-        <div className="text-center lg:text-left lg:w-1/2 space-y-6 lg:px-6 ">
+        <div className="text-center lg:text-left lg:w-1/2 space-y-6 lg:px-6 mt-3 ">
           <h1 className="text-4xl font-bold text-purple-600 ">
             Book a car today, <br/> save up to <span className="text-red-500">50%</span>
           </h1>
@@ -174,16 +95,73 @@ const HomePage = () => {
         </div>
         <div className="text-right mt-4">
           <Btn >
+            <Link to={'/rent'}>
             Search
+            </Link>
+            
           </Btn>
         </div>
       </section> 
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 m-4">
+                    
+                    <div className=" bg-base-200 p-6 rounded-lg shadow-md flex items-center border-purple-600 border-s-2 ">
+                        <div className="text-purple-600 bg-gray-100 rounded-full p-6 mr-6">
+                            <FaHeadset size={48} />
+                        </div>
+                        <div>
+                            <h3 className="text-2xl font-bold mb-2 ">24/7 Customer Support</h3>
+                            <p className="">
+                                Our dedicated support team is available around the clock to assist you with any issues or inquiries. We ensure your rental experience is smooth and hassle-free.
+                            </p>
+                        </div>
+                    </div>
+
+                    
+                    <div className="bg-base-200 p-6 rounded-lg shadow-md flex items-center border-purple-600 border-s-2 ">
+                        <div className="text-purple-600 bg-gray-100 rounded-full p-6 mr-6">
+                            <FaCar size={48} />
+
+                        </div>
+                        <div>
+                            <h3 className="text-2xl font-bold mb-2 ">Wide Range of Vehicles</h3>
+                            <p className="">
+                                From compact cars to luxury vehicles, we offer a diverse selection of cars to suit every occasion. All our vehicles are regularly serviced and kept in pristine condition.
+                            </p>
+                        </div>
+                    </div>
+
+                  
+                    <div className="bg-base-200 p-6 rounded-lg shadow-md flex items-center border-purple-600 border-s-2 ">
+                        <div className="text-purple-600 bg-gray-100 rounded-full p-6 mr-6">
+                            <FaUserShield size={48} />
+                        </div>
+                        <div>
+                            <h3 className="text-2xl font-bold mb-2">Safety & Security</h3>
+                            <p className="">
+                                Your safety is our top priority. Our vehicles are equipped with the latest safety features, and we provide comprehensive insurance options to give you peace of mind on the road.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Service 4 */}
+                    <div className="bg-base-200 p-6 rounded-lg shadow-md flex items-center border-purple-600 border-s-2 ">
+                        <div className="text-purple-600 bg-gray-100 rounded-full p-6 mr-6">
+                            <FaMapMarkedAlt size={48} />
+                        </div>
+                        <div>
+                            <h3 className="text-2xl font-bold mb-2">Convenient Locations</h3>
+                            <p className="">
+                                We have rental locations in major cities and airports, making it easy for you to pick up and drop off your vehicle wherever you are. Our locations are conveniently situated to serve you better.
+                            </p>
+                        </div>
+                    </div>
+                </section>
 
       
     </div>
    
 
-    <input type="date" />
+   
     </div>
 
   );

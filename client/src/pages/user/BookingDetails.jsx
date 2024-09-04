@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
 import { loadStripe } from "@stripe/stripe-js"
+import Btn from '../../components/ui/Btn';
 export const BookingDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -24,6 +25,9 @@ export const BookingDetails = () => {
     const CancelBooking = async (id) => {
         try {
             const response = await axiosInstance.put(`user/cancel-booking/${id}`);
+            
+            setBooking(( booking._id === id ? { ...booking, status: 'canceled' } : booking))
+
             toast.success("booking cancelled")
             
         } catch (error) {
@@ -75,7 +79,7 @@ export const BookingDetails = () => {
                         <img className=" object-contain w-96" src={booking.car.image} alt=""  />
                     </div>
                      
-                     <div className="text-lg font-bold">
+                     <div className="text-md font-bold text-center">
                      <p>Car:{booking.car.brand} {booking.car.model}</p>
                      <p>Total Price: {booking.totalPrice}</p>
                     <p>Start Date: {formatDate(booking.startDate)}</p>
@@ -85,21 +89,18 @@ export const BookingDetails = () => {
                     <p>Pickup Location: {booking.pickupLocation}</p>
                     <p>status: {booking.status}</p>
                     {booking.status === 'booked' && (
-                      <button  className="mt-4 bg-red-500 text-white p-2 rounded-md"  onClick={()=>CancelBooking(booking._id)}  >
+                      <button  className="m-3 bg-red-500 text-white p-2 rounded-md"  onClick={()=>CancelBooking(booking._id)}  >
                                 Cancel Booking
                             </button>
                         )}
+                      {booking.status === 'booked' && <Btn onClick={makePayment} > Pay Now</Btn>}  
                      </div>
                     
-
                 </div>
             ) : (
                 <p>Loading booking details...</p>
             )}
         </div>
-
-        <button onClick={makePayment}>pay Now</button>
-
 
         </div>
     );

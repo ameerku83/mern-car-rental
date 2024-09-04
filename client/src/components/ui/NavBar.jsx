@@ -17,6 +17,7 @@ const NavBar = () => {
             <AiOutlineMenu className="h-5 w-5" />
           </label>
           <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+          <li><Link to={"/"}> Home</Link></li>
           <li><Link to={"/about"}> About</Link></li>
           <li><Link to={"/services"}> Our Services</Link></li>
             <li><Link to={"/rent"}>Rent a car</Link></li>
@@ -36,6 +37,7 @@ const NavBar = () => {
       {/* Navbar Center */}
       <div className="navbar-center hidden lg:flex  ">
         <ul className="menu menu-horizontal px-1 gap-2">
+        <li><Btn><Link to={"/"}> Home</Link></Btn></li>
         <li><Btn><Link to={"/about"}> About</Link></Btn></li>
           <li><Btn><Link to={"/services"}> Our Services</Link></Btn></li>
             <li><Btn> <Link to={"/rent"}>Rent a car</Link></Btn></li>

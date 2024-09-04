@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { axiosInstance } from '../config/axiosInstance';
 import CarCard from '../components/CarCard';
+import { CarCardSkeliton } from '../components/ui/CarCardSkeliton';
 
 export const CarCategories = () => {
   const [cars, setCars] = useState([]);
@@ -24,7 +25,15 @@ export const CarCategories = () => {
       console.log(error);
     }
   };
-
+if(cars.length===0) return (
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+    <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
+    <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
+    <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
+    <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
+     
+  </div>
+)
   return (
     <div className="pt-24">
         
