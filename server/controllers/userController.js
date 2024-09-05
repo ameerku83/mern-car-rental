@@ -78,6 +78,7 @@ export const userProfile = async (req, res, next) => {
     
 };
 
+
 export const checkUser = async (req, res, next) => {
    
         const user = req.user;

@@ -38,26 +38,40 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Search Section */}
-      {/* <div className="mt-10 bg-gray-100 p-6 rounded-lg shadow-md">
-        <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4">
-          <div className="flex-1">
-            <label className="label"><span className="label-text">Pickup Location</span></label>
-            <input type="text" placeholder="Enter pickup location" className="input input-bordered w-full"/>
+      <section className="my-16">
+          <div className="carousel w-full">
+            <div id="slide1" className="carousel-item relative w-full">
+              <img src="https://thumbs.dreamstime.com/b/traveling-car-happy-couple-love-go-cabriolet-car-sunset-time-traveling-car-happy-couple-love-go-cabriolet-car-123687723.jpg?w=768" className="w-full" alt="Happy Traveler 1" />
+              <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                <a href="#slide4" className="btn btn-circle">❮</a>
+                <a href="#slide2" className="btn btn-circle">❯</a>
+              </div>
+            </div>
+            <div id="slide2" className="carousel-item relative w-full">
+            <img src="https://thumbs.dreamstime.com/b/summer-time-car-trip-traveling-men-driving-down-road-scenic-sunset-53598816.jpg?w=768" className="w-full" alt="Happy Traveler 2" />
+              <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                <a href="#slide1" className="btn btn-circle">❮</a>
+                <a href="#slide3" className="btn btn-circle">❯</a>
+              </div>
+            </div>
+            <div id="slide3" className="carousel-item relative w-full">
+              <img src="https://thumbs.dreamstime.com/b/happy-hispanic-man-his-new-car-17145871.jpg?w=768" className="w-full" alt="Happy Traveler 3" />
+              <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                <a href="#slide2" className="btn btn-circle">❮</a>
+                <a href="#slide4" className="btn btn-circle">❯</a>
+              </div>
+            </div>
+            <div id="slide4" className="carousel-item relative w-full">
+              <img src="https://thumbs.dreamstime.com/b/happy-family-riding-modern-car-traveling-automobile-together-enjoying-road-trip-portrait-laughing-smiling-four-325105013.jpg?w=768" className="w-full" alt="Happy Traveler 4" />
+              <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                <a href="#slide3" className="btn btn-circle">❮</a>
+                <a href="#slide1" className="btn btn-circle">❯</a>
+              </div>
+            </div>
           </div>
-          <div className="flex-1">
-            <label className="label"><span className="label-text">Pickup Date</span></label>
-            <input type="date" className="input input-bordered w-full"/>
-          </div>
-          <div className="flex-1">
-            <label className="label"><span className="label-text">Return Date</span></label>
-            <input type="date" className="input input-bordered w-full"/>
-          </div>
-          <div className="flex-none">
-            <button className="btn btn-primary mt-8 w-full">Search</button>
-          </div>
-        </div>
-      </div> */}
+        </section>
+
+     
 
   <section className="bg-base-200 p-5 rounded-lg shadow-lg mt-10 mx-5 md:mx-auto md:max-w-4xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
