@@ -25,7 +25,7 @@ export const UsersReviews = () => {
     const deleteReview = async (id)=>{
         try {
             await axiosInstance.delete(`admin/delete-review/${id}`)
-            setReviews(reviews.filter((review)=>review._id != id))
+            setReviews(reviews.filter((review)=>review._id !== id))
             toast.success('review deleted')
         } catch (error) {
             console.log(error);
@@ -35,6 +35,7 @@ export const UsersReviews = () => {
     }
   return (
     <div>
+         <h1 className=' text-2xl font-bold text-center'> Users Reviews</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {
              reviews.map((review)=>(
@@ -48,7 +49,7 @@ export const UsersReviews = () => {
                 <h5> {review.user.email}</h5>
                 <h5>mobile : {review.user.mobile}</h5>
                 <h5>Rating : {review.rating}</h5>
-                <h5>Rating : {review.comment}</h5>
+                <h5>Comment : {review.comment}</h5>
                
                
                 {/* <h5> fuel type : {review.fuelType}</h5>

@@ -22,6 +22,7 @@ import { adminCreate,
         userCreatedByAdmin,
          userList } from "../../controllers/adminController.js";
 import { authAdmin } from "../../middlewares/authAdmin.js";
+import { cancelBooking } from "../../controllers/bookingController.js";
 
 
 const adminRoute = e.Router()
@@ -36,12 +37,14 @@ adminRoute.post("/create-user", authAdmin,errorHandler(userCreatedByAdmin));
  //bookin 
  adminRoute.get("/bookings", authAdmin, errorHandler(admingetAllBookings));
  adminRoute.get("/bookings/:userId", authAdmin, errorHandler(admingetUserBookings));
+ adminRoute.put("/cancel-booking/:id", authAdmin, errorHandler(cancelBooking));
  adminRoute.get("/booking/:id", authAdmin, errorHandler(admingetBookingById));
  adminRoute.delete("/delete-booking/:id", authAdmin, errorHandler(adminDeleteBooking));
 
  //payment
  adminRoute.get("/payments", authAdmin, errorHandler(adminGetPayments));
  adminRoute.get("/payments/:userId", authAdmin, errorHandler(admingetUserPayments));
+
  adminRoute.get("/payment", authAdmin, errorHandler(AdminGetPayment));
  adminRoute.delete("/delete-payment/:id", authAdmin, errorHandler(adminDeletePayment));
 

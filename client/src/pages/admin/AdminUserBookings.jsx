@@ -28,7 +28,7 @@ export const AdminUserBookings = () => {
         };
         const cancelBooking = async (id) => {
             try {
-                 await axiosInstance.put(`user/cancel-booking/${id}`);
+                 await axiosInstance.put(`admin/cancel-booking/${id}`);
                  setBookings(( bookings.map(booking => booking._id === id ? { ...booking, status: 'canceled' } : booking))
                 );
                 toast.success("booking cancelled")
@@ -71,7 +71,7 @@ export const AdminUserBookings = () => {
                     <h5>staus : {booking.status}</h5>
                     <h5>start date : {formatDate(booking.startDate)}</h5>
                     <h5>End date : {formatDate(booking.endDate)}</h5>
-                    <h5>payment : {booking.paymentStatus}</h5>
+                    
                     {/* <h5> fuel type : {booking.fuelType}</h5>
                     <h5>capacity : {booking.capacity}</h5>
                     <h5>mileage : {booking.mileage}</h5> */}

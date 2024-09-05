@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { axiosInstance } from '../../config/axiosInstance'
+import { toast } from 'react-toastify'
 
 export const UsersPayments = () => {
     const [payments,setPayments] = useState([])
@@ -20,8 +21,24 @@ export const UsersPayments = () => {
 
         fetchPayment()
     },[])
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString('en-CA'); 
+    };
+    const deletePayment = async(id)=>{
+        try {
+                
+             await axiosInstance.delete( `admin/delete-payment/${id}` )
+             setPayments(payments.filter((payment)=> payment._id !== id ))
+            toast.success('payment deleted')
+            } catch (error) {
+                console.log(error);
+                
+            }
+
+    }
   return (
     <div>
+          <h1 className=' text-2xl font-bold text-center'> Users Payments</h1>
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {
              payments.map((payment)=>(
@@ -35,8 +52,8 @@ export const UsersPayments = () => {
                 <h5> {payment.user.email}</h5>
                 <h5>mobile : {payment.user.mobile}</h5>
                 <h5>Amount : {payment.amount}</h5>
-                <h5>Amount : {payment.status}</h5>
-                <h5>Amount : {payment.paymentDate}</h5>
+                <h5>Payment status : {payment.status}</h5>
+                <h5>Date : {formatDate(payment.paymentDate)}</h5>
                 
                
                
@@ -48,7 +65,7 @@ export const UsersPayments = () => {
                 </div>
                 <div className="flex justify-center items-center mt-2">
                 
-                {/* <button className='btn btn-error' onClick={()=>deleteReview(review._id)} > Delete Review </button> */}
+                <button className='btn btn-error' onClick={()=>deletePayment(payment._id)} > Delete Review </button>
               
                 </div>
               </div>

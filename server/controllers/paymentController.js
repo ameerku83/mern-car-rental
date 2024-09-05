@@ -2,8 +2,10 @@
 import { Booking } from "../models/bookingModel.js";
 import { Payment } from "../models/paymntModel.js";
 import { sendClient } from "../utils/sendMail.js";
+import dotenv from "dotenv"
+ dotenv.config()
 import Stripe from "stripe"
-const stripe = new Stripe("sk_test_51PrCMS04oHGbi1WXaAFuRsuvIcAFzbynU2ExF2qHxezCoNZNqMO6cGIGstOXfs80hYcmNDrDT4bakG4b7Bvp9Q3h00uzgEwyaA")
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
  
 export const createPayment = async (req, res) => {
     
@@ -11,9 +13,9 @@ export const createPayment = async (req, res) => {
   
     const isComplete=await Payment.findOne({booking})
     if (isComplete) {
-      return res.status(400).json({ message: ' payment already completed' })} 
+      return res.status(400).json({ message: ' payment already procceced' })} 
 
-      const fetchBooking= await Booking.findById(booking).populate('car') 
+      const fetchBooking= await Booking.findById(booking).populate('car')
       const lineItems = [{
         price_data: {
             currency: "inr",
@@ -33,13 +35,12 @@ export const createPayment = async (req, res) => {
     mode:"payment",
     success_url:"https://ameerku83mern-car-rental.vercel.app/user/payment/success",
     cancel_url:"https://ameerku83mern-car-rental.vercel.app/user/payment/cancel",
-
    })
 
     const payment =  Payment({ car,user, booking,amount:fetchBooking.totalPrice,  paymentDate, status:"paid"  });
     
 
-    fetchBooking.payment="completed"
+    fetchBooking.paymentStatus="completed"
     await fetchBooking.save()
       await payment.save()    
     res.status(200).json({ message:"payment success", data:payment,sessionId:session.id});

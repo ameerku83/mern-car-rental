@@ -43,7 +43,7 @@ export const BookingDetails = () => {
    const makePayment = async()=>{
     try {
 
-        const stripe=await loadStripe("pk_test_51PrCMS04oHGbi1WXUldePfVqBpsFGQVzUcCtebG6jXAZsqPjRyyE3jGHk2m51ybZ2WzNzVJBcS0KD4ZMe4BVnmyn00hEBGGuXn")
+        const stripe=await loadStripe(process.env.REACT_APP_stripe_publishable_key)
 
         const paymentData={
             car:booking.car._id,

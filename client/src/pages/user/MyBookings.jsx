@@ -75,7 +75,7 @@ const MyBookings = () => {
             console.log(error);
         }
     };
-    if(bookings.length==0) return( <h1>No bookings found</h1> )
+    if(bookings.length === 0) return( <h1>No bookings found</h1> )
         const formatDate = (dateString) => {
             return new Date(dateString).toLocaleDateString('en-CA'); 
         };
@@ -93,19 +93,17 @@ const MyBookings = () => {
                     <h3 className="text-2xl font-bold mt-4"> {booking.car.brand} {booking.car.model}</h3>
                     <div className='text-xl font-semibold'>
                     <h5>Total price : {booking.totalPrice}</h5>
-                    <h5>staus : {booking.status}</h5>
-                    <h5>start date : {formatDate(booking.startDate)}</h5>
-                    <h5>rnd date : {formatDate(booking.endDate)}</h5>
-                    {/* <h5> fuel type : {booking.fuelType}</h5>
-                    <h5>capacity : {booking.capacity}</h5>
-                    <h5>mileage : {booking.mileage}</h5> */}
+                    <h5>Staus : {booking.status}</h5>
+                    <h5>Start date : {formatDate(booking.startDate)}</h5>
+                    <h5>End date : {formatDate(booking.endDate)}</h5>
+                   
                    
                     </div>
                     </div>
                     <div className="flex justify-between mt-2">
                     
-                   { booking.status=="booked" && < button className=' btn  btn-error' onClick={()=>cancelBooking(booking._id)} > cancel booking </button>}
-                   {booking.status=="canceled" &&   <button className='btn  btn-error' onClick={()=>deleteBooking(booking._id)} >delete</button>  }
+                   { booking.status === "booked" && < button className=' btn  btn-error' onClick={()=>cancelBooking(booking._id)} > cancel booking </button>}
+                   {booking.status === "canceled" &&   <button className='btn  btn-error' onClick={()=>deleteBooking(booking._id)} >delete</button>  }
                    <Btn ><Link to={`/user/booking/${booking._id}`} > Add Review </Link></Btn>
                     </div>
                   </div>

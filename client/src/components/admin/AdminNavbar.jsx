@@ -19,10 +19,10 @@ const AdminNavbar = () => {
           </label>
           <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
             
-          <Link  to={"/admin/services"}>Services</Link>
-          <Link to={"/admin/addcar"} >add car</Link>
-          <Link to={"/admin/editcar"} >edit car </Link>
-          <Link to={"/admin/carlist"} >car list</Link>
+          <li> <Link  to={"/admin/services"}>Services</Link></li>
+          <li>  <Link to={"/admin/addcar"} >add car</Link></li>
+          <li>   <Link to={"/admin/carlist"} >car list</Link></li>
+          <li> <Link to={"/admin/createuser"}> Create User </Link></li>
 
 
 
@@ -44,8 +44,8 @@ const AdminNavbar = () => {
          
         <li><Btn>   <Link  to={"/admin/services"}>Services</Link></Btn></li>
           <li><Btn> <Link to={"/admin/addcar"} >add car</Link></Btn></li>
-          <li><Btn> <Link to={"/admin/editcar"} >edit car</Link></Btn></li>
           <li><Btn> <Link to={"/admin/carlist"} >car list</Link></Btn></li>
+          <li><Btn> <Link to={"/admin/createuser"} >Create User</Link></Btn></li>
         </ul>
       </div>
 
