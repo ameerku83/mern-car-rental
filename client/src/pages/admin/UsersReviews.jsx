@@ -6,7 +6,7 @@ export const UsersReviews = () => {
     const [reviews,setReviews]=useState([])
     useEffect(()=>{
         
-        const fetchPayment = async  ()=>{
+        const fetchReviews = async  ()=>{
             try {
                 
             const response = await axiosInstance.get( "admin/reviews" )
@@ -19,7 +19,7 @@ export const UsersReviews = () => {
             }
         }
 
-        fetchPayment()
+        fetchReviews()
     },[])
 
     const deleteReview = async (id)=>{

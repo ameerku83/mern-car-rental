@@ -1,52 +1,40 @@
 import React from 'react'
-import audiq7 from "../../asets/images/audi q7.png"
-import bmwi4 from "../../asets/images/BMW_i4_IMG_6695-removebg-preview 1.png"
-import bmwx5 from "../../asets/images/bmw_x5-removebg-preview 2.png"
-import bmwx3 from "../../asets/images/BMW-X3-x.png"
-//import prev from "../../asets/images/images-removebg-preview 1.png"
+
 export const Carousel = () => {
-    
   return (
     <div>
-        <div className="carousel w-full">
-  <div id="slide1" className="carousel-item relative w-full">
-    <img
-      src="https://www.hdcarwallpapers.com/walls/2023_bmw_m2_001_4k-HD.jpg"
-      className=" w-1/2 object-contain" />
-    <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-      <a href="#slide4" className="btn btn-circle">❮</a>
-      <a href="#slide2" className="btn btn-circle">❯</a>
-    </div>
-  </div>
-  <div id="slide2" className="carousel-item relative w-full">
-    <img
-      src={bmwx3}
-      className="w-full" />
-    <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-      <a href="#slide1" className="btn btn-circle">❮</a>
-      <a href="#slide3" className="btn btn-circle">❯</a>
-    </div>
-  </div>
-  <div id="slide3" className="carousel-item relative w-full">
-    <img
-      src={audiq7}
-      className="w-full" />
-    <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-      <a href="#slide2" className="btn btn-circle">❮</a>
-      <a href="#slide4" className="btn btn-circle">❯</a>
-    </div>
-  </div>
-  <div id="slide4" className="carousel-item relative w-full">
-    <img
-      src={bmwi4}
-      className="w-full" />
-    <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-      <a href="#slide3" className="btn btn-circle">❮</a>
-      <a href="#slide1" className="btn btn-circle">❯</a>
-    </div>
-  </div>
-</div>
+       <section className="my-4">
+          <div className="carousel w-full">
+            <div id="slide1" className="carousel-item relative w-full">
+              <img src="https://thumbs.dreamstime.com/b/traveling-car-happy-couple-love-go-cabriolet-car-sunset-time-traveling-car-happy-couple-love-go-cabriolet-car-123687723.jpg?w=768" className="w-full" alt="Happy Traveler 1" />
+              <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                <a href="#slide4" className="btn btn-circle">❮</a>
+                <a href="#slide2" className="btn btn-circle">❯</a>
+              </div>
+            </div>
+            <div id="slide2" className="carousel-item relative w-full">
+            <img src="https://thumbs.dreamstime.com/b/summer-time-car-trip-traveling-men-driving-down-road-scenic-sunset-53598816.jpg?w=768" className="w-full" alt="Happy Traveler 2" />
+              <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                <a href="#slide1" className="btn btn-circle">❮</a>
+                <a href="#slide3" className="btn btn-circle">❯</a>
+              </div>
+            </div>
+            <div id="slide3" className="carousel-item relative w-full">
+              <img src="https://thumbs.dreamstime.com/b/happy-hispanic-man-his-new-car-17145871.jpg?w=768" className="w-full" alt="Happy Traveler 3" />
+              <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                <a href="#slide2" className="btn btn-circle">❮</a>
+                <a href="#slide4" className="btn btn-circle">❯</a>
+              </div>
+            </div>
+            <div id="slide4" className="carousel-item relative w-full">
+              <img src="https://thumbs.dreamstime.com/b/happy-family-riding-modern-car-traveling-automobile-together-enjoying-road-trip-portrait-laughing-smiling-four-325105013.jpg?w=768" className="w-full" alt="Happy Traveler 4" />
+              <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                <a href="#slide3" className="btn btn-circle">❮</a>
+                <a href="#slide1" className="btn btn-circle">❯</a>
+              </div>
+            </div>
+          </div>
+        </section>
     </div>
   )
 }
-

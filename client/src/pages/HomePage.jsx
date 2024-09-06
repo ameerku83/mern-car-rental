@@ -1,7 +1,7 @@
 
 // src/App.js
-import React from "react";
-import { FaCalendarAlt, FaCar, FaHeadset, FaLocationArrow, FaMapMarkedAlt, FaUserShield } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaCalendarAlt, FaCar, FaHeadset, FaLocationArrow, FaMapMarkedAlt, FaStar, FaStarHalf, FaUserCircle, FaUserShield } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
 import NavBar from "../components/ui/NavBar";
@@ -9,8 +9,40 @@ import audiq7 from ".././asets/images/audi q7.png"
 import Btn from "../components/ui/Btn";
 import CarCollections from "../components/CarCollections";
 import { Link } from "react-router-dom";
+import { Carousel } from "../components/ui/Carousel";
+import { axiosInstance } from "../config/axiosInstance";
 
 const HomePage = () => {
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(()=>{
+        
+    const fetchReviews = async  ()=>{
+        try {
+            
+        const response = await axiosInstance.get( "admin/reviews" )
+        console.log(response?.data);
+        setReviews(response?.data.data)
+        
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
+
+    fetchReviews()
+},[])
+const renderStars = (rating) => {
+  const stars = [];
+  for (let i = 0; i < 5; i++) {
+    if (i < rating) {
+      stars.push(<FaStar key={i} className="text-yellow-500" />);
+    } else {
+      stars.push(<FaStar key={i} className="text-gray-400" />);
+    }
+  }
+  return stars;
+};
   return (
     
   <div>
@@ -37,43 +69,10 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      
+      <Carousel/>
 
-      <section className="my-16">
-          <div className="carousel w-full">
-            <div id="slide1" className="carousel-item relative w-full">
-              <img src="https://thumbs.dreamstime.com/b/traveling-car-happy-couple-love-go-cabriolet-car-sunset-time-traveling-car-happy-couple-love-go-cabriolet-car-123687723.jpg?w=768" className="w-full" alt="Happy Traveler 1" />
-              <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                <a href="#slide4" className="btn btn-circle">❮</a>
-                <a href="#slide2" className="btn btn-circle">❯</a>
-              </div>
-            </div>
-            <div id="slide2" className="carousel-item relative w-full">
-            <img src="https://thumbs.dreamstime.com/b/summer-time-car-trip-traveling-men-driving-down-road-scenic-sunset-53598816.jpg?w=768" className="w-full" alt="Happy Traveler 2" />
-              <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                <a href="#slide1" className="btn btn-circle">❮</a>
-                <a href="#slide3" className="btn btn-circle">❯</a>
-              </div>
-            </div>
-            <div id="slide3" className="carousel-item relative w-full">
-              <img src="https://thumbs.dreamstime.com/b/happy-hispanic-man-his-new-car-17145871.jpg?w=768" className="w-full" alt="Happy Traveler 3" />
-              <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                <a href="#slide2" className="btn btn-circle">❮</a>
-                <a href="#slide4" className="btn btn-circle">❯</a>
-              </div>
-            </div>
-            <div id="slide4" className="carousel-item relative w-full">
-              <img src="https://thumbs.dreamstime.com/b/happy-family-riding-modern-car-traveling-automobile-together-enjoying-road-trip-portrait-laughing-smiling-four-325105013.jpg?w=768" className="w-full" alt="Happy Traveler 4" />
-              <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                <a href="#slide3" className="btn btn-circle">❮</a>
-                <a href="#slide1" className="btn btn-circle">❯</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-     
-
-  <section className="bg-base-200 p-5 rounded-lg shadow-lg mt-10 mx-5 md:mx-auto md:max-w-4xl">
+  < section className="bg-base-200 p-5 rounded-lg shadow-lg mt-10 mx-5 md:mx-auto md:max-w-4xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block mb-2 text-sm text-gray-700">Pickup Location</label>
@@ -189,6 +188,26 @@ const HomePage = () => {
                         </div>
                     </div>
                 </section>
+
+                <section className="my-16 px-5 md:px-10">
+          <h2 className="text-3xl font-bold text-center mb-8 text-purple-600">What Our Clients Say</h2>
+          <div className=" mx-auto bg-base-200 shadow-lg rounded-lg p-6  " style={{ maxWidth:'500px', height: '660px',overflowY: 'auto' }}>
+            {reviews.map((review, index) => (
+              <div key={index} className="border-b border-gray-300 pb-4 mb-4">
+                <div className="flex items-center mb-2">
+                  <div className="font-semibold mr-2 flex ">  <FaUserCircle className=" h-6 mx-2" /> { review.user.name}</div> 
+                  
+                </div>
+                <div className="">{review.car.brand} {review.car.model}</div>
+                <img  src={review.car.image}  className=" max-w-28 object-contain"  alt="car" />
+                <div className="flex mb-2">
+                  {renderStars(review.rating)}
+                </div>
+                <p>"{review.comment}"</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
       
     </div>
