@@ -5,11 +5,12 @@ import { FaCalendarAlt, FaCar, FaHeadset, FaLocationArrow, FaMapMarkedAlt, FaSta
 
 import audiq7 from ".././asets/images/audi q7.png"
 import Btn from "../components/ui/Btn";
+
 import { Link } from "react-router-dom";
 import { Carousel } from "../components/ui/Carousel";
 import { axiosInstance } from "../config/axiosInstance";
 
-const HomePage = () => {
+const UserHomePage = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(()=>{
@@ -33,9 +34,9 @@ const renderStars = (rating) => {
   const stars = [];
   for (let i = 0; i < 5; i++) {
     if (i < rating) {
-      stars.push(<FaStar key={i} className="text-yellow-500" />);
+      stars.push(<FaStar  className="text-yellow-500" />);
     } else {
-      stars.push(<FaStar key={i} className="text-gray-400" />);
+      stars.push(<FaStar  className="text-gray-400" />);
     }
   }
   return stars;
@@ -55,7 +56,7 @@ const renderStars = (rating) => {
             Discover the epitome of premium cars.,<br />  Unleash the thrill of driving around the world.<br/> Best maintenance, wide selection of vehicles.
           </p>
           <div className="space-x-4">
-            <Btn className=""><Link to={'/rent'}>
+            <Btn className=""><Link to={'/user/rent'}>
             Book a car 
             </Link></Btn>
             <button className="btn btn-outline">Learn more</button>
@@ -126,7 +127,7 @@ const renderStars = (rating) => {
         </div>
         <div className="text-right mt-4">
           <Btn >
-            <Link to={'/rent'}>
+            <Link to={'/user/rent'}>
             Search
             </Link>
             
@@ -219,4 +220,4 @@ const renderStars = (rating) => {
 };
 
 
-export default HomePage;
+export default UserHomePage;

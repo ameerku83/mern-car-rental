@@ -24,6 +24,7 @@ import { PaymentCancell } from "../pages/user/PaymentCancell";
 import { UsersReviews } from "../pages/admin/UsersReviews";
 import { UsersPayments } from "../pages/admin/UsersPayments";
 import AdminCreateUser from "../pages/admin/AdminCreateUser";
+import UserHomePage from "../pages/UserHomePage";
 
 const adminPath=process.env.REACT_APP_ADMIN
 export const router=createBrowserRouter([
@@ -126,7 +127,7 @@ export const router=createBrowserRouter([
         children:[
             {
                 path:'home',
-                element:<HomePage/>
+                element:<UserHomePage/>
                 
             },
             {

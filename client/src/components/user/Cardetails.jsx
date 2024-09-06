@@ -12,7 +12,7 @@ export const Cardetails = () => {
     const navigate = useNavigate()
     const {id}=useParams()
     const [car,setCar]=useState([])
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit,formState:{errors} } = useForm();
     const formatDate = (dateStr) => {
     const [day, month, year] = dateStr.split('/'); // Split the date string
     return `${year}-${month}-${day}`; // Rearrange to yyyy-mm-dd
@@ -180,11 +180,12 @@ export const Cardetails = () => {
                   type="text"
                   id="mobile"
                   placeholder="Enter your mobile number"
-                  {...register('mobile', { required: true })}
+                  {...register('mobile', { required: true,maxLength:{value:10,message:"enter valid mobile number"}},)}
                   className="p-2 w-full border rounded-md pl-10"
               />
               <AiOutlinePhone className="absolute left-3 top-3 text-gray-400" />
           </div>
+          <span className=' text-red-600'> {errors.mobile?.message} </span>
       </div>
 
       <div className="mb-4">
