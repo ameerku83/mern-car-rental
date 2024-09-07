@@ -142,9 +142,9 @@ const renderStars = (rating) => {
         </div>
         <div className="text-right mt-4">
           <Btn type="submit" >
-            <Link  >
+            
             Search
-            </Link>
+            
             
           </Btn>
         </div>

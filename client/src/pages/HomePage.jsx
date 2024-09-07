@@ -43,8 +43,15 @@ const renderStars = (rating) => {
   return stars;
 };
 const onSubmit = (data)=>{
-  console.log(data);
-  navigate('/rent')
+  try{
+    console.log(data);
+    navigate('/rent')
+
+  }catch(error){
+    console.loge(error)
+  }
+
+
   
 }
   return (
@@ -140,10 +147,9 @@ const onSubmit = (data)=>{
         </div>
         <div className="text-right mt-4">
           <Btn type="submit" >
-            <Link  >
+          
             Search
-            </Link>
-            
+          
           </Btn>
         </div>
         </form>

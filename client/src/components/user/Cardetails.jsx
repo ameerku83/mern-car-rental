@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { FaCar, FaGasPump, FaCogs, FaTachometerAlt } from 'react-icons/fa';
+import { FaCar, FaGasPump, FaCogs, FaTachometerAlt, FaUsers } from 'react-icons/fa';
 import { AiOutlineCalendar, AiOutlineHome, AiOutlinePhone, AiOutlineEnvironment } from 'react-icons/ai';
 
 import { axiosInstance } from '../../config/axiosInstance';
@@ -105,6 +105,10 @@ export const Cardetails = () => {
                <div className="flex items-center mt-4">
             <FaGasPump className=" mr-2" />
              <p className="">{car.fuelType}</p>
+              </div>
+              <div className="flex items-center mt-4">
+            <FaUsers className=" mr-2" />
+             <p className="">{car.capacity} people</p>
               </div>
          <div className="flex items-center mt-2">
          <FaCogs className=" mr-2" />
