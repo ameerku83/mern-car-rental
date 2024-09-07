@@ -5,7 +5,8 @@ import { authUser } from "../../middlewares/userAuth.js";
 import { errorHandler } from "../../utils/errorHandler.js";
 import { cancelBooking, createBooking, deleteBooking, getAllBookings, getBookingById } from "../../controllers/bookingController.js";
 import { cancelPayment, createPayment, getPayment, getPayments,  } from "../../controllers/paymentController.js";
-import { createReview, deleteReview, getReviews, getReviewById, updateReview } from "../../controllers/reviewController.js";
+import { createReview, deleteReview, getReviewById, updateReview } from "../../controllers/reviewController.js";
+import { adminGetReviews } from "../../controllers/adminController.js";
 
 const router = e.Router()
 router.post("/create", errorHandler(userCreate));
@@ -28,8 +29,8 @@ router.delete("/delete-booking/:id", authUser, errorHandler(deleteBooking));
  router.get("/get-payment/:id", authUser, errorHandler(getPayment));
 
  //review
+ router.get("/reviews", errorHandler(adminGetReviews));
  router.post("/review", authUser, errorHandler(createReview));
- router.get("/get-reviews/:userId", authUser, errorHandler(getReviews));
  router.get("/get-review/:id", authUser, errorHandler(getReviewById));
  router.put("/update-review/:id", authUser, errorHandler(updateReview));
  router.delete("/delete-review/:id", authUser, errorHandler(deleteReview));

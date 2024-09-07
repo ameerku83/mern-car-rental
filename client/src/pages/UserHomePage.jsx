@@ -6,19 +6,27 @@ import { FaCalendarAlt, FaCar, FaHeadset, FaLocationArrow, FaMapMarkedAlt, FaSta
 import audiq7 from ".././asets/images/audi q7.png"
 import Btn from "../components/ui/Btn";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Carousel } from "../components/ui/Carousel";
 import { axiosInstance } from "../config/axiosInstance";
+import { useForm } from "react-hook-form";
 
 const UserHomePage = () => {
   const [reviews, setReviews] = useState([]);
+  const { handleSubmit, register, formState:{errors} }   = useForm()
+  const navigate = useNavigate()
+  const onSubmit = (data)=>{
+    console.log(data);
+    navigate('/user/rent')
+    
+  }
 
   useEffect(()=>{
         
     const fetchReviews = async  ()=>{
         try {
             
-        const response = await axiosInstance.get( "admin/reviews" )
+        const response = await axiosInstance.get( "user/reviews" )
         console.log(response?.data);
         setReviews(response?.data.data)
         
@@ -34,7 +42,7 @@ const renderStars = (rating) => {
   const stars = [];
   for (let i = 0; i < 5; i++) {
     if (i < rating) {
-      stars.push(<FaStar  className="text-yellow-500" />);
+      stars.push(<FaStar   className="text-yellow-500" />);
     } else {
       stars.push(<FaStar  className="text-gray-400" />);
     }
@@ -72,7 +80,8 @@ const renderStars = (rating) => {
       
       <Carousel/>
 
-  < section className="bg-base-200 p-5 rounded-lg shadow-lg mt-10 mx-5 md:mx-auto md:max-w-4xl">
+      < section className="bg-base-200 p-5 rounded-lg shadow-lg mt-10 mx-5 md:mx-auto md:max-w-4xl">
+       <form onSubmit={handleSubmit(onSubmit)} >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block mb-2 text-sm ">Pickup Location</label>
@@ -85,7 +94,7 @@ const renderStars = (rating) => {
               /> */}
                <select
                   id="pickupLocation"
-                  
+                  {...register("pickupLocation",{required:"pickup Location required"})}
                   className="input input-bordered w-full pl-10"
               >
                   <option value="Bitherkad">Bitherkad</option>
@@ -102,7 +111,9 @@ const renderStars = (rating) => {
                   <option value="Chrambady">Chrambady</option>
                   <option value="Oorkadavu">Oorkadavu</option>
               </select>
+                
             </div>
+            <span className=" text-red-600"  >   { errors.pickupLocation?.message  }   </span>  
           </div>
           <div>
             <label className="block mb-2 text-sm ">Pickup Date</label>
@@ -110,9 +121,11 @@ const renderStars = (rating) => {
               <FaCalendarAlt className="absolute left-2 top-2 text-gray-400" />
               <input
                 type="date"
+                {...register("pickupdate",{required:"Date required"})}
                 className="input input-bordered w-full pl-10"
               />
             </div>
+            <span className=" text-red-600"  >   { errors.pickupdate?.message  }   </span>  
           </div>
           <div>
             <label className="block mb-2 text-sm ">Return Date</label>
@@ -120,20 +133,25 @@ const renderStars = (rating) => {
               <FaCalendarAlt className="absolute left-2 top-2 text-gray-400" />
               <input
                 type="date"
+                {...register("returndate",{required:"Date required"})}
                 className="input input-bordered w-full pl-10"
               />
             </div>
+            <span className=" text-red-600"  >   { errors.returndate?.message  }   </span>  
           </div>
         </div>
         <div className="text-right mt-4">
-          <Btn >
-            <Link to={'/user/rent'}>
+          <Btn type="submit" >
+            <Link  >
             Search
             </Link>
             
           </Btn>
         </div>
+        </form>
       </section> 
+
+
       <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 m-4">
                     
                     <div className=" bg-base-200 p-6 rounded-lg shadow-md flex items-center border-purple-600 border-s-2 ">
