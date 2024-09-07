@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { User } from "../models/userModel.js";
 import { generateToken } from "../utils/generateToken.js";
 import { userValidate } from "../joiValidations/userValidation.js";
+import { Contact } from "../models/contactModel.js";
 
 export const userCreate = async (req, res, next) => {
     
@@ -104,5 +105,14 @@ export const updateUser = async (req, res, next) => {
 
 };
 
+
+export const createContact = async (req,res)=>{
+    const {user,email,mobile,message,}= req.body
+
+    const createContact= new Contact({user,email,mobile,message})
+     await createContact.save()
+   
+    res.json({ success: true, message: "your message sent successfully" });
+}
 
 

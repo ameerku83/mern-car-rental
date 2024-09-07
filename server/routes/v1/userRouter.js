@@ -1,6 +1,6 @@
 
 import e from "express"
-import { checkUser, updateUser, userCreate, userLogin, userLogout, userProfile } from "../../controllers/userController.js";
+import { checkUser, createContact, updateUser, userCreate, userLogin, userLogout, userProfile } from "../../controllers/userController.js";
 import { authUser } from "../../middlewares/userAuth.js";
 import { errorHandler } from "../../utils/errorHandler.js";
 import { cancelBooking, createBooking, deleteBooking, getAllBookings, getBookingById } from "../../controllers/bookingController.js";
@@ -34,7 +34,8 @@ router.delete("/delete-booking/:id", authUser, errorHandler(deleteBooking));
  router.get("/get-review/:id", authUser, errorHandler(getReviewById));
  router.put("/update-review/:id", authUser, errorHandler(updateReview));
  router.delete("/delete-review/:id", authUser, errorHandler(deleteReview));
- 
+ //contact us
+ router.post("/contact", authUser, errorHandler(createContact))
 export default router
 
 

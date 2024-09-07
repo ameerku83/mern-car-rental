@@ -25,6 +25,8 @@ import { UsersReviews } from "../pages/admin/UsersReviews";
 import { UsersPayments } from "../pages/admin/UsersPayments";
 import AdminCreateUser from "../pages/admin/AdminCreateUser";
 import UserHomePage from "../pages/UserHomePage";
+import ContactUs from "../pages/user/ContactUs";
+import { UsersMessages } from "../pages/admin/UsersMessages";
 
 const adminPath=process.env.REACT_APP_ADMIN
 export const router=createBrowserRouter([
@@ -117,6 +119,10 @@ export const router=createBrowserRouter([
             path:"createuser",
             element:<AdminCreateUser/>
         },
+        {
+            path:"contacts",
+            element:<UsersMessages/>
+        },
         
     ]
 
@@ -150,10 +156,9 @@ export const router=createBrowserRouter([
                 element:<Cardetails/>
                 
             },
-           
             {
                 path:"contact",
-                element:<h1 className="pt-28"  >contact</h1>
+                element:<ContactUs/>
 
             },
             {

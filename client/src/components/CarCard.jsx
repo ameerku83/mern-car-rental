@@ -27,7 +27,7 @@ const CarCard = ({ rating, car }) => {
           </div>
           <div className="flex items-center">
             <FaTachometerAlt className="text-purple-600 text-lg mr-1" />
-            <span className="text-sm">{car.mileage} km</span>
+            <span className="text-sm">{car.mileage} km/l</span>
           </div>
         </div>
         <div className="flex flex-wrap justify-between items-center mt-4">

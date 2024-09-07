@@ -63,6 +63,7 @@ const AdminNavbar = () => {
             <li><Link to={"/admin/bookings"}>Users Bookings</Link></li>
             <li><Link  to={"/admin/reviews"} >Users Reviews</Link></li>
             <li><Link  to={"/admin/payments"} >Users Payments</Link></li>
+            <li><Link  to={"/admin/contacts"} >Users messages</Link></li>
           </ul>
         </div>
 

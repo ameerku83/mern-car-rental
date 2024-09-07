@@ -2,6 +2,7 @@
 import { userValidate } from "../joiValidations/userValidation.js";
 import { Admin } from "../models/adminModel.js";
 import { Booking } from "../models/bookingModel.js";
+import { Contact } from "../models/contactModel.js";
 import { Payment } from "../models/paymntModel.js";
 import { Review } from "../models/review.js";
 import { User } from "../models/userModel.js";
@@ -276,4 +277,22 @@ export const adminDeleteReview = async (req, res, next) => {
     }
 
     res.json({ success: true, message: 'Review deleted successfully!', data: deleteReview });
+  } 
+
+  export const getContacts = async (req,res)=>{
+     const contacts= await Contact.find().populate("user")
+   
+    res.json({ success: true, message: "contact fetched",data:contacts });
+}
+
+export const adminDeleteMessage = async (req, res, next) => {
+  
+    const { id } = req.params;
+    const deleteMessage = await Contact.findByIdAndDelete(id);
+
+    if (!deleteMessage) {
+      return res.status(404).json({ success: false, message: 'Message not found' });
+    }
+
+    res.json({ success: true, message: 'Message deleted successfully!', data: deleteMessage });
   } 

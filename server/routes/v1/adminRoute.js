@@ -4,6 +4,7 @@ import e from "express"
 import { errorHandler } from "../../utils/errorHandler.js";
 import { adminCreate,
      adminDeleteBooking,
+      adminDeleteMessage,
       adminDeletePayment,
        adminDeleteReview, 
        admingetAllBookings,
@@ -19,6 +20,7 @@ import { adminCreate,
          adminProfile, 
          checkAdmin,
          deleteUserById,
+        getContacts,
         userCreatedByAdmin,
          userList } from "../../controllers/adminController.js";
 import { authAdmin } from "../../middlewares/authAdmin.js";
@@ -53,5 +55,8 @@ adminRoute.post("/create-user", authAdmin,errorHandler(userCreatedByAdmin));
  adminRoute.get("/reviews/:user", authAdmin, errorHandler(admingetUserReviews));
  adminRoute.get("/review/:id", authAdmin, errorHandler(adminGetReviewById));
  adminRoute.delete("/delete-review/:id", authAdmin, errorHandler(adminDeleteReview));
+//contact us
+adminRoute.get("/contact", authAdmin, errorHandler(getContacts))
+adminRoute.delete("/delete-message/:id", authAdmin, errorHandler(adminDeleteMessage))
 
 export default adminRoute   
