@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { axiosInstance } from '../../config/axiosInstance';
+import Btn from '../../components/ui/Btn';
 
 const ContactUs = () => {
     const [user,setUser]=useState({})
@@ -86,12 +87,12 @@ const ContactUs = () => {
           {errors.message && <p className="text-red-600 text-sm mt-1">{errors.message.message}</p>}
         </div>
 
-        <button
+        <Btn
           type="submit"
-          className="btn btn-primary w-full"
+          
         >
           Send Message
-        </button>
+        </Btn>
       </form>
     </div>
     </div>

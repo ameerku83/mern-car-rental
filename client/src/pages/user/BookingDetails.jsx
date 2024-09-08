@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { loadStripe } from "@stripe/stripe-js"
 import Btn from '../../components/ui/Btn';
 import Review from '../../components/user/Review';
+import { BookingDetailsSkeleton } from '../../components/ui/BookingDetailsSkeleton';
 export const BookingDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -68,6 +69,10 @@ export const BookingDetails = () => {
         
     }
    }
+
+   if(!booking) return (
+    <BookingDetailsSkeleton/>
+   )
    
 
     return ( <div>
@@ -77,7 +82,7 @@ export const BookingDetails = () => {
                 <div className="max-w-4xl lg:mx-auto bg-scale-300 shadow-md rounded-lg overflow-hidden border border-purple-200 pt-5 px-5 mx-5 md:flex gap-x-6 pb-4">
                
                     <div>
-                    <h2 className="text-2xl font-bold">Booking Details</h2>
+                    <h2 className="text-2xl font-bold mx-3">Booking Details</h2>
                         <img className=" object-contain w-96" src={booking.car.image} alt=""  />
                     </div>
                      

@@ -61,7 +61,7 @@ const AdminCreateUser = () => {
           <div className="mb-2">
             <label htmlFor="mobile" className="block text-gray-700">mobile</label>
             <input
-              type="mobile"
+              type="text"
               id="mobile"
               {...register('mobile', { required: 'mobile is required',pattern:{value:/^[0-9]{10}$/, message:"enter valid mobile number"}})}
               className="w-full p-2 border border-gray-300 rounded"

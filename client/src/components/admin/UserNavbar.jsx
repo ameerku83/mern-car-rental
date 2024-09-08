@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineHeart, AiOutlineMenu } from 'react-icons/ai'; // Importing icons from react-icons
 import { FaUserCircle } from 'react-icons/fa';
 
@@ -23,6 +23,50 @@ const UserNavbar = () => {
       
     }
   };
+
+  const [user,setUser]=useState({})
+  const [bookings, setBookings] = useState([]);
+
+  useEffect(() => {
+    
+      const fetchUser = async () => {
+          try {
+           const response= await axiosInstance.get('user/profile',);
+            setUser(response?.data?.data)
+            //toast.success('account created suc');
+            
+            
+          
+          } catch (error) {
+           // toast.error(error.response.data.message);
+            console.log(error);
+            
+          }
+        };
+        fetchUser()
+    
+  }, [])
+  
+ 
+  useEffect(() => {
+      const fetchBookings = async () => {
+          if (user._id) { 
+              try {
+                  const response = await axiosInstance.get(`user/bookings/${user._id}`);
+                  setBookings(response?.data?.data);
+                  console.log(response.data);
+                  
+              } catch (error) {
+                  console.error('Error fetching bookings:', error);
+                  
+              } 
+          }
+      };
+
+      fetchBookings();
+  }, [user._id]); 
+
+
 
   return (
     <div className="navbar bg-base-100 px-4 shadow border-b-2 border-purple-100 fixed z-40  ">
@@ -86,7 +130,7 @@ const UserNavbar = () => {
           </label>
           <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-40">
             <li className='text-md font-bold' ><Link to={ "/user/profile" }> Profile</Link>  </li>
-            <li className='text-md font-bold' ><Link to={ "/user/bookings"}>My Bookings </Link></li>
+            <li className=' font-bold' ><Link to={ "/user/bookings"}>My Bookings <sup className=' text-purple-700 text-xl font-bold' > {bookings.length} </sup> </Link></li>
             <li> <button className='btn bg-red-500 cursor-pointer btn-sm' onClick={logout} > Log out </button> </li>
           </ul>
         </div> 

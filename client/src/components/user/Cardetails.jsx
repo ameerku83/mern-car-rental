@@ -7,6 +7,7 @@ import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import Btn from '../ui/Btn';
+import { CardetailSkeleton } from '../ui/CardetailSkeleton';
 
 export const Cardetails = () => {
     const navigate = useNavigate()
@@ -85,6 +86,13 @@ export const Cardetails = () => {
             console.log(error);
         }
     };
+    if(car.length===0) return(
+      <div className=' pt-28'>
+        <h3  className=' text-center text-3xl my-2 font-bold ' >Car details</h3>
+        <CardetailSkeleton/>
+
+      </div>
+    )
   return (
     
         
@@ -180,13 +188,14 @@ export const Cardetails = () => {
               Mobile
           </label>
           <div className="relative mt-1">
-              <input
-                  type="text"
-                  id="mobile"
-                  placeholder="Enter your mobile number"
-                  {...register('mobile', { required: true,maxLength:{value:10,message:"enter valid mobile number"}},)}
-                  className="p-2 w-full border rounded-md pl-10"
-              />
+          <input
+            id="mobile"
+            type="text"     
+            placeholder='Enter your mobile number'
+            {...register('mobile', { required: 'Mobile number is required', pattern: { value: /^[0-9]{10}$/, message: 'Mobile number must be 10 digits' } })}
+            className="input input-bordered w-full pl-10 p-2"
+          />
+            
               <AiOutlinePhone className="absolute left-3 top-3 text-gray-400" />
           </div>
           <span className=' text-red-600'> {errors.mobile?.message} </span>
