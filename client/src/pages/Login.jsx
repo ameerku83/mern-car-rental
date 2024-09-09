@@ -32,7 +32,7 @@ const Login = () => {
         <h2 className="text-2xl font-bold mb-4">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700">Email</label>
+            <label htmlFor="email" className="block ">Email</label>
             <input
               type="email"
               id="email"
@@ -42,7 +42,7 @@ const Login = () => {
             {errors.email && <p className="text-red-500">{errors.email.message}</p>}
           </div>
           <div className="mb-4 relative">
-            <label htmlFor="password" className="block text-gray-700">Password</label>
+            <label htmlFor="password" className="block ">Password</label>
             <input
               type={showPassword ? 'text' : 'password'}
               id="password"

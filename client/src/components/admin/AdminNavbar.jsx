@@ -6,8 +6,24 @@ import { FaUserCircle } from 'react-icons/fa';
 import car from '../../asets/images/carlogo.png'
 import { DarkMode } from '../ui/DarkMode';
 import Btn from '../ui/Btn';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { axiosInstance } from '../../config/axiosInstance';
+import { toast } from 'react-toastify';
 const AdminNavbar = () => {
+  const navigate= useNavigate()
+  const adminLogout = async () => {
+    try {
+      await axiosInstance.put('admin/adminlogout');
+      
+      toast.success('Logged out successfully');
+      navigate('/')
+    //navigate('/user/home')
+    } catch (error) {
+     // toast.error(error.response.data.message);
+      console.log(error.response);
+      
+    }
+  };
   return (
     <div className="navbar bg-base-100 px-4 shadow border-b-2 border-purple-/00">
       {/* Navbar Start */}
@@ -73,9 +89,9 @@ const AdminNavbar = () => {
             <FaUserCircle className="h-6 w-6" />
           </label>
           <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-40">
-            <li><a href="/profile" className="justify-between">Profile</a></li>
-            <li><a href="/settings"></a></li>
-            <li><a href="/logout">Logout</a></li>
+            <li>< Link href="/profile" className="justify-between">Profile</Link></li>
+            
+            <li><button className=' btn btn-error btn-sm' onClick={adminLogout} >Logout</button></li>
           </ul>
         </div>
       </div>

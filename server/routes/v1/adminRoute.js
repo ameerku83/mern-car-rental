@@ -17,6 +17,7 @@ import { adminCreate,
          admingetUserPayments,
          admingetUserReviews,
          adminLogin,
+         adminLogout,
          adminProfile, 
          checkAdmin,
          deleteUserById,
@@ -30,8 +31,9 @@ import { cancelBooking } from "../../controllers/bookingController.js";
 const adminRoute = e.Router()
 adminRoute.post("/create", errorHandler(adminCreate));
 adminRoute.post("/login", adminLogin);
-adminRoute.get("/profile/", authAdmin, errorHandler(adminProfile));
+adminRoute.get("/profile", authAdmin, errorHandler(adminProfile));
 adminRoute.get("/check-admin", authAdmin, errorHandler(checkAdmin));
+adminRoute.put("/adminlogout", authAdmin, errorHandler(adminLogout));
 // admin user  controlling
 adminRoute.get("/user-list", authAdmin, errorHandler(userList));
 adminRoute.delete("/delete-user/:id", authAdmin, errorHandler(deleteUserById)); 

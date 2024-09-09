@@ -6,10 +6,23 @@ import { loadStripe } from "@stripe/stripe-js"
 import Btn from '../../components/ui/Btn';
 import Review from '../../components/user/Review';
 import { BookingDetailsSkeleton } from '../../components/ui/BookingDetailsSkeleton';
+import { FaStar, FaUserCircle } from 'react-icons/fa';
 export const BookingDetails = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
+   
     const [booking, setBooking] = useState(null);
+  
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      if (i < rating) {
+        stars.push(<FaStar key={i} className="text-yellow-500" />);
+      } else {
+        stars.push(<FaStar key={i} className="text-gray-400" />);
+      }
+    }
+    return stars;
+  };
 
     useEffect(() => {
         const fetchBooking = async () => {
@@ -23,21 +36,26 @@ export const BookingDetails = () => {
         };
         fetchBooking();
     }, [id]);
+    const [reviews, setReviews] = useState([]);
+    //const carId=booking.car._id
+    useEffect(() => {
+        const fetchReviews = async () => {
+            if (!booking?.car?._id) return; // Ensure carId is valid before making API call
+    
+            try {
+                const response = await axiosInstance.get(`user/carreviews/${booking.car._id}`);
+                console.log(response?.data);
+                setReviews(response?.data.data);
+            } catch (error) {
+                console.log(error);
+                toast.error('Error fetching reviews');
+            }
+        };
+    
+        fetchReviews();
+    }, [booking?.car?._id]); // Dependency on booking.car._id
+    
   
-  
-    const CancelBooking = async (id) => {
-        try {
-            const response = await axiosInstance.put(`user/cancel-booking/${id}`);
-            
-            setBooking(( booking._id === id ? { ...booking, status: 'canceled' } : booking))
-
-            toast.success("booking cancelled")
-            
-        } catch (error) {
-            toast.error('Error fetching booking details');
-            console.log(error);
-        }
-    };
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('en-CA'); 
     };
@@ -95,17 +113,32 @@ export const BookingDetails = () => {
                     <p>Mobile: {booking.mobile}</p>
                     <p>Pickup Location: {booking.pickupLocation}</p>
                     <p>status: {booking.status}</p>
-                    {booking.status === 'booked' && (
-                      <button  className="m-3 bg-red-500 text-white p-2 rounded-md"  onClick={()=>CancelBooking(booking._id)}  >
-                                Cancel Booking
-                            </button>
-                        )}
+                   
                       {booking.status === 'booked' && <Btn onClick={makePayment} > Pay Now</Btn>}  
                      </div>
                 </div>
+                <section className="my-16 px-5 md:px-10">
+          <h2 className="text-3xl font-bold text-center mb-8 text-purple-600">What Our Clients Say</h2>
+          <div className=" mx-auto bg-base-200 shadow-lg rounded-lg p-6  " style={{ maxWidth:'300px', height: '350px',overflowY: 'auto' }}>
+            {reviews?.map((review, index) => (
+              <div key={index} className="border-b border-gray-300 pb-4 mb-4">
+                <div className="flex items-center mb-2">
+                  <div className="font-semibold mr-2 flex ">  <FaUserCircle className=" h-6 mx-2" /> { review.user.name}</div> 
+                  
+                </div>
+                <div className="">{review.car.brand} {review.car.model}</div>
+                <img  src={review.car.image}  className=" max-w-28 object-contain"  alt="car" />
+                <div className="flex mb-2">
+                  {renderStars(review.rating)}
+                </div>
+                <p>"{review.comment}"</p>
+              </div>
+            ))}
+          </div>
+        </section>
                   <Review  userId={booking.user._id} carId={booking.car._id} />
                  </div>
-            ) : (
+             ) : (
                 <p>Loading booking details...</p>
             )}
         </div>

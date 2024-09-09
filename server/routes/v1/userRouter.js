@@ -5,7 +5,7 @@ import { authUser } from "../../middlewares/userAuth.js";
 import { errorHandler } from "../../utils/errorHandler.js";
 import { cancelBooking, createBooking, deleteBooking, getAllBookings, getBookingById } from "../../controllers/bookingController.js";
 import { cancelPayment, createPayment, getPayment, getPayments,  } from "../../controllers/paymentController.js";
-import { createReview, deleteReview, getReviewById, updateReview } from "../../controllers/reviewController.js";
+import { createReview, deleteReview, getReviewById, getReviewCarid, updateReview } from "../../controllers/reviewController.js";
 import { adminGetReviews } from "../../controllers/adminController.js";
 
 const router = e.Router()
@@ -30,6 +30,7 @@ router.delete("/delete-booking/:id", authUser, errorHandler(deleteBooking));
 
  //review
  router.get("/reviews", errorHandler(adminGetReviews));
+ router.get("/carreviews/:carId",authUser, errorHandler(getReviewCarid));
  router.post("/review", authUser, errorHandler(createReview));
  router.get("/get-review/:id", authUser, errorHandler(getReviewById));
  router.put("/update-review/:id", authUser, errorHandler(updateReview));

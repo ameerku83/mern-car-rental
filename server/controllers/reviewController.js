@@ -57,8 +57,7 @@ export const updateReview = async (req, res, next) => {
   } 
 
 
-  // Get all reviews
-export const getReviews= async (req, res, next) => {
+export const getReviews= async (req, res) => {
     const {userId}= req.params
     const reviewList = await Review.find({user:userId});
     if (!reviewList) {
@@ -66,8 +65,15 @@ export const getReviews= async (req, res, next) => {
     }
     res.json({ success: true, message: 'Review list fetched', data: reviewList });
   }
+  export const getReviewCarid= async (req, res) => {
+    const {carId}= req.params
+    const reviewList = await Review.find({car:carId}).populate('user').populate('car');
+    if (!reviewList) {
+      return res.status(404).json({ success: false, message: 'Review not found' });
+    }
+    res.json({ success: true, message: 'Review list fetched', data: reviewList });
+  }
 
-// Get review by ID
 export const getReviewById = async (req, res, next) => {
   
     const { id } = req.params;

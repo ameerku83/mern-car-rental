@@ -82,6 +82,14 @@ export const checkAdmin = async (req, res, next) => {
         res.json({ success: true, message: "admin authenticated" });
    
 };
+export const adminLogout = async (req, res, next) => {
+    
+    res.clearCookie("admin",{ httpOnly:true,secure:true,sameSite:"None", });
+   
+
+    res.json({ success: true, message: "admin logout successfully" });
+
+};
 
 
 
