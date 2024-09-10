@@ -30,7 +30,7 @@ router.delete("/delete-booking/:id", authUser, errorHandler(deleteBooking));
 
  //review
  router.get("/reviews", errorHandler(adminGetReviews));
- router.get("/carreviews/:carId",authUser, errorHandler(getReviewCarid));
+ router.get("/carreviews/:carId",errorHandler(getReviewCarid));
  router.post("/review", authUser, errorHandler(createReview));
  router.get("/get-review/:id", authUser, errorHandler(getReviewById));
  router.put("/update-review/:id", authUser, errorHandler(updateReview));
