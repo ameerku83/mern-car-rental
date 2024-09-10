@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { AiOutlineHeart, AiOutlineMenu } from 'react-icons/ai'; // Importing icons from react-icons
+import {  AiOutlineMenu } from 'react-icons/ai'; // Importing icons from react-icons
 import { FaUserCircle } from 'react-icons/fa';
 
 import car from '../../asets/images/carlogo.png'

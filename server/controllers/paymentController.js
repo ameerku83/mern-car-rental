@@ -27,7 +27,7 @@ export const createPayment = async (req, res) => {
         },
         quantity: 1,
     }];
-  console.log(fetchBooking.car.image);
+ 
   
    const session= await stripe.checkout.sessions.create({  
     payment_method_types:["card"],
@@ -81,3 +81,10 @@ export const createPayment = async (req, res) => {
             }
             
             res.json({ success: true, message: 'payment deleted successfully!', data: payment });  }
+
+
+
+
+
+
+            

@@ -1,6 +1,7 @@
 import { bookingValiadation } from '../joiValidations/bookingValidation.js';
 import {Booking} from '../models/bookingModel.js';
 import { Car } from '../models/carModel.js';
+import { Payment } from '../models/paymntModel.js';
 import { User } from '../models/userModel.js';
 import { sendClient } from '../utils/sendMail.js';
 //import m from "moment"
@@ -73,6 +74,10 @@ const booking = await Booking.findById(id);
         return res.status(400).json({ message: 'Booking is already canceled' })}                                             
      booking.status = 'canceled';
          await booking.save();
+         const payment = await Payment.findOne({ booking: booking._id })
+            if (payment) {
+              payment.status = 'cancelled';
+              await payment.save();}
 
     const car = await Car.findById(booking.car);
    if (car) {

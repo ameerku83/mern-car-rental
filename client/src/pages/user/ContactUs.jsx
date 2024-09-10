@@ -36,9 +36,7 @@ const ContactUs = () => {
     }
 
     try {
-       const res= await axiosInstance.post("/user/contact",contactData)
-
-       
+       await axiosInstance.post("/user/contact",contactData)
        toast.success('Message sent successfully!');
       reset()
      

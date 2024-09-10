@@ -10,7 +10,7 @@ const bookingSchema = new mongoose.Schema({
     mobile:{type: String},
     address:{ type: String,},
     pickupLocation:{ type: String, },  
-     status: { type: String, default: 'Pending' },
+     status: { type: String, default: 'pending' },
       
 });
 

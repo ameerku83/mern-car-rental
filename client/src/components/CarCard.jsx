@@ -1,10 +1,54 @@
-import React from 'react';
-import StarRating from './ui/StarRating';
-import { AiOutlineHeart } from 'react-icons/ai';
-import { FaGasPump, FaUsers, FaTachometerAlt } from 'react-icons/fa'; 
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 
-const CarCard = ({ rating, car }) => {
+import { AiOutlineHeart } from 'react-icons/ai';
+import { FaGasPump, FaUsers, FaTachometerAlt, FaStar } from 'react-icons/fa'; 
+import { Link } from 'react-router-dom';
+import { axiosInstance } from '../config/axiosInstance';
+import { toast } from 'react-toastify';
+
+const CarCard = ({  car }) => {
+  
+  const [averageRating, setAverageRating] = useState(0);
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      if (i < rating) {
+        stars.push(<FaStar key={i} className="text-yellow-500" />);
+      } else {
+        stars.push(<FaStar key={i} className="text-gray-400" />);
+      }
+    }
+    return stars;
+  };
+
+    useEffect(() => {
+        const fetchReviews = async () => {
+          if (!car?._id) return
+    
+            try {
+                const response = await axiosInstance.get(`user/carreviews/${car._id}`);
+                
+                const fetchedReviews = response?.data.data 
+                
+                
+                if (fetchedReviews.length > 0) {
+                  const totalRating = fetchedReviews.reduce((acc, review) => acc + review.rating, 0);
+                  const avgRating = totalRating / fetchedReviews.length;
+                  setAverageRating(avgRating);
+                } else {
+                  setAverageRating(0); // Set to 0 if no reviews
+                }
+            } catch (error) {
+                console.log(error);
+                toast.error('Error fetching reviews');
+            }
+        };
+       
+    
+        fetchReviews();
+    }, [car._id]); 
+   
+   
   return (
     <div className="relative">
       <div className="rounded-lg shadow-md p-4 mx-4 mt-4 md:mt-4 sm:mt-5 bg-base-100 border border-purple-100">
@@ -15,7 +59,7 @@ const CarCard = ({ rating, car }) => {
           </div>
         </div>
         <h3 className="text-lg font-semibold mt-4">{car.brand} {car.model}</h3>
-        <StarRating rating={rating} />
+        <h3 className="text-md font-semibold mt-4 flex">{renderStars(Math.round(averageRating))}</h3>
         <div className="flex flex-wrap gap-4 mt-2">
           <div className="flex items-center">
             <FaGasPump className="text-purple-600 text-lg mr-1" />

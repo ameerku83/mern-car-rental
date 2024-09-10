@@ -67,6 +67,7 @@ const formatDate = (dateString) => {
       <th>Car</th>
       <th>Date</th>
       <th>Amount</th>
+      <th>Status</th>
       
     </tr>
   </thead>
@@ -77,6 +78,7 @@ const formatDate = (dateString) => {
         <td><img className=' w-28 object-contain' src={payment.car.image} alt="car" /> {payment.car.brand}{payment.car.model}</td>
         <td>{formatDate(payment.paymentDate)}</td>
         <td> {payment.amount}/-</td>
+        <td> {payment.status}</td>
       </tr>
     )) }
   </tbody>

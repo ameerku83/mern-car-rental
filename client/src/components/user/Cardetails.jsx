@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { FaCar, FaGasPump, FaCogs, FaTachometerAlt, FaUsers } from 'react-icons/fa';
+import {  FaGasPump, FaCogs, FaTachometerAlt, FaUsers, FaStar } from 'react-icons/fa';
 import { AiOutlineCalendar, AiOutlineHome, AiOutlinePhone, AiOutlineEnvironment } from 'react-icons/ai';
 
 import { axiosInstance } from '../../config/axiosInstance';
@@ -56,6 +56,47 @@ export const Cardetails = () => {
         
         fetchCar()
       }, [id]);
+      
+      const [averageRating, setAverageRating] = useState(0);
+      const renderStars = (rating) => {
+        const stars = [];
+        for (let i = 0; i < 5; i++) {
+          if (i < rating) {
+            stars.push(<FaStar key={i} className="text-yellow-500" />);
+          } else {
+            stars.push(<FaStar key={i} className="text-gray-400" />);
+          }
+        }
+        return stars;
+      };
+    
+        useEffect(() => {
+            const fetchReviews = async () => {
+              if (!car?._id) return
+        
+                try {
+                    const response = await axiosInstance.get(`user/carreviews/${car._id}`);
+                    
+                    const fetchedReviews = response?.data.data 
+                   
+                    
+                    if (fetchedReviews.length > 0) {
+                      const totalRating = fetchedReviews.reduce((acc, review) => acc + review.rating, 0);
+                      const avgRating = totalRating / fetchedReviews.length;
+                      setAverageRating(avgRating);
+                    } else {
+                      setAverageRating(0); // Set to 0 if no reviews
+                    }
+                } catch (error) {
+                    console.log(error);
+                    toast.error('Error fetching reviews');
+                }
+            };
+           
+        
+            fetchReviews();
+        }, [car._id]); 
+         
 
       const onSubmit = async (data) => {
         try {
@@ -93,7 +134,7 @@ export const Cardetails = () => {
 
       </div>
     )
-  return (
+  return (  
     
         
       <div className='pt-24 ' > 
@@ -102,6 +143,7 @@ export const Cardetails = () => {
      <div className="max-w-4xl lg:mx-auto bg-scale-300 shadow-md rounded-lg overflow-hidden md:flex border border-purple-200 pt-5 px-5 mx-5">
         <div>
         <img className="w-full  h-64 object-contain" src={car.image} alt={`${car.brand} ${car.model}`} />
+        <p  className='flex' >Rating: <span className='mt-1 flex' > {renderStars(Math.round(averageRating))}</span> </p>
         </div>
         <div>
         <div className="p-2 mx-2">

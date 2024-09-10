@@ -71,7 +71,9 @@ export const getReviews= async (req, res) => {
     if (!reviewList) {
       return res.status(404).json({ success: false, message: 'Review not found' });
     }
-    res.json({ success: true, message: 'Review list fetched', data: reviewList });
+    const totalRating = reviewList.reduce((acc, review) => acc + review.rating, 0);
+    const averageRating = totalRating / reviewList.length;
+    res.json({ success: true, message: 'Review list fetched', data: reviewList ,averageRating:averageRating.toFixed(1)});
   }
 
 export const getReviewById = async (req, res, next) => {

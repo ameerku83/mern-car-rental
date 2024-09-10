@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { axiosInstance } from '../../config/axiosInstance';
 
 import Btn from '../../components/ui/Btn';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const MyBookings = () => {
@@ -63,18 +63,7 @@ const MyBookings = () => {
             console.log(error);
         }
     };
-    const deleteBooking = async (id) => {
-        try {
-             await axiosInstance.delete(`user/delete-booking/${id}`);
-             setBookings(( bookings.filter((booking)=>booking._id !== id))
-            );
-            toast.success("booking deleted")
-            
-        } catch (error) {
-            toast.error('Error deleting booking');
-            console.log(error);
-        }
-    };
+  
     if(bookings.length === 0) return( <h1>No bookings found</h1> )
         const formatDate = (dateString) => {
             return new Date(dateString).toLocaleDateString('en-CA'); 
@@ -103,7 +92,6 @@ const MyBookings = () => {
                     <div className="flex justify-between mt-2">
                     
                    { booking.status === "booked" && < button className=' btn  btn-error' onClick={()=>cancelBooking(booking._id)} > cancel booking </button>}
-                   {booking.status === "canceled" &&   <button className='btn  btn-error' onClick={()=>deleteBooking(booking._id)} >delete</button>  }
                    <Btn ><Link to={`/user/booking/${booking._id}`} > Add Review </Link></Btn>
                     </div>
                   </div>

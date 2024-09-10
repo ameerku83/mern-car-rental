@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
 import { loadStripe } from "@stripe/stripe-js"
@@ -9,9 +9,9 @@ import { BookingDetailsSkeleton } from '../../components/ui/BookingDetailsSkelet
 import { FaStar, FaUserCircle } from 'react-icons/fa';
 export const BookingDetails = () => {
     const { id } = useParams();
-   
+   const [show,setShow]=   useState(false);
     const [booking, setBooking] = useState(null);
-  
+    
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
@@ -28,7 +28,8 @@ export const BookingDetails = () => {
         const fetchBooking = async () => {
             try {
                 const response = await axiosInstance.get(`user/single-booking/${id}`);
-                setBooking(response.data.data);
+                setBooking(response?.data?.data);
+                
             } catch (error) {
                 toast.error('Error fetching booking details');
                 console.log(error);
@@ -53,7 +54,10 @@ export const BookingDetails = () => {
         };
     
         fetchReviews();
-    }, [booking?.car?._id]); // Dependency on booking.car._id
+    }, [booking?.car?._id]); 
+    const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+    const averageRating = totalRating / reviews.length;
+   
     
   
     const formatDate = (dateString) => {
@@ -68,16 +72,13 @@ export const BookingDetails = () => {
             car:booking.car._id,
             booking:booking._id,
             user:booking.user._id,
-            paymentDate:formatDate(booking.startDate),
-           
-        }
+            paymentDate:formatDate(booking.startDate), }
 
         const response = await axiosInstance.post("user/payment",paymentData);
         const sessionId=response?.data?.sessionId;
-       const result = stripe.redirectToCheckout({
+        stripe.redirectToCheckout({
         sessionId:sessionId
        })
-
        console.log(response);
        
 
@@ -102,9 +103,10 @@ export const BookingDetails = () => {
                     <div>
                     <h2 className="text-2xl font-bold mx-3">Booking Details</h2>
                         <img className=" object-contain w-96" src={booking.car.image} alt=""  />
+                        { averageRating !== null && (<div className='flex mt-4'>   <span className=''>Rating:</span> <span className='flex mt-1'> {renderStars(Math.round( averageRating))}</span></div> )}
                     </div>
                      
-                     <div className="text-md font-bold text-center">
+                     <div className="text-md font-bold text-center ">
                      <p>Car:{booking.car.brand} {booking.car.model}</p>
                      <p>Total Price: {booking.totalPrice}</p>
                     <p>Start Date: {formatDate(booking.startDate)}</p>
@@ -113,14 +115,18 @@ export const BookingDetails = () => {
                     <p>Mobile: {booking.mobile}</p>
                     <p>Pickup Location: {booking.pickupLocation}</p>
                     <p>status: {booking.status}</p>
-                   
+                        <div className=' justify-between flex'>
                       {booking.status === 'booked' && <Btn onClick={makePayment} > Pay Now</Btn>}  
+                      <Btn onClick={()=>setShow(!show)} > {show? "Close Review"  : "Add Review"}</Btn>
+                         </div>
                      </div>
                 </div>
-                <section className="my-16 px-5 md:px-10">
-          <h2 className="text-3xl font-bold text-center mb-8 text-purple-600">What Our Clients Say</h2>
+                 
+             {  show? <Review  userId={booking.user._id} carId={booking.car._id} /> :null }
+           {reviews.length > 0 &&     <section className="my-16 px-5 ">
+          <h2 className="text-xl font-bold text-center">Reviews</h2>
           <div className=" mx-auto bg-base-200 shadow-lg rounded-lg p-6  " style={{ maxWidth:'300px', height: '350px',overflowY: 'auto' }}>
-            {reviews?.map((review, index) => (
+            {reviews?.map((review, index) =>  (
               <div key={index} className="border-b border-gray-300 pb-4 mb-4">
                 <div className="flex items-center mb-2">
                   <div className="font-semibold mr-2 flex ">  <FaUserCircle className=" h-6 mx-2" /> { review.user.name}</div> 
@@ -135,8 +141,8 @@ export const BookingDetails = () => {
               </div>
             ))}
           </div>
-        </section>
-                  <Review  userId={booking.user._id} carId={booking.car._id} />
+        </section> }
+                 
                  </div>
              ) : (
                 <p>Loading booking details...</p>
