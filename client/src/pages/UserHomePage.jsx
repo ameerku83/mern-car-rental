@@ -28,7 +28,7 @@ const UserHomePage = () => {
             
         const response = await axiosInstance.get( "user/reviews" )
         console.log(response?.data);
-        setReviews(response?.data.data)
+        setReviews(response?.data?.data)
         
         } catch (error) {
             
