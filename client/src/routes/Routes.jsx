@@ -84,6 +84,11 @@ export const router=createBrowserRouter([
         path:'admin',
         element:<AdminAuth> <AdminLayout/> </AdminAuth>,
         children:[
+            {
+                path:'services',
+                element:<Services/>
+                
+            },
         {
             path:"userlist",
             element:<UserList/>

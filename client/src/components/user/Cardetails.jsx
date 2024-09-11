@@ -140,7 +140,7 @@ export const Cardetails = () => {
       <div className='pt-24 ' > 
       <h3  className=' text-center text-3xl my-2 font-bold' >Car details</h3>
 
-     <div className="max-w-4xl lg:mx-auto bg-scale-300 shadow-md rounded-lg overflow-hidden md:flex border border-purple-200 pt-5 px-5 mx-5">
+     <div className="max-w-4xl lg:mx-auto  shadow-md rounded-lg overflow-hidden md:flex border border-purple-200 pt-5 px-5 mx-5">
         <div>
         <img className="w-full  h-64 object-contain" src={car.image} alt={`${car.brand} ${car.model}`} />
         <p  className='flex' >Rating: <span className='mt-1 flex' > {renderStars(Math.round(averageRating))}</span> </p>

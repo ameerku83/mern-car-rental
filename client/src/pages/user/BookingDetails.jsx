@@ -81,8 +81,6 @@ export const BookingDetails = () => {
        })
        console.log(response);
        
-
-
     } catch (error) {
         console.log(error);
         
@@ -98,7 +96,7 @@ export const BookingDetails = () => {
         <div className="pt-28">
             {booking ? (
                 <div>
-                <div className="max-w-4xl lg:mx-auto bg-scale-300 shadow-md rounded-lg overflow-hidden border border-purple-200 pt-5 px-5 mx-5 md:flex gap-x-6 pb-4">
+                <div className="max-w-4xl lg:mx-auto bg-base-100 shadow-md rounded-lg overflow-hidden border border-purple-200 pt-5 px-5 mx-5 md:flex gap-x-6 pb-4">
                
                     <div>
                     <h2 className="text-2xl font-bold mx-3">Booking Details</h2>
@@ -106,9 +104,9 @@ export const BookingDetails = () => {
                         { averageRating !== null && (<div className='flex mt-4'>   <span className=''>Rating:</span> <span className='flex mt-1'> {renderStars(Math.round( averageRating))}</span></div> )}
                     </div>
                      
-                     <div className="text-md font-bold text-center ">
+                     <div className="text-md font-bold  ">
                      <p>Car:{booking.car.brand} {booking.car.model}</p>
-                     <p>Total Price: {booking.totalPrice}</p>
+                     <p>Total Price:  {booking.totalPrice}</p>
                     <p>Start Date: {formatDate(booking.startDate)}</p>
                     <p>End Date: {formatDate(booking.endDate)}</p>
                     <p>Address: {booking.address}</p>
@@ -123,25 +121,34 @@ export const BookingDetails = () => {
                 </div>
                  
              {  show? <Review  userId={booking.user._id} carId={booking.car._id} /> :null }
-           {reviews.length > 0 &&     <section className="my-16 px-5 ">
-          <h2 className="text-xl font-bold text-center">Reviews</h2>
-          <div className=" mx-auto bg-base-200 shadow-lg rounded-lg p-6  " style={{ maxWidth:'300px', height: '350px',overflowY: 'auto' }}>
-            {reviews?.map((review, index) =>  (
-              <div key={index} className="border-b border-gray-300 pb-4 mb-4">
-                <div className="flex items-center mb-2">
-                  <div className="font-semibold mr-2 flex ">  <FaUserCircle className=" h-6 mx-2" /> { review.user.name}</div> 
-                  
-                </div>
-                <div className="">{review.car.brand} {review.car.model}</div>
-                <img  src={review.car.image}  className=" max-w-28 object-contain"  alt="car" />
-                <div className="flex mb-2">
-                  {renderStars(review.rating)}
-                </div>
-                <p>"{review.comment}"</p>
-              </div>
-            ))}
-          </div>
-        </section> }
+           {reviews.length > 0 &&   
+                   <section className="my-16 px-5 md:px-10">
+          
+                   <h2 className="text-2xl text-center ">Car Reviews</h2>
+                   <div className="overflow-x-auto whitespace-nowrap ">
+                     <div className="flex space-x-3  p-4 justify-center ">
+                       {reviews.map((review, index) => (
+                         <div key={index} className="bg-base-200 shadow-lg rounded-lg p-2 flex-none ">
+                           <div className="w-36">
+                             <div className="flex items-center mb-2">
+                               <FaUserCircle className="h-6 mx-2 text-gray-600" />
+                               <div className="font-semibold">{review.user.name}</div>
+                             </div>
+                             <div className="text-sm mb-2">
+                               {review.car.brand} {review.car.model}
+                             </div>
+                             <img src={review.car.image} className="w-24 object-contain mb-2" alt="car" />
+                             <div className="flex mb-2">
+                               {renderStars(review.rating)}
+                             </div>
+                             <p className="text-sm  overflow-hidden text-ellipsis whitespace-normal">"{review.comment}"</p>
+                           </div>
+                         </div>
+                       ))}
+                     </div>
+                   </div>
+                 </section>
+         }
                  
                  </div>
              ) : (
