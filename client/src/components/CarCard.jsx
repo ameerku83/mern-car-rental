@@ -40,7 +40,7 @@ const CarCard = ({  car }) => {
                 }
             } catch (error) {
                 console.log(error);
-                toast.error('Error fetching reviews');
+                
             }
         };
        

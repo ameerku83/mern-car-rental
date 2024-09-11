@@ -13,8 +13,9 @@ export const PaymentSucces = () => {
 
     
   return (
-    <div  >
-        <h1 className=' text-green-700 text-2xl pt-28 font-bold text-center' >Payment success....!!</h1>
+    <div className='mx-4'  >
+       <h2 className=' text-xl text-center pt-28' > Your booking confirmed and Payment successfully recieved </h2>
+        <h1 className=' text-green-700 text-2xl mt-4 font-bold text-center' >Payment success....!!</h1>
     </div>
   )
 }

@@ -27,6 +27,7 @@ import AdminCreateUser from "../pages/admin/AdminCreateUser";
 import UserHomePage from "../pages/UserHomePage";
 import ContactUs from "../pages/user/ContactUs";
 import { UsersMessages } from "../pages/admin/UsersMessages";
+import CancelBooking from "../pages/user/CancelBooking";
 
 const adminPath=process.env.REACT_APP_ADMIN
 export const router=createBrowserRouter([
@@ -184,6 +185,11 @@ export const router=createBrowserRouter([
             {
                 path:"services",
                 element:<Services/>
+
+            },
+            {
+                path:"bookingcancel",
+                element:<CancelBooking/>
 
             }
 

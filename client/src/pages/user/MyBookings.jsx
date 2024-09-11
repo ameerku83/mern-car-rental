@@ -4,12 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { axiosInstance } from '../../config/axiosInstance';
 
 import Btn from '../../components/ui/Btn';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const MyBookings = () => {
 
-    
+    const navigate=useNavigate()
     const [user,setUser]=useState({})
     const [bookings, setBookings] = useState({});
 
@@ -56,10 +56,11 @@ const MyBookings = () => {
         try {
              await axiosInstance.put(`user/cancel-booking/${id}`);
              setBookings(( bookings.map(booking => booking._id === id ? { ...booking, status: 'canceled' } : booking)) );
-            toast.success("booking cancelled")
+                navigate('/user/bookingcancel')  
+             toast.success("booking cancelled")
             
         } catch (error) {
-            toast.error('Error cancelling booking');
+            toast.error('Error cancell booking');
             console.log(error);
         }
     };
