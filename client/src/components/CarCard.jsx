@@ -1,14 +1,90 @@
 import React, { useEffect, useState } from 'react';
-
-import { AiOutlineHeart } from 'react-icons/ai';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { FaGasPump, FaUsers, FaTachometerAlt, FaStar } from 'react-icons/fa'; 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../config/axiosInstance';
 import { toast } from 'react-toastify';
 
-const CarCard = ({  car }) => {
-  
+const CarCard = ({ car }) => {
   const [averageRating, setAverageRating] = useState(0);
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const navigate = useNavigate();
+  const [user,setUser]=useState({})
+  
+ 
+      useEffect(() => {
+       
+         const fetchUser = async () => {
+             try {
+              const response= await axiosInstance.get('user/profile',);
+               setUser(response?.data?.data)
+             } catch (error) {
+              
+               console.log(error); 
+             }
+           };
+           fetchUser() 
+     }, [])
+     
+const userId = user._id 
+  
+  useEffect(() => {
+    const checkWishlist = async () => {
+      if (!userId || !car._id) return;
+
+      try {
+        const response = await axiosInstance.get(`user/check/${userId}/${car._id}`);
+        setIsInWishlist(response.data.isInWishlist);
+        
+      } catch (error) {
+        console.log( "error---->"+ error);
+      }
+    };
+
+    checkWishlist();
+  }, [userId, car._id]);
+
+  // Fetch car reviews
+  useEffect(() => {
+    const fetchReviews = async () => {
+      if (!car?._id) return;
+      try {
+        const response = await axiosInstance.get(`user/carreviews/${car._id}`);
+        const fetchedReviews = response?.data.data;
+        if (fetchedReviews.length > 0) {
+          const totalRating = fetchedReviews.reduce((acc, review) => acc + review.rating, 0);
+          const avgRating = totalRating / fetchedReviews.length;
+          setAverageRating(avgRating);
+        } else {
+          setAverageRating(0);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchReviews();
+  }, [car._id]);
+
+  const handleWishlistClick = async () => {
+    if (!userId) {
+      navigate('/login'); // Redirect to login if not authenticated
+      return;
+    }
+
+    try {
+      const response = await axiosInstance.post('user/wishlist', {
+        userId,
+        carId: car._id,
+      });
+
+      setIsInWishlist(true);
+      toast.success("addwd to wishlist");
+    } catch (error) {
+      toast.error( 'Failed to add to wishlist');
+      console.log(error);
+      
+    }
+  };
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
@@ -21,41 +97,17 @@ const CarCard = ({  car }) => {
     return stars;
   };
 
-    useEffect(() => {
-        const fetchReviews = async () => {
-          if (!car?._id) return
-    
-            try {
-                const response = await axiosInstance.get(`user/carreviews/${car._id}`);
-                
-                const fetchedReviews = response?.data.data 
-                
-                
-                if (fetchedReviews.length > 0) {
-                  const totalRating = fetchedReviews.reduce((acc, review) => acc + review.rating, 0);
-                  const avgRating = totalRating / fetchedReviews.length;
-                  setAverageRating(avgRating);
-                } else {
-                  setAverageRating(0); // Set to 0 if no reviews
-                }
-            } catch (error) {
-                console.log(error);
-                
-            }
-        };
-       
-    
-        fetchReviews();
-    }, [car._id]); 
-   
-   
   return (
     <div className="relative">
-      <div className="rounded-lg shadow-md p-4 mx-4 mt-4 md:mt-4 sm:mt-5 bg-base-100 border border-purple-100">
+      <div className="rounded-lg shadow-md p-4 mx-4 mt-4 bg-base-100 border border-purple-100">
         <div className="relative">
           <img src={car.image} alt={car.model} className="w-full h-40 object-contain rounded-md" />
           <div className="absolute top-2 right-2">
-            <AiOutlineHeart className="text-purple-600 text-2xl cursor-pointer hover:text-purple-800" />
+            {isInWishlist ? (
+              <AiFillHeart className="text-purple-600 text-2xl" />
+            ) : (
+              <AiOutlineHeart className="text-purple-600 text-2xl cursor-pointer hover:text-purple-800" onClick={handleWishlistClick} />
+            )}
           </div>
         </div>
         <h3 className="text-lg font-semibold mt-4">{car.brand} {car.model}</h3>
@@ -75,14 +127,10 @@ const CarCard = ({  car }) => {
           </div>
         </div>
         <div className="flex flex-wrap justify-between items-center mt-4">
-          <button
-            className={`btn p-2 ${car.availability ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'} text-white rounded-md`}
-          >
+          <button className={`btn p-2 ${car.availability ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'} text-white rounded-md`}>
             <Link to={`/user/cardetails/${car._id}`}>{car.availability ? 'Book Now' : 'Not Available'}</Link>
           </button>
-          <button className="btn  border border-purple-600 px-3 py-1 rounded">
-            {car.pricePerDay}/Day
-          </button>
+          <button className="btn border border-purple-600 px-3 py-1 rounded">{car.pricePerDay}/Day</button>
         </div>
       </div>
     </div>

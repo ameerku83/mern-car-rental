@@ -26,7 +26,7 @@ const UserNavbar = () => {
 
   const [user,setUser]=useState({})
   const [bookings, setBookings] = useState([]);
-
+ const [wishlist,setWishlist] =useState([])
   useEffect(() => {
     
       const fetchUser = async () => {
@@ -46,7 +46,6 @@ const UserNavbar = () => {
         fetchUser()
     
   }, [])
-  
  
   useEffect(() => {
       const fetchBookings = async () => {
@@ -65,7 +64,24 @@ const UserNavbar = () => {
 
       fetchBookings();
   }, [user._id]); 
+  const userId=user._id
+  useEffect(() => {
+      const fetchWishlist = async () => {
+          if (userId) { 
+              try {
+                  const response = await axiosInstance.get(`user/wishlist/${userId}`);
+                  setWishlist(response?.data);
+                  console.log(response.data);
+                  
+              } catch (error) {
+                  console.error('Error fetching wishlist:', error);
+                  
+              } 
+          }
+      };
 
+      fetchWishlist();
+  }, [userId]); 
 
 
   return (
@@ -114,13 +130,12 @@ const UserNavbar = () => {
            <DarkMode   />
           </label>
         <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle ">
-            <AiOutlineHeart className="h-6 w-6" />
+          <label tabIndex={0} className="btn btn-ghost btn-circle relative">
+           <AiOutlineHeart className="h-6 w-6" /> <sup className='text-purple-600 font-bold text-lg absolute left-7' > {wishlist.length} </sup>
           </label>
           <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-40">
-            <li><a href="/wishlist">Wishlist Item 1</a></li>
-            <li><a href="/wishlist">Wishlist Item 2</a></li>
-            <li><a href="/wishlist">Wishlist Item 3</a></li>
+            <li><Link to={"/user/wishlist"}>Wishlist </Link></li>
+            
           </ul>
         </div> 
 

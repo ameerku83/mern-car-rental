@@ -28,6 +28,7 @@ import UserHomePage from "../pages/UserHomePage";
 import ContactUs from "../pages/user/ContactUs";
 import { UsersMessages } from "../pages/admin/UsersMessages";
 import CancelBooking from "../pages/user/CancelBooking";
+import { WishlistPage } from "../pages/user/WishlistPage";
 
 const adminPath=process.env.REACT_APP_ADMIN
 export const router=createBrowserRouter([
@@ -98,8 +99,8 @@ export const router=createBrowserRouter([
             element:<HomePage/>
         },
         {
-            path:"addcar",
-            element:<CarForm/>
+           path:"addcar",
+           element:<CarForm/>
         },
         {
             path:"edit/:id",
@@ -150,7 +151,7 @@ export const router=createBrowserRouter([
             {
                 path:'about',
                 element:<AboutPage/>
-                
+              
             },
             {
                 path:'rent',
@@ -195,6 +196,11 @@ export const router=createBrowserRouter([
             {
                 path:"bookingcancel",
                 element:<CancelBooking/>
+
+            },
+            {
+                path:"wishlist",
+                element:<WishlistPage/>
 
             }
 

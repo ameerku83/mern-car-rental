@@ -7,6 +7,7 @@ import { cancelBooking, createBooking, deleteBooking, getAllBookings, getBooking
 import { cancelPayment, createPayment, getPayment, getPayments,  } from "../../controllers/paymentController.js";
 import { createReview, deleteReview, getReviewById, getReviewCarid, updateReview } from "../../controllers/reviewController.js";
 import { adminGetReviews } from "../../controllers/adminController.js";
+import { addToWishlist, getUserWishlist, isCarInWishlist, removecarFormWishlist } from "../../controllers/wishlistController.js";
 
 const router = e.Router()
 router.post("/create", errorHandler(userCreate));
@@ -37,6 +38,11 @@ router.delete("/delete-booking/:id", authUser, errorHandler(deleteBooking));
  router.delete("/delete-review/:id", authUser, errorHandler(deleteReview));
  //contact us
  router.post("/contact", authUser, errorHandler(createContact))
+ //wishlist
+ router.post('/wishlist', authUser,errorHandler(addToWishlist));
+router.get('/wishlist/:userId', authUser,errorHandler(getUserWishlist));
+router.get('/check/:userId/:carId',authUser, errorHandler(isCarInWishlist));
+router.delete('/remove-wishlist/:id', authUser,errorHandler(removecarFormWishlist));
 export default router
 
 
