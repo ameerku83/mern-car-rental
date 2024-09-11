@@ -67,7 +67,7 @@ const userId = user._id
 
   const handleWishlistClick = async () => {
     if (!userId) {
-      navigate('/login'); // Redirect to login if not authenticated
+      navigate('/login'); 
       return;
     }
 
@@ -78,7 +78,7 @@ const userId = user._id
       });
 
       setIsInWishlist(true);
-      toast.success("addwd to wishlist");
+      toast.success("aded to wishlist");
     } catch (error) {
       toast.error( 'Failed to add to wishlist');
       console.log(error);

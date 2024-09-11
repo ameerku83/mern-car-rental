@@ -24,7 +24,7 @@ const HomePage = () => {
         setReviews(response?.data.data)
         
         } catch (error) {
-            console.log(error);
+           
             
         }
     }
@@ -215,7 +215,7 @@ const onSubmit = (data)=>{
         <div className="flex space-x-4 p-6">
           {reviews.map((review, index) => (
             <div key={index} className="bg-base-200 shadow-lg rounded-lg p-3 flex-none ">
-              <div className="w-36">
+              <div className="w-36 ">
                 <div className="flex items-center mb-2">
                   <FaUserCircle className="h-6 mx-2 text-gray-600" />
                   <div className="font-semibold">{review.user.name}</div>
@@ -227,7 +227,7 @@ const onSubmit = (data)=>{
                 <div className="flex mb-2">
                   {renderStars(review.rating)}
                 </div>
-                <p className="text-sm  overflow-hidden text-ellipsis whitespace-normal">"{review.comment}"</p>
+                <p className="text-sm">"{review.comment}"</p>
               </div>
             </div>
           ))}
