@@ -39,7 +39,7 @@ router.delete("/delete-booking/:id", authUser, errorHandler(deleteBooking));
  //contact us
  router.post("/contact", authUser, errorHandler(createContact))
  //wishlist
- router.post('/wishlist', authUser,errorHandler(addToWishlist));
+ router.post('/add-wishlist', authUser,errorHandler(addToWishlist));
 router.get('/wishlist/:userId', authUser,errorHandler(getUserWishlist));
 router.get('/check/:userId/:carId',authUser, errorHandler(isCarInWishlist));
 router.delete('/remove-wishlist/:id', authUser,errorHandler(removecarFormWishlist));

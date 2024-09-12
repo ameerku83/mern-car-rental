@@ -16,7 +16,7 @@ const app =express()
 //app.use(morgan("dev"))
   app.use(cors(
     {
-      origin:"https://ameerku83mern-car-rental.vercel.app",
+      origin: [ "https://ameerku83mern-car-rental.vercel.app","http://localhost:3000"],
       credentials:true
     }
   ))

@@ -72,7 +72,7 @@ const userId = user._id
     }
 
     try {
-      const response = await axiosInstance.post('user/wishlist', {
+      const response = await axiosInstance.post('user/add-wishlist', {
         userId,
         carId: car._id,
       });

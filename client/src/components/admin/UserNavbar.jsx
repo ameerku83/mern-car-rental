@@ -70,7 +70,7 @@ const UserNavbar = () => {
           if (userId) { 
               try {
                   const response = await axiosInstance.get(`user/wishlist/${userId}`);
-                  setWishlist(response?.data);
+                  setWishlist(response?.data?.data);
                   console.log(response.data);
                   
               } catch (error) {
