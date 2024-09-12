@@ -14,21 +14,18 @@ import cookieParser from 'cookie-parser';
 const app =express()
 
 //app.use(morgan("dev"))
-const corsOptions = {
-  origin: ["https://ameerku83mern-car-rental.vercel.app", "http://localhost:3000"],  
-  credentials: true, 
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
-  allowedHeaders: ['Content-Type', 'Authorization'],  
-};
-
-
-app.use(cors(corsOptions));
-
-app.options('*', cors(corsOptions));  
-
+  app.use(cors(
+    {
+      origin: "https://ameerku83mern-car-rental.vercel.app",
+      credentials:true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  
+      allowedHeaders: ['Content-Type', 'Authorization'],  
+    }
+  ))
+  
   app.use(express.urlencoded({ extended: true }));
 
- 
+ //"http://localhost:3000"
  
 app.use(express.json())
 
