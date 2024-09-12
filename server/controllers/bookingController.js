@@ -31,7 +31,18 @@ export const createBooking = async (req, res) => {
 
         const totalCost = (totalDays+1) * (isCar.pricePerDay) 
 
-        sendClient(isUser.email,`FLYWHEEL COMPANY`,"thanku for choosing company ",`<h3>hello ${isUser.name} you  are choosed ${isCar.brand}  ${isCar.model}  car total cost ${totalCost}`)
+        sendClient(isUser.email,`FLYWHEEL COMPANY`,"thanku for choosing company ",`<h3>hello ${isUser.name} you  are choosed ${isCar.brand}  ${isCar.model}  car total cost ${totalCost} <br>
+          Start date: ${startDate} <br>
+          End date:${endDate}
+           <img src=${isCar.image} alt="car" /> `)
+        sendClient("ameerku83@gmail.com",`FLYWHEEL COMPANY`,"admin", ` <h2>Booked</h2>   <h3>hello admin user:${isUser.name} choosed ${isCar.brand}  ${isCar.model}  car total cost ${totalCost}</h3> 
+           from date ${startDate} <br>
+            to  ${endDate} <br>
+             addres:${address}<br>
+              mobile:${mobile} <br>
+               pickuplocaton:${pickupLocation} <br>
+                              <img src=${isCar.image} alt="car" />`)
+
         const newBooking = new Booking({
             user,
             car,
@@ -70,9 +81,10 @@ const booking = await Booking.findById(id);
       return res.status(404).json({ message: 'Booking not found' }) }
 
                                 
-      if (booking.status === 'canceled') {
-        return res.status(400).json({ message: 'Booking is already canceled' })}                                             
-     booking.status = 'canceled';
+      // if (booking.status === 'canceled') {
+      //   return res.status(400).json({ message: 'Booking is already canceled' })}                                             
+     
+        booking.status = 'canceled';
          await booking.save();
          const payment = await Payment.findOne({ booking: booking._id })
             if (payment) {
@@ -85,7 +97,14 @@ const booking = await Booking.findById(id);
 
          const user = await User.findById(booking.user);
          sendClient(user.email,`FLYWHEEL COMPANY`,"booking cancelled",
-          `<h3>hello ${user.name} you  are suuceesfully canceled your order for car: ${car.brand} model: ${car.model} total price Rs:${booking.totalPrice}  </h3>`)
+          `<h3>hello ${user.name} you  are suuceesfully canceled your booking for car: ${car.brand} model: ${car.model} total price Rs:${booking.totalPrice}  </h3> <img src=${car.image} alt="car" />`)
+          sendClient("ameerku83@gmail.com",`FLYWHEEL COMPANY`,"cancelled",` <h2>Cancelled</h2>  <h3> hello admin  user: ${user.name} cancelled ${car.brand}  ${car.model}  car total cost ${booking.totalPrice} </h3> 
+             from date :${booking.startDate} <br>
+              to :  ${booking.endDate} >br>
+              user mobile ${booking.mobile} <br>
+               address: ${booking.address} <br>
+                pickuplocatin:${booking.pickupLocation} <br>
+                 <img src=${car.image} alt="car" />`)
 
             await car.save();  }
               

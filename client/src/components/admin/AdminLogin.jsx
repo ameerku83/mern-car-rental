@@ -19,8 +19,8 @@ const AdminLogin = () => {
       toast.success('Logged in successfully');
     navigate('/admin/home')
     } catch (error) {
-      toast.error(error.response.data.message);
-      console.log(error.response);
+     
+      console.log(error);
       
     }
   };
