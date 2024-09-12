@@ -1,4 +1,5 @@
-import { Wishlist } from "../models/WishlistModel.js";
+import { Wishlist } from "../models/wishlistModel.js";
+
 
 
 export const addToWishlist = async (req, res) => {
