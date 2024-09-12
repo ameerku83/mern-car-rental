@@ -6,26 +6,20 @@ import mongoDb from "./config/mongoDb.js"
 import apiRouter from "./routes/index.js"
 import cookieParser from 'cookie-parser';
 
-// import path from "path"
-// import { fileURLToPath } from "url";
-
 //import morgan from "morgan"
 
 const app =express()
 
-//app.use(morgan("dev"))
   app.use(cors(
     {
-      origin: "https://ameerku83mern-car-rental.vercel.app",
+      origin: ["https://ameerku83mern-car-rental.vercel.app","http://localhost:3000"],
       credentials:true,
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  
-      
+   
     }
   ))
   
   app.use(express.urlencoded({ extended: true }));
 
- //"http://localhost:3000"
  
 app.use(express.json())
 
