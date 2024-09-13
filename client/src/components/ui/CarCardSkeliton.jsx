@@ -11,10 +11,7 @@ export const CarCardSkeliton = () => {
           <div className="h-6 bg-gray-300 rounded w-1/2 mx-auto"></div>
           <div className="h-6 bg-gray-300 rounded w-1/3 mx-auto"></div>
           <div className="h-6 bg-gray-300 rounded w-2/3 mx-auto"></div>
-          <div className="h-6 bg-gray-300 rounded w-1/4 mx-auto"></div>
-          <div className="h-6 bg-gray-300 rounded w-1/2 mx-auto"></div>
-          <div className="h-6 bg-gray-300 rounded w-1/3 mx-auto"></div>
-          <div className="h-6 bg-gray-300 rounded w-1/4 mx-auto"></div>
+         
         </div>
       </div>
       <div className="flex justify-between items-center mt-2">

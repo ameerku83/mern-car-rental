@@ -8,9 +8,9 @@ const Services = () => {
                 <h2 className="text-4xl font-semibold text-purple-600 mb-12">
                     Our Services
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
+                <div className="grid grid-cols-1 md:grid-cols-3  lg:grid-cols-3 gap-8 justify-center ">
                     {/* Service 1 */}
-                    <div className="service-card bg-base-200 p-6 rounded-lg shadow-md border-purple-600 border-s-2 ">
+                    <div className="service-card bg-base-200 p-6 rounded-lg shadow-md border-purple-600 border-s-2 mx-2">
                         <div className="icon mb-6">
                             <div className="text-purple-600 bg-gray-100 rounded-full p-6 inline-block">
                                 <FaHeadset size={48} />
@@ -27,7 +27,7 @@ const Services = () => {
                     </div>
 
                     {/* Service 2 */}
-                    <div className="service-card bg-base-200 p-6 rounded-lg shadow-md border-purple-600 border-s-2  ">
+                    <div className="service-card bg-base-200 p-6 rounded-lg shadow-md border-purple-600 border-s-2  mx-2">
                         <div className="icon mb-6">
                             <div className="text-purple-600 bg-gray-100 rounded-full p-6 inline-block">
                                 <FaCar size={48} />
@@ -39,8 +39,8 @@ const Services = () => {
                         </p>
                     </div>
 
-                    {/* Service 3 */}
-                    <div className="service-card bg-base-200 p-6 rounded-lg shadow-md border-purple-600 border-s-2 ">
+                    
+                    <div className="service-card bg-base-200 p-6 rounded-lg shadow-md border-purple-600 border-s-2 mx-2">
                         <div className="icon mb-6">
                             <div className="text-purple-600 bg-gray-100 rounded-full p-6 inline-block">
                                 <FaPercent size={48} />
@@ -52,6 +52,7 @@ const Services = () => {
 
                         </p>
                     </div>
+                
                 </div>
             </div>
         </div>

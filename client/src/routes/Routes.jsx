@@ -29,11 +29,13 @@ import ContactUs from "../pages/user/ContactUs";
 import { UsersMessages } from "../pages/admin/UsersMessages";
 import CancelBooking from "../pages/user/CancelBooking";
 import { WishlistPage } from "../pages/user/WishlistPage";
+import UserErrorPage from "../pages/UserErrorPage";
 
 const adminPath=process.env.REACT_APP_ADMIN
 export const router=createBrowserRouter([
     {   path:"/",
         element:<RootLayout/>,
+        errorElement:<UserErrorPage/>,
         children:[
             {
                 path:"/",

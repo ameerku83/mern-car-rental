@@ -65,7 +65,7 @@ const MyBookings = () => {
         }
     };
   
-    if(bookings.length === 0) return( <h1>No bookings found</h1> )
+    if(bookings.length === 0) return( <h1 className='pt-28 text-center'>No bookings found</h1> )
         const formatDate = (dateString) => {
             return new Date(dateString).toLocaleDateString('en-CA'); 
         };
@@ -99,7 +99,7 @@ const MyBookings = () => {
 
                    ))  
             ) : (
-                 <p>  No bookings found. </p>
+                 <p className='pt-28'>  No bookings found. </p>
             )}
            </div>
      </div>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { AiOutlineHeart, AiOutlineMenu } from 'react-icons/ai'; // Importing icons from react-icons
-import { FaUserCircle } from 'react-icons/fa';
+import {  AiOutlineMenu } from 'react-icons/ai'; // Importing icons from react-icons
+
 import Btn from './Btn';
 import { DarkMode } from './DarkMode';
 import car from '../../asets/images/carlogo.png'
@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const NavBar = () => {
     
   return (
-    <div className="navbar bg-base-100 px-4 shadow border-b-2 border-purple-100 fixed z-40 ">
+    <div className="navbar bg-base-200 px-2 shadow border-b-2 border-purple-100 fixed z-40 ">
       {/* Navbar Start */}
       <div className="navbar-start">
         {/* Mobile Menu Icon */}
@@ -16,12 +16,12 @@ const NavBar = () => {
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
             <AiOutlineMenu className="h-5 w-5" />
           </label>
-          <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-          <li><Link to={"/"}> Home</Link></li>
-          <li><Link to={"/about"}> About</Link></li>
-          <li><Link to={"/services"}> Our Services</Link></li>
-            <li><Link to={"/rent"}>Rent a car</Link></li>
-            <li><Link to={"/user/contact"}> Contact us</Link></li>
+          <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-sm bg-base-200  w-32">
+          <li> <button className='btn btn-sm bg-purple-500 text-white hover:bg-purple-600' > <Link to={"/"}> Home</Link></button></li>
+          <li><button className='btn btn-sm bg-purple-500 text-white hover:bg-purple-600' ><Link to={"/about"}> About</Link></button></li>
+          <li><button className='btn btn-sm bg-purple-500 text-white hover:bg-purple-600' ><Link to={"/services"}> Our Services</Link></button></li>
+            <li><button className='btn btn-sm bg-purple-500 text-white hover:bg-purple-600' ><Link to={"/rent"}>Rent a car</Link></button></li>
+            <li><button className='btn btn-sm bg-purple-500 text-white hover:bg-purple-600' ><Link to={"/user/contact"}> Contact us</Link></button></li>
             
           </ul>
         </div>

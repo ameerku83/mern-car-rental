@@ -67,7 +67,7 @@ const renderStars = (rating) => {
             <Btn className=""><Link to={'/user/rent'}>
             Book a car 
             </Link></Btn>
-            <button className="btn btn-outline">Learn more</button>
+            <button className="btn btn-outline"><Link to={'/user/about'}> Learn more </Link> </button>
           </div>
         </div>
         <div className="lg:w-3/4 mt-14">

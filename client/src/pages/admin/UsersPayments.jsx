@@ -65,7 +65,7 @@ export const UsersPayments = () => {
                 </div>
                 <div className="flex justify-center items-center mt-2">
                 
-                <button className='btn btn-error' onClick={()=>deletePayment(payment._id)} > Delete Review </button>
+                <button className='btn btn-error' onClick={()=>deletePayment(payment._id)} > Delete Payment </button>
               
                 </div>
               </div>
