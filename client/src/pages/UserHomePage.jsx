@@ -10,11 +10,26 @@ import { Link, useNavigate } from "react-router-dom";
 import { Carousel } from "../components/ui/Carousel";
 import { axiosInstance } from "../config/axiosInstance";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { setUserId } from "../redux/userSlice";
 
 const UserHomePage = () => {
+  
   const [reviews, setReviews] = useState([]);
   const { handleSubmit, register, formState:{errors} }   = useForm()
   const navigate = useNavigate()
+  const dispatch =useDispatch()
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axiosInstance.get('user/profile');
+        dispatch(setUserId(response?.data?.data?._id));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUser();
+  }, [dispatch]);
   const onSubmit = (data)=>{
     console.log(data);
     navigate('/user/rent')

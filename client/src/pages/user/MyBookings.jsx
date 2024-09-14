@@ -6,39 +6,22 @@ import { axiosInstance } from '../../config/axiosInstance';
 import Btn from '../../components/ui/Btn';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 const MyBookings = () => {
 
     const navigate=useNavigate()
-    const [user,setUser]=useState({})
+   
     const [bookings, setBookings] = useState({});
-
-    useEffect(() => {
-      
-        const fetchUser = async () => {
-            try {
-             const response= await axiosInstance.get('user/profile',);
-              setUser(response?.data?.data)
-              //toast.success('account created suc');
-              
-              
-            
-            } catch (error) {
-             // toast.error(error.response.data.message);
-              console.log(error);
-              
-            }
-          };
-          fetchUser()
-      
-    }, [])
+    const userId = useSelector((state) => state.user.id); 
+  
     
    
     useEffect(() => {
         const fetchBookings = async () => {
-            if (user._id) { 
+            if (userId) { 
                 try {
-                    const response = await axiosInstance.get(`user/bookings/${user._id}`);
+                    const response = await axiosInstance.get(`user/bookings/${userId}`);
                     setBookings(response?.data?.data);
                     console.log(response.data);
                     
@@ -50,7 +33,7 @@ const MyBookings = () => {
         };
 
         fetchBookings();
-    }, [user._id]); 
+    }, [userId]); 
   
     const cancelBooking = async (id) => {
         try {

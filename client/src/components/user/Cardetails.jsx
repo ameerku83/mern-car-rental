@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import Btn from '../ui/Btn';
 import { CardetailSkeleton } from '../ui/CardetailSkeleton';
+import { useSelector } from 'react-redux';
 
 export const Cardetails = () => {
     const navigate = useNavigate()
@@ -18,26 +19,8 @@ export const Cardetails = () => {
     const [day, month, year] = dateStr.split('/'); // Split the date string
     return `${year}-${month}-${day}`; // Rearrange to yyyy-mm-dd
    };
-   const [user,setUser]=useState({})
-
-     useEffect(() => {
-      
-        const fetchUser = async () => {
-            try {
-             const response= await axiosInstance.get('user/profile',);
-              setUser(response?.data?.data)
-              //toast.success('account created suc');
-            
-            } catch (error) {
-             // toast.error(error.response.data.message);
-              console.log(error);
-              
-            }
-          };
-          fetchUser()
-      
-    }, [])
-    
+   const userId = useSelector((state) => state.user.id); 
+  
     useEffect(() => {
         const fetchCar = async ()=>{
             
@@ -105,7 +88,7 @@ export const Cardetails = () => {
             const bookingData = {
                  // Replace with actual user ID from authentication context
                 car:id,
-                user:user._id,
+                user:userId,
                 startDate: startDateFormatted,
                 endDate: endDateFormatted,
                 address:data.address,

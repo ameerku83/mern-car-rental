@@ -9,14 +9,18 @@ import { DarkMode } from '../ui/DarkMode';
 import { Link, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearUserId } from '../../redux/userSlice';
 const UserNavbar = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const logout = async () => {
     try {
       await axiosInstance.put('user/logout',);
       toast.success('Logged out successfully');
+      dispatch(clearUserId());
       navigate('/login')
-    //navigate('/user/home')
+    
     } catch (error) {
      // toast.error(error.response.data.message);
       console.log(error.response);
@@ -24,34 +28,16 @@ const UserNavbar = () => {
     }
   };
 
-  const [user,setUser]=useState({})
+  
   const [bookings, setBookings] = useState([]);
  const [wishlist,setWishlist] =useState([])
-  useEffect(() => {
-    
-      const fetchUser = async () => {
-          try {
-           const response= await axiosInstance.get('user/profile',);
-            setUser(response?.data?.data)
-            //toast.success('account created suc');
-            
-            
-          
-          } catch (error) {
-           // toast.error(error.response.data.message);
-            console.log(error);
-            
-          }
-        };
-        fetchUser()
-    
-  }, [])
+ const userId = useSelector((state) => state.user.id); 
  
   useEffect(() => {
       const fetchBookings = async () => {
-          if (user._id) { 
+          if (userId) { 
               try {
-                  const response = await axiosInstance.get(`user/bookings/${user._id}`);
+                  const response = await axiosInstance.get(`user/bookings/${userId}`);
                   setBookings(response?.data?.data);
                   console.log(response.data);
                   
@@ -63,8 +49,8 @@ const UserNavbar = () => {
       };
 
       fetchBookings();
-  }, [user._id]); 
-  const userId=user._id
+  }, [userId]); 
+  
   useEffect(() => {
       const fetchWishlist = async () => {
           if (userId) { 
@@ -93,7 +79,7 @@ const UserNavbar = () => {
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
             <AiOutlineMenu className="h-5 w-5" />
           </label>
-          <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-200 rounded-sm w-32">
+          <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-white rounded-md w-32 space-y-0.5">
             
          
           <li><button className='btn btn-sm bg-purple-500 text-white hover:bg-purple-600' ><Link  to={"/user/home"}> Home</Link  > </button> </li>

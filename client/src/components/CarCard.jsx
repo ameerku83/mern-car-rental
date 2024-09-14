@@ -4,29 +4,13 @@ import { FaGasPump, FaUsers, FaTachometerAlt, FaStar } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../config/axiosInstance';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 const CarCard = ({ car }) => {
   const [averageRating, setAverageRating] = useState(0);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const navigate = useNavigate();
-  const [user,setUser]=useState({})
-  
- 
-      useEffect(() => {
-       
-         const fetchUser = async () => {
-             try {
-              const response= await axiosInstance.get('user/profile',);
-               setUser(response?.data?.data)
-             } catch (error) {
-              
-               console.log(error); 
-             }
-           };
-           fetchUser() 
-     }, [])
-     
-const userId = user._id 
+  const userId = useSelector((state) => state.user.id); 
   
   useEffect(() => {
     const checkWishlist = async () => {

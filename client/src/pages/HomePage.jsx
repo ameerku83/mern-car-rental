@@ -10,10 +10,13 @@ import { Carousel } from "../components/ui/Carousel";
 import { axiosInstance } from "../config/axiosInstance";
 import { useForm } from "react-hook-form";
 
+
 const HomePage = () => {
+  
   const [reviews, setReviews] = useState([]);
   const { handleSubmit, register, formState:{errors} }   = useForm()
    const navigate = useNavigate()
+  
   useEffect(()=>{
         
     const fetchReviews = async  ()=>{

@@ -3,36 +3,22 @@ import { axiosInstance } from '../../config/axiosInstance';
 import { FaGasPump, FaTachometerAlt, FaUsers } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import {  useSelector } from 'react-redux';
+
 
 export const WishlistPage = () => {
-    const [user,setUser]=useState({})
+    
     const [wishlists, setWishlist] = useState([]);
+   const userId = useSelector((state) => state.user.id); 
+  
+  
    
     useEffect(() => {
-      
-        const fetchUser = async () => {
-            try {
-             const response= await axiosInstance.get('user/profile',);
-              setUser(response?.data?.data)
-              //toast.success('account created suc');
-              
-              
-            
-            } catch (error) {
-             // toast.error(error.response.data.message);
-              console.log(error);
-              
-            }
-          };
-          fetchUser()
-      
-    }, [])
-    
-   const userId=user._id
-    useEffect(() => {
         const fetchWishlist = async () => {
+          
             if (userId) { 
                 try {
+                  
                     const response = await axiosInstance.get(`user/wishlist/${userId}`);
                     setWishlist(response?.data?.data);
                     console.log(response.data);

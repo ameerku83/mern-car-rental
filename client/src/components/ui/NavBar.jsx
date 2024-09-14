@@ -16,7 +16,7 @@ const NavBar = () => {
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
             <AiOutlineMenu className="h-5 w-5" />
           </label>
-          <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-sm bg-base-200  w-32">
+          <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-white rounded-md w-32 space-y-0.5">
           <li> <button className='btn btn-sm bg-purple-500 text-white hover:bg-purple-600' > <Link to={"/"}> Home</Link></button></li>
           <li><button className='btn btn-sm bg-purple-500 text-white hover:bg-purple-600' ><Link to={"/about"}> About</Link></button></li>
           <li><button className='btn btn-sm bg-purple-500 text-white hover:bg-purple-600' ><Link to={"/services"}> Our Services</Link></button></li>
@@ -25,12 +25,12 @@ const NavBar = () => {
             
           </ul>
         </div>
-         <div>
-        <Link to={'/'} >
+        <div className=' relative'>
+        <Link to={'/user/home'} >
   
         <img className=' h-8 object-contain' src={car} alt="" /> 
         </Link>
-        <i className=' text-sm text-purple-700 font-bold' > FLY WHEELS</i>
+        <i className=' text-sm text-purple-700 font-bold sm:text-sm mt-0 pt-0 absolute top-6' > FLY WHEELS</i>
         </div>
       </div>
 
