@@ -87,7 +87,7 @@ export const WishlistPage = () => {
         </div>
       </div>
        <div className="flex flex-wrap justify-between items-center mt-4">
-       <button className="btn text-white bg-green-600 rounded-md">
+       <button className="btn bg-green-500 text-white rounded-md">
          <Link to={`/user/cardetails/${wishlist.carId._id}`}> Book Now </Link>
         </button>
      <button className="btn btn-error" onClick={ ()=>removeWishlist(wishlist._id)} >Remove</button> 

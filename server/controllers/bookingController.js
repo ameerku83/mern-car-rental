@@ -5,9 +5,11 @@ import { Payment } from '../models/paymntModel.js';
 import { User } from '../models/userModel.js';
 import { sendClient } from '../utils/sendMail.js';
 //import m from "moment"
+const formatDate = (dateString) => {
+  return new Date(dateString).toLocaleDateString('en-CA'); 
+};
 
 export const createBooking = async (req, res) => {
-    
         const { car,user, startDate, endDate,address,pickupLocation,mobile } = req.body;
         await bookingValiadation.validateAsync({ startDate, endDate,address,pickupLocation,mobile })
        const isCar= await Car.findById(car)
@@ -24,24 +26,21 @@ export const createBooking = async (req, res) => {
           // const startFormat = m(startDate,'DD/MM/YYYY').format("YYYY-MM-DD")
           // const endFormat = m(endDate,'DD/MM/YYYY').format("YYYY-MM-DD")
 
-
-
-         
           const totalDays=Math.ceil((new Date(endDate)-new Date(startDate))/ (1000 * 60 * 60*24 ))
 
         const totalCost = (totalDays+1) * (isCar.pricePerDay) 
 
-        sendClient(isUser.email,`FLYWHEEL COMPANY`,"thanku for choosing company ",`<h3>hello ${isUser.name} you  are choosed ${isCar.brand}  ${isCar.model}  car total cost ${totalCost} <br>
-          Start date: ${startDate} <br>
-          End date:${endDate}
+        sendClient(isUser.email,`FLYWHEEL `,"thanku for choosing company ",`<h3>hello ${isUser.name} you  are choosed ${isCar.brand}  ${isCar.model}  car total cost ${totalCost} <br>
+          Start date: ${formatDate(startDate)} <br>
+          End date:${formatDate(endDate)}
            <img src=${isCar.image} alt="car" /> `)
-        sendClient("ameerku83@gmail.com",`FLYWHEEL COMPANY`,"admin", ` <h2>Booked</h2>   <h3>hello admin user:${isUser.name} choosed ${isCar.brand}  ${isCar.model}  car total cost ${totalCost}</h3> 
-           from date ${startDate} <br>
-            to  ${endDate} <br>
-             addres:${address}<br>
-              mobile:${mobile} <br>
-               pickuplocaton:${pickupLocation} <br>
-                              <img src=${isCar.image} alt="car" />`)
+        sendClient("ameerku83@gmail.com",`FLYWHEEL `,"admin", ` <h2>Booked</h2>   <h3>hello admin user:${isUser.name} choosed ${isCar.brand}  ${isCar.model}  car total cost ${totalCost}</h3> 
+           from date ${formatDate(startDate)} <br>
+            to  ${formatDate(endDate)} <br>
+            addres:${address}<br>
+            mobile:${mobile} <br>
+            pickuplocaton:${pickupLocation} <br>
+            <img src=${isCar.image} alt="car" />`)
 
         const newBooking = new Booking({
             user,
@@ -96,11 +95,11 @@ const booking = await Booking.findById(id);
          car.availability = true;
 
          const user = await User.findById(booking.user);
-         sendClient(user.email,`FLYWHEEL COMPANY`,"booking cancelled",
+         sendClient(user.email,`FLYWHEEL `,"booking cancelled",
           `<h3>hello ${user.name} you  are suuceesfully canceled your booking for car: ${car.brand} model: ${car.model} total price Rs:${booking.totalPrice}  </h3> <img src=${car.image} alt="car" />`)
-          sendClient("ameerku83@gmail.com",`FLYWHEEL COMPANY`,"cancelled",` <h2>Cancelled</h2>  <h3> hello admin  user: ${user.name} cancelled ${car.brand}  ${car.model}  car total cost ${booking.totalPrice} </h3> 
-             from date :${booking.startDate} <br>
-              to :  ${booking.endDate} >br>
+          sendClient("ameerku83@gmail.com",`FLYWHEEL `,"cancelled",` <h2>Cancelled</h2>  <h3> hello admin  user: ${user.name} cancelled ${car.brand}  ${car.model}  car total cost ${booking.totalPrice} </h3> 
+             from date :${formatDate(booking.startDate)} <br>
+              to :  ${formatDate(booking.endDate)} <br>
               user mobile ${booking.mobile} <br>
                address: ${booking.address} <br>
                 pickuplocatin:${booking.pickupLocation} <br>
