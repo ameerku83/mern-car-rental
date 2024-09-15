@@ -33,10 +33,10 @@ export const createPayment = async (req, res) => {
     success_url:"https://ameerku83mern-car-rental.vercel.app/user/payment/success",
     cancel_url:"https://ameerku83mern-car-rental.vercel.app/user/payment/cancel",
  })
-    const payment =  Payment({ car,user, booking,amount:fetchBooking.totalPrice,  paymentDate, status:session.payment_status  });
-
  
-   
+ 
+    
+ const payment =  Payment({ car,user, booking,amount:fetchBooking.totalPrice,  paymentDate,status:"paid" });
     await fetchBooking.save()
       await payment.save()    
     res.status(200).json({ message:"payment success", data:payment,sessionId:session.id});

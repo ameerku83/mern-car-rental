@@ -55,7 +55,7 @@ export const UserProfile = () => {
         </Btn>
       </div>
 
-      <div className="overflow-x-auto px-4 mt-4">
+    { payments.length >0 && <div className="overflow-x-auto px-4 mt-4">
         <h1 className="text-center text-2xl my-3">Payments</h1>
         <table className="table w-full border border-black-600">
           <thead>
@@ -81,7 +81,7 @@ export const UserProfile = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> }
     </div>
   );
 };

@@ -50,6 +50,12 @@ export const AdminUserBookings = () => {
                 console.log(error);
             }
         };
+        const HourFormat = (time24) => {
+            const [hour, minute] = time24.split(':');
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const hour12 = hour % 12 || 12; 
+            return `${hour12}:${minute} ${ampm}`;
+          };
 
   return (
     <div>
@@ -69,7 +75,11 @@ export const AdminUserBookings = () => {
                     <h5> {booking.user.email}</h5>
                     <h5>mobile : {booking.user.mobile}</h5>
                     <h5>staus : {booking.status}</h5>
+                    <h5>Pickup Loacation : {booking.pickupLocation}</h5>
+                    <h5>Pickup Time : {HourFormat(booking.pickupTime)}</h5>
                     <h5>start date : {formatDate(booking.startDate)}</h5>
+                    <h5>Drop Location : {booking.dropOffLocation}</h5>
+                    <h5>Drop Time : {HourFormat(booking.dropOffTime)}</h5>
                     <h5>End date : {formatDate(booking.endDate)}</h5>
                     
                     {/* <h5> fuel type : {booking.fuelType}</h5>
