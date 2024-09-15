@@ -10,7 +10,7 @@ const formatDate = (dateString) => {
 };
 
 export const createBooking = async (req, res) => {
-        const { car,user, startDate, endDate,address,pickupLocation,mobile } = req.body;
+        const { car,user, startDate, endDate,address,pickupLocation,mobile,pickupTime,dropOffTime,dropOffLocation } = req.body;
         await bookingValiadation.validateAsync({ startDate, endDate,address,pickupLocation,mobile })
        const isCar= await Car.findById(car)
        const isUser= await User.findById(user)
@@ -29,10 +29,19 @@ export const createBooking = async (req, res) => {
           const totalDays=Math.ceil((new Date(endDate)-new Date(startDate))/ (1000 * 60 * 60*24 ))
 
         const totalCost = (totalDays+1) * (isCar.pricePerDay) 
-
+        const HourFormat = (time24) => {
+          const [hour, minute] = time24.split(':');
+          const ampm = hour >= 12 ? 'PM' : 'AM';
+          const hour12 = hour % 12 || 12; 
+          return `${hour12}:${minute} ${ampm}`;
+        };
         sendClient(isUser.email,`FLYWHEEL `,"thanku for choosing company ",`<h3>hello ${isUser.name} you  are choosed ${isCar.brand}  ${isCar.model}  car total cost ${totalCost} <br>
           Start date: ${formatDate(startDate)} <br>
-          End date:${formatDate(endDate)}
+          End date:${formatDate(endDate)}<br>
+          pickuplocaton:${pickupLocation} <br>
+          Drop Off locaton:${dropOffLocation} <br>
+          Pick Up Time:${HourFormat(pickupTime)} <br>
+          Drop Off Time:${HourFormat(dropOffTime)} <br>
            <img src=${isCar.image} alt="car" /> `)
         sendClient("ameerku83@gmail.com",`FLYWHEEL `,"admin", ` <h2>Booked</h2>   <h3>hello admin user:${isUser.name} choosed ${isCar.brand}  ${isCar.model}  car total cost ${totalCost}</h3> 
            from date ${formatDate(startDate)} <br>
@@ -40,6 +49,9 @@ export const createBooking = async (req, res) => {
             addres:${address}<br>
             mobile:${mobile} <br>
             pickuplocaton:${pickupLocation} <br>
+            Drop Off locaton:${dropOffLocation} <br>
+            Pick Up Time:${HourFormat(pickupTime)} <br>
+            Drop Off Time:${HourFormat(dropOffTime)} <br>
             <img src=${isCar.image} alt="car" />`)
 
         const newBooking = new Booking({
@@ -51,6 +63,9 @@ export const createBooking = async (req, res) => {
             address,
             pickupLocation,
             mobile,
+            pickupTime,
+            dropOffTime,
+            dropOffLocation,
             status:"booked",
             
         });

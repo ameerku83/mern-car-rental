@@ -52,11 +52,18 @@ const MyBookings = () => {
         const formatDate = (dateString) => {
             return new Date(dateString).toLocaleDateString('en-CA'); 
         };
+        const HourFormat = (time24) => {
+            const [hour, minute] = time24.split(':');
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const hour12 = hour % 12 || 12; 
+            return `${hour12}:${minute} ${ampm}`;
+          };
+          
     return (
      
      <div>
             <h1>Your Bookings</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-12">
             {bookings.length > 0 ? (
                    
                    bookings.map((booking)=>(
@@ -68,7 +75,11 @@ const MyBookings = () => {
                     <h5>Total price : {booking.totalPrice}</h5>
                     <h5>Staus : {booking.status}</h5>
                     <h5>Start date : {formatDate(booking.startDate)}</h5>
+                    <h5>Pickup Time : {HourFormat(booking.pickupTime)}</h5>
+                    <h5>Pickup Location : {booking.pickupLocation}</h5>
                     <h5>End date : {formatDate(booking.endDate)}</h5>
+                    <h5>Drop Off Time : {HourFormat(booking.dropOffTime)}</h5>
+                    <h5>Drop Off Location : {booking.dropOffLocation}</h5>
                    
                    
                     </div>

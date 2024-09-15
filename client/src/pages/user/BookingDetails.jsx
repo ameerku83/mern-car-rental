@@ -86,6 +86,12 @@ export const BookingDetails = () => {
         
     }
    }
+   const HourFormat = (time24) => {
+    const [hour, minute] = time24.split(':');
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const hour12 = hour % 12 || 12; 
+    return `${hour12}:${minute} ${ampm}`;
+  };
 
    if(!booking) return (
     <BookingDetailsSkeleton/>
@@ -107,11 +113,14 @@ export const BookingDetails = () => {
                      <div className="text-md font-bold  ">
                      <p>Car:{booking.car.brand} {booking.car.model}</p>
                      <p>Total Price:  {booking.totalPrice}</p>
-                    <p>Start Date: {formatDate(booking.startDate)}</p>
+                     <p>Pickup Location: {booking.pickupLocation}</p>
+                    <p>Pickup Date: {formatDate(booking.startDate)}</p>
+                    <h5>Pickup Time : {HourFormat(booking.pickupTime)}</h5>
                     <p>End Date: {formatDate(booking.endDate)}</p>
+                    <h5>Drop Off Time : {HourFormat(booking.dropOffTime)}</h5>
+                    <h5>Drop Off Location : {booking.dropOffLocation}</h5>
                     <p>Address: {booking.address}</p>
                     <p>Mobile: {booking.mobile}</p>
-                    <p>Pickup Location: {booking.pickupLocation}</p>
                     <p>status: {booking.status}</p>
                         <div className=' justify-between flex'>
                       {booking.status === 'booked' && <Btn onClick={makePayment} > Pay Now</Btn>}  
