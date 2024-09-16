@@ -130,34 +130,36 @@ export const BookingDetails = () => {
                 </div>
                  
              {  show? <Review  userId={booking.user._id} carId={booking.car._id} /> :null }
-           {reviews.length > 0 &&   
-                   <section className="my-16 px-5 md:px-10">
+            
+                   
+    
+         {reviews.length > 0 &&       <section className="my-16 px-5 md:px-10">
           
-                   <h2 className="text-2xl text-center ">Car Reviews</h2>
-                   <div className="overflow-x-auto whitespace-nowrap ">
-                     <div className="flex space-x-3  p-4 justify-center ">
-                       {reviews.map((review, index) => (
-                         <div key={index} className="bg-base-200 shadow-lg rounded-lg p-2 flex-none ">
-                           <div className="w-36">
-                             <div className="flex items-center mb-2">
-                               <FaUserCircle className="h-6 mx-2 text-gray-600" />
-                               <div className="font-semibold">{review.user.name}</div>
-                             </div>
-                             <div className="text-sm mb-2">
-                               {review.car.brand} {review.car.model}
-                             </div>
-                             <img src={review.car.image} className="w-24 object-contain mb-2" alt="car" />
-                             <div className="flex mb-2">
-                               {renderStars(review.rating)}
-                             </div>
-                             <p className="text-sm  overflow-hidden text-ellipsis whitespace-normal">"{review.comment}"</p>
-                           </div>
-                         </div>
-                       ))}
-                     </div>
-                   </div>
-                 </section>
-         }
+          <h2 className="text-3xl font-bold text-center mb-2 text-purple-600">What Our Clients Say</h2>
+          <div className="overflow-x-auto whitespace-nowrap">
+            <div className="flex space-x-4 p-6 hide-scrollbar">
+              {reviews.map((review, index) => (
+                <div key={index} className="bg-base-200 shadow-lg rounded-lg p-3 flex-none ">
+                  <div className="w-36">
+                    <div className="flex items-center mb-2">
+                      <FaUserCircle className="h-6 mx-2 text-gray-600" />
+                      <div className="font-semibold">{review.user.name}</div>
+                    </div>
+                    <div className="text-sm mb-2">
+                      {review.car.brand} {review.car.model}
+                    </div>
+                    <img src={review.car.image} className="w-24 object-contain mb-2" alt="car" />
+                    <div className="flex mb-2">
+                      {renderStars(review.rating)}
+                    </div>
+                    <p className="text-sm  overflow-hidden text-ellipsis whitespace-normal">"{review.comment}"</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+            </section> 
+             }
                  
                  </div>
              ) : (
