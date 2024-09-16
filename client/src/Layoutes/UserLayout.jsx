@@ -9,7 +9,7 @@ export const UserLayout = () => {
     return (
         <div>
             <UserNavbar/>
-            <div className="min-h-96">
+            <div className="">
                 <Outlet />
             </div>
             <Footer/>

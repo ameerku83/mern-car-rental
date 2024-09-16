@@ -64,9 +64,9 @@ const CarCard = ({ car }) => {
       setIsInWishlist(true);
       toast.success("aded to wishlist");
     } catch (error) {
-      toast.error( 'Failed to add to wishlist');
+      toast.error( 'please login');
       console.log(error);
-      
+      navigate('/login')
     }
   };
   const renderStars = (rating) => {

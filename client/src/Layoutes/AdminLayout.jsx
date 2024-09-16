@@ -8,7 +8,7 @@ export const AdminLayout = () => {
     return (
         <div>
             <AdminNavbar />
-            <div className="min-h-96">
+            <div >
                 <Outlet />
             </div>
             <Footer/>
