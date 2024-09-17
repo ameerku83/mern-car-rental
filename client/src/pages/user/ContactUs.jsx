@@ -50,7 +50,7 @@ const ContactUs = () => {
   return (
     <div className='pt-24' >
     <div className="container mx-auto p-4 max-w-md  shadow bg-base-200">
-      <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
+      <h2 className="text-2xl font-bold mb-4">Send your complaints</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label className="block text-sm font-medium mb-1" htmlFor="email">Email</label>

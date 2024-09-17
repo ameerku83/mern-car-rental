@@ -61,15 +61,15 @@ const MyBookings = () => {
           
     return (
      
-     <div>
-            <h1>Your Bookings</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-12">
+     <div >
+           <h2 className="text-2xl font-bold mx-3 text-center pt-24">  My Bookings</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 ">
             {bookings.length > 0 ? (
                    
                    bookings.map((booking)=>(
                     <div className="border border-gray-200 rounded-lg  shadow-md p-4 mx-4 mt-4 md:mt-6 sm:mt-5">
                     <img src={booking.car.image} alt={booking.status} className="w-full h-40 object-contain rounded-md" />
-                    <div className=' text-center mt-2 ' >
+                    <div className='  mt-2 ' >
                     <h3 className="text-2xl font-bold mt-4"> {booking.car.brand} {booking.car.model}</h3>
                     <div className='text-xl font-semibold'>
                     <h5>Total price : {booking.totalPrice}</h5>

@@ -32,7 +32,7 @@ const AdminCreateUser = () => {
   return (
     <div className="flex items-center justify-center pt-24 ">
       <div className="bg-base-200 p-3 py-1 rounded shadow w-full max-w-sm border-purple-600 border-s-2 ">
-        <h2 className="text-2xl font-bold mb-2 text-center">Sign up</h2>
+        <h2 className="text-2xl font-bold mb-2 text-center">Create User</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-2">
             <label htmlFor="name" className="block text-gray-700"> Name</label>
@@ -80,7 +80,7 @@ const AdminCreateUser = () => {
             </span>
             {errors.password && <p className="text-red-500">{errors.password.message}</p>}
           </div>
-        <div className='flex justify-center' > <Btn type="submit" className=" p-2 rounded w-full">Sign up</Btn></div> 
+        <div className='flex justify-center' > <Btn type="submit" className=" p-2 rounded w-full">Create</Btn></div> 
         </form>
       </div>
     </div>

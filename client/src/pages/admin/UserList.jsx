@@ -44,6 +44,7 @@ const deleteUser =async(id)=>{
       <table className="table w-full border border-black-600">
         <thead>
           <tr className="text-lg  font-bold">
+          <th>Index</th>
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
@@ -51,8 +52,9 @@ const deleteUser =async(id)=>{
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {users.map((user,index) => (
             <tr key={user.id}>
+              <td>{index+1}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>{user.mobile}</td>
