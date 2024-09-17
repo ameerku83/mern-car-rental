@@ -82,10 +82,10 @@ const CarCard = ({ car }) => {
   };
 
   return (
-    <div className="relative">
-      <div className="rounded-lg shadow-md p-4 mx-4 mt-4 bg-base-100 border border-purple-100">
+    <div className=" relative ">
+      <div className=" rounded-lg shadow-md p-3 mx-3 bg-base-100 border border-purple-100 ">
         <div className="relative">
-          <img src={car.image} alt={car.model} className="w-full h-40 object-contain rounded-md" />
+          <img src={car.image} alt={car.model} className="w-full h-56 object-contain rounded-md" />
           <div className="absolute top-2 right-2">
             {isInWishlist ? (
               <AiFillHeart className="text-purple-600 text-2xl" />
