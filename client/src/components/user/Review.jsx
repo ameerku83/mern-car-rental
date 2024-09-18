@@ -22,7 +22,8 @@ const Review = ({userId,carId}) => {
     try {
      const response = await axiosInstance.post('user/review',reviewData);
       reset(); 
-      toast.success('Review  successfully!');
+      toast.success('Review added successfully!');
+      window.location.reload()
       console.log(response?.data);
       
     } catch (error) {
@@ -42,7 +43,7 @@ const Review = ({userId,carId}) => {
       <div className="mb-4">
   <label className="block">Select Rating</label>
   <div className="rating">
-    {/* Daisy UI's rating component with stars */}
+    
     {[1, 2, 3, 4, 5].map((star) => (
       <input
         key={star}

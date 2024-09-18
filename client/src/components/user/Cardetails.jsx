@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import {  FaGasPump, FaCogs, FaTachometerAlt, FaUsers, FaStar } from 'react-icons/fa';
+import {  FaGasPump, FaCogs, FaTachometerAlt, FaUsers, FaStar, FaUserCircle } from 'react-icons/fa';
 
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
@@ -14,6 +14,7 @@ export const Cardetails = () => {
    
     const {id}=useParams()
     const [car,setCar]=useState([])
+    const [reviews,setReviews]= useState([])
     useEffect(() => {
         const fetchCar = async ()=>{
             
@@ -54,7 +55,7 @@ export const Cardetails = () => {
                     const response = await axiosInstance.get(`user/carreviews/${car._id}`);
                     
                     const fetchedReviews = response?.data.data 
-                   
+                    setReviews (response?.data?.data )
                     
                     if (fetchedReviews.length > 0) {
                       const totalRating = fetchedReviews.reduce((acc, review) => acc + review.rating, 0);
@@ -124,9 +125,41 @@ export const Cardetails = () => {
 
      
     </div>
+    {reviews.length > 0 &&       <section className="my-16 px-5 ">
+          
+          <h2 className="text-3xl font-bold text-center mb-2 text-purple-600">Reviews ({reviews.length})</h2>
+          <div className="overflow-x-auto whitespace-nowrap">
+            <div className="flex space-x-4  hide-scrollbar md:justify-center">
+              {reviews.map((review, index) => (
+                <div key={index} className="bg-base-100 shadow-lg rounded-md p-3 flex-none ">
+                  <div className="w-28">
+                    <div className="flex items-center mb-2">
+                      <FaUserCircle className="h-6 mx-2 text-gray-600" />
+                      <div className="font-semibold">{review.user.name}</div>
+                    </div>
+                    <div className="text-sm mb-2">
+                      {review.car.brand} {review.car.model}
+                    </div>
+                    
+                    <div className="flex mb-2">
+                      {renderStars(review.rating)}
+                    </div>
+                    <p className="text-sm  overflow-hidden text-ellipsis whitespace-normal">"{review.comment}"</p>
+                    
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+            </section> 
+             }
+
 
     {car.availability && (
+      <div>
+      <h3  className=' text-center text-xl my-2 font-bold' >Book Now</h3>
       <BookingComponent id={id}  />
+      </div>
    
     )}
     </div> 
