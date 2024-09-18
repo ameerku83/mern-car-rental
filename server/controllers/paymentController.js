@@ -6,7 +6,9 @@ import dotenv from "dotenv"
  dotenv.config()
 import Stripe from "stripe"
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
- 
+const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-CA'); 
+  };
 export const createPayment = async (req, res) => {
     
     const { car,user,booking,   paymentDate, } = req.body;
@@ -19,7 +21,7 @@ export const createPayment = async (req, res) => {
         price_data: {
             currency: "inr",
             product_data: {
-                name: `${fetchBooking.car.brand} ${fetchBooking.car.model} ${fetchBooking.startDate}`, 
+                name: `${fetchBooking.car.brand} ${fetchBooking.car.model} ${formatDate(fetchBooking.startDate)}`, 
                 images: [fetchBooking.car.image], 
             },
             unit_amount: fetchBooking.totalPrice * 100, 

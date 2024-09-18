@@ -4,7 +4,7 @@ import { Car } from '../models/carModel.js';
 import { Payment } from '../models/paymntModel.js';
 import { User } from '../models/userModel.js';
 import { sendClient } from '../utils/sendMail.js';
-//import m from "moment"
+
 const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString('en-CA'); 
 };
