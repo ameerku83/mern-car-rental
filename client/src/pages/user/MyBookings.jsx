@@ -27,11 +27,15 @@ const MyBookings = () => {
     fetchBookings();
   }, [userId]);
 
-  const cancelBooking = async (id) => {
+  const cancelBooking = async (id,paymentStatus) => {
     try {
       await axiosInstance.put(`user/cancel-booking/${id}`);
       setBookings(bookings.map(booking => booking._id === id ? { ...booking, status: 'cancelled' } : booking));
-      navigate('/user/bookingcancel');
+       if(paymentStatus==="paid"){
+        navigate('/user/bookingcancel') 
+       }
+      
+        
       toast.success("Booking cancelled");
     } catch (error) {
       toast.error('Error canceling booking');
@@ -100,7 +104,7 @@ const MyBookings = () => {
               </div>
             </div>
             <div className="flex justify-between mt-2">
-              {booking.status === "booked" && <button className='btn btn-error' onClick={() => cancelBooking(booking._id)}>Cancel Booking</button>}
+              {booking.status === "booked" && <button className='btn btn-error' onClick={() => cancelBooking(booking._id,booking.paymentStatus)}>Cancel Booking</button>}
               <Btn>
                 <button onClick={() => toggleReviewForm(booking._id)}>
                   {selectedBookingId === booking._id && show ? "Close" : "Add Review"}
