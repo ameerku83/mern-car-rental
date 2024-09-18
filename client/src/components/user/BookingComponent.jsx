@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiOutlineCalendar, AiOutlineHome, AiOutlinePhone, AiOutlineEnvironment } from 'react-icons/ai';
 import Btn from '../ui/Btn';
@@ -8,12 +8,13 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const BookingComponent = ({ id }) => {
+    const [isDriving, setIsDriving] = useState(false); 
     const navigate= useNavigate()
     const { register, handleSubmit, formState: { errors } } = useForm();
     const userId = useSelector((state) => state.user.id); 
     const formatDate = (dateStr) => {
-        const [day, month, year] = dateStr.split('/'); // Split the date string
-        return `${year}-${month}-${day}`; // Rearrange to yyyy-mm-dd
+        const [day, month, year] = dateStr.split('/'); 
+        return `${year}-${month}-${day}`; 
        };
     const onSubmit = async (data) => {
         try {
@@ -30,8 +31,8 @@ const BookingComponent = ({ id }) => {
                 pickupLocation:data.pickupLocation,
                 pickupTime:data.pickupTime,
                 dropOffTime:data.dropOffTime,
-                dropOffLocation:data.dropOffLocation
-               
+                dropOffLocation:data.dropOffLocation,
+                  driverLicense:data.driverLicense
             };
             console.log(id);
 
@@ -200,6 +201,37 @@ const BookingComponent = ({ id }) => {
                     <AiOutlineEnvironment className="absolute left-3 top-3 text-gray-400" />
                 </div>
             </div>
+            <div className="mb-4">
+                <label className="block text-sm font-medium">
+                    <input
+                        type="checkbox"
+                        {...register('isDriving')}
+                        checked={isDriving}
+                        onChange={() => setIsDriving(!isDriving)}
+                        className="mr-2"
+                    />
+                    Drive yourself
+                </label>
+            </div>
+
+            {/* Conditionally render driver license input */}
+            {isDriving && (
+                <div className="mb-4">
+                    <label htmlFor="driverLicense" className="block text-sm font-medium">
+                        Driver's License Number
+                    </label>
+                    <div className="relative mt-1">
+                        <input
+                            type="text"
+                            id="driverLicense"
+                            placeholder="Enter your driver's license number"
+                            {...register('driverLicense', { required: "enter driver's license number ", min:{value:12,message:" enter valid driver's license number"}})}
+                            className="p-2 w-full border rounded-md"
+                        />
+                    </div>
+                    {errors.driverLicense && <span className="text-red-600">{errors.driverLicense.message}</span>}
+                </div>
+            )}
 
             <div className="flex justify-center">
                 <Btn type="submit" className="mt-4 p-2 rounded-md w-full">Book Now</Btn>

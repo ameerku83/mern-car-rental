@@ -226,9 +226,9 @@ const renderStars = (rating) => {
           
       <h2 className="text-3xl font-bold text-center mb-2 text-purple-600">What Our Clients Say</h2>
       <div className="overflow-x-auto whitespace-nowrap">
-        <div className="flex space-x-4 p-6 hide-scrollbar">
+        <div className="flex space-x-4 p-3 hide-scrollbar">
           {reviews.map((review, index) => (
-            <div key={index} className="bg-base-200 shadow-lg rounded-lg p-3 flex-none ">
+            <div key={index} className="bg-base-100 shadow-lg rounded-lg p-2 flex-none border border-purple-100">
               <div className="w-36">
                 <div className="flex items-center mb-2">
                   <FaUserCircle className="h-6 mx-2 text-gray-600" />
@@ -247,7 +247,7 @@ const renderStars = (rating) => {
           ))}
         </div>
       </div>
-    </section>
+        </section>
 
 
       

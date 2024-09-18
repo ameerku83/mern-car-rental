@@ -26,7 +26,7 @@ export const CarCategories = () => {
     }
   };
 if(cars.length===0) return (
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-12">
     <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
     <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
     <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
@@ -63,7 +63,7 @@ if(cars.length===0) return (
           Sedan
         </h4>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 ">
         {cars.map((car) => (
           <CarCard key={car._id} car={car} rating={4} />
         ))}

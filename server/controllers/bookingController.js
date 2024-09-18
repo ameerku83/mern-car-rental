@@ -10,7 +10,7 @@ const formatDate = (dateString) => {
 };
 
 export const createBooking = async (req, res) => {
-        const { car,user, startDate, endDate,address,pickupLocation,mobile,pickupTime,dropOffTime,dropOffLocation } = req.body;
+        const { car,user, startDate, endDate,address,pickupLocation,mobile,pickupTime,dropOffTime,dropOffLocation,driverLicense } = req.body;
         await bookingValiadation.validateAsync({ startDate, endDate,address,pickupLocation,mobile })
        const isCar= await Car.findById(car)
        const isUser= await User.findById(user)
@@ -67,6 +67,7 @@ export const createBooking = async (req, res) => {
             dropOffTime,
             dropOffLocation,
             status:"booked",
+            driverLicense
             
         });
         if (!isCar.availability) {
@@ -98,7 +99,8 @@ const booking = await Booking.findById(id);
       // if (booking.status === 'canceled') {
       //   return res.status(400).json({ message: 'Booking is already canceled' })}                                             
      
-        booking.status = 'canceled';
+        booking.status = 'cancelled';
+        booking.paymentStatus = 'cancelled';
          await booking.save();
          const payment = await Payment.findOne({ booking: booking._id })
             if (payment) {

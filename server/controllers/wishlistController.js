@@ -18,7 +18,6 @@ export const addToWishlist = async (req, res) => {
 
     await newWishlistItem.save();
     res.json({  success: true ,message: 'Car added to wishlist', wishlistItem: newWishlistItem });
- 
 };
 
 export const getUserWishlist = async (req, res) => {

@@ -111,6 +111,7 @@ export const BookingDetails = () => {
                     </div>
                      
                      <div className="text-md font-bold  ">
+                      {booking.driverLicense &&  <p>DL No:  {booking.driverLicense}</p>}
                      <p>Car:{booking.car.brand} {booking.car.model}</p>
                      <p>Total Price:  {booking.totalPrice}</p>
                      <p>Pickup Location: {booking.pickupLocation}</p>
@@ -135,12 +136,12 @@ export const BookingDetails = () => {
     
          {reviews.length > 0 &&       <section className="my-16 px-5 md:px-10">
           
-          <h2 className="text-3xl font-bold text-center mb-2 text-purple-600">What Our Clients Say</h2>
+          <h2 className="text-3xl font-bold text-center mb-2 text-purple-600">Reviews ({reviews.length})</h2>
           <div className="overflow-x-auto whitespace-nowrap">
-            <div className="flex space-x-4 p-6 hide-scrollbar">
+            <div className="flex space-x-4 p-6 hide-scrollbar md:justify-center">
               {reviews.map((review, index) => (
-                <div key={index} className="bg-base-200 shadow-lg rounded-lg p-3 flex-none ">
-                  <div className="w-36">
+                <div key={index} className="bg-base-100 shadow-lg rounded-md p-3 flex-none ">
+                  <div className="w-28">
                     <div className="flex items-center mb-2">
                       <FaUserCircle className="h-6 mx-2 text-gray-600" />
                       <div className="font-semibold">{review.user.name}</div>
@@ -148,11 +149,12 @@ export const BookingDetails = () => {
                     <div className="text-sm mb-2">
                       {review.car.brand} {review.car.model}
                     </div>
-                    <img src={review.car.image} className="w-24 object-contain mb-2" alt="car" />
+                    
                     <div className="flex mb-2">
                       {renderStars(review.rating)}
                     </div>
                     <p className="text-sm  overflow-hidden text-ellipsis whitespace-normal">"{review.comment}"</p>
+                    
                   </div>
                 </div>
               ))}

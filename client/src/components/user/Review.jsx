@@ -39,23 +39,23 @@ const Review = ({userId,carId}) => {
       <form onSubmit={handleSubmit(onSubmit)}>
 
       
-        <div className="mb-4">
-          <label className="block ">Select Rating</label>
-          <select
-            {...register('rating', { required: 'Rating is required' })}
-            className="select select-bordered w-full"
-          >
-            <option value="">Select Rating</option>
-            
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            
-          </select>
-          {errors.rating && <p className="text-red-600 text-sm">{errors.rating.message}</p>}
-        </div>
+      <div className="mb-4">
+  <label className="block">Select Rating</label>
+  <div className="rating">
+    {/* Daisy UI's rating component with stars */}
+    {[1, 2, 3, 4, 5].map((star) => (
+      <input
+        key={star}
+        type="radio"
+        {...register('rating', { required: 'Rating is required' })}
+        value={star}
+        className="mask mask-star-2 bg-yellow-500"
+      />
+    ))}
+  </div>
+  {errors.rating && <p className="text-red-600 text-sm">{errors.rating.message}</p>}
+</div>
+
 
         {/* Comment */}
         <div className="mb-4">

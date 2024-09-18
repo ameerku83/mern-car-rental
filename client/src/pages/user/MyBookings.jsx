@@ -38,7 +38,7 @@ const MyBookings = () => {
     const cancelBooking = async (id) => {
         try {
              await axiosInstance.put(`user/cancel-booking/${id}`);
-             setBookings(( bookings.map(booking => booking._id === id ? { ...booking, status: 'canceled' } : booking)) );
+             setBookings(( bookings.map(booking => booking._id === id ? { ...booking, status: 'cancelled' } : booking)) );
                 navigate('/user/bookingcancel')  
              toast.success("booking cancelled")
             
@@ -68,6 +68,21 @@ const MyBookings = () => {
                    
                    bookings.map((booking)=>(
                     <div className="border border-gray-200 rounded-lg  shadow-md p-4 mx-4 mt-4 md:mt-6 sm:mt-5">
+                     <button 
+  className={`btn btn-sm
+    ${booking.paymentStatus === "paid" 
+      ? 'bg-green-500 hover:bg-green-600' 
+      : booking.paymentStatus === "pending" 
+      ? 'bg-yellow-500 hover:bg-yellow-600' 
+      : 'bg-red-500 hover:bg-red-600'} 
+    text-white rounded-md`}
+>
+  {booking.paymentStatus === "paid" && " ₹ Paid"}
+  {booking.paymentStatus === "pending" && <Link to={`/user/booking/${booking._id}`}>₹ pay now </Link> }
+  {booking.paymentStatus === "cancelled" && " ₹ Cancelled"}
+</button>
+
+                           
                     <img src={booking.car.image} alt={booking.status} className="w-full h-40 object-contain rounded-md" />
                     <div className='  mt-2 ' >
                     <h3 className="text-2xl font-bold mt-4"> {booking.car.brand} {booking.car.model}</h3>

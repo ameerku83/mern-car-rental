@@ -14,6 +14,8 @@ const bookingSchema = new mongoose.Schema({
     dropOffTime: { type: String }, 
     dropOffLocation: { type: String }, 
     status: { type: String, default: 'pending' },
+    driverLicense:{ type: String }, 
+
 });
 
 export const Booking = mongoose.model('Booking', bookingSchema);

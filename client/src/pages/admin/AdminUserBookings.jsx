@@ -29,7 +29,7 @@ export const AdminUserBookings = () => {
         const cancelBooking = async (id) => {
             try {
                  await axiosInstance.put(`admin/cancel-booking/${id}`);
-                 setBookings(( bookings.map(booking => booking._id === id ? { ...booking, status: 'canceled' } : booking))
+                 setBookings(( bookings.map(booking => booking._id === id ? { ...booking, status: 'cancelled' } : booking))
                 );
                 toast.success("booking cancelled")
                 
@@ -66,12 +66,24 @@ export const AdminUserBookings = () => {
                    
                    bookings.map((booking)=>(
                     <div className="border border-gray-200 rounded-lg  shadow-md p-4 mx-4 mt-4 md:mt-6 sm:mt-5">
+                    <button    className={`btn btn-sm
+    ${booking.paymentStatus === "paid" 
+      ? 'bg-green-500 hover:bg-green-600' 
+      : booking.paymentStatus === "pending" 
+      ? 'bg-yellow-500 hover:bg-yellow-600' 
+      : 'bg-red-500 hover:bg-red-600'} 
+    text-white rounded-md`}
+>
+ ₹ {booking.paymentStatus}
+ 
+</button>
                     <img src={booking.car.image} alt={booking.status} className="w-full h-40 object-contain rounded-md" />
-                    <div className=' text-center mt-2 ' >
+                    <div className='  mt-2 ' >
                     <h3 className="text-2xl font-bold mt-4"> {booking.car.brand} {booking.car.model}</h3>
                     <div className='text-xl font-semibold'>
                     <h5>Total price : {booking.totalPrice}</h5>
                     <h5>User name : {booking.user.name}</h5>
+                   { booking.driverLicense && <h5>DL No : {booking.driverLicense}  </h5>}
                     <h5> {booking.user.email}</h5>
                     <h5>mobile : {booking.user.mobile}</h5>
                     <h5>staus : {booking.status}</h5>
@@ -81,17 +93,12 @@ export const AdminUserBookings = () => {
                     <h5>Drop Location : {booking.dropOffLocation}</h5>
                     <h5>Drop Time : {HourFormat(booking.dropOffTime)}</h5>
                     <h5>End date : {formatDate(booking.endDate)}</h5>
-                    
-                    {/* <h5> fuel type : {booking.fuelType}</h5>
-                    <h5>capacity : {booking.capacity}</h5>
-                    <h5>mileage : {booking.mileage}</h5> */}
-                   
                     </div> 
                     </div>
                     <div className="flex justify-center items-center mt-2">
                     
-                   { booking.status=="booked" && <Btn onClick={()=>cancelBooking(booking._id)} > cancel booking </Btn>}
-                   {booking.status=="canceled" &&   <button className='btn btn-error' onClick={()=>deleteBooking(booking._id)} >delete</button>  }
+                   { booking.status==="booked" && <Btn onClick={()=>cancelBooking(booking._id)} > cancel booking </Btn>}
+                   {booking.status==="cancelled" &&   <button className='btn btn-error' onClick={()=>deleteBooking(booking._id)} >delete</button>  }
                     </div>
                   </div>
 

@@ -82,7 +82,7 @@ const CarCard = ({ car }) => {
   };
 
   return (
-    <div className=" relative ">
+    <div className=" relative hover:scale-105 duration-300 transition transform cursor-pointer ">
       <div className=" rounded-lg shadow-md p-3 mx-3 bg-base-100 border border-purple-100 ">
         <div className="relative">
           <img src={car.image} alt={car.model} className="w-full h-56 object-contain rounded-md" />

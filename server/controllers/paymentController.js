@@ -37,7 +37,8 @@ export const createPayment = async (req, res) => {
  
     
  const payment =  Payment({ car,user, booking,amount:fetchBooking.totalPrice,  paymentDate,status:"paid" });
-    await fetchBooking.save()
+ fetchBooking.paymentStatus="paid"
+ await fetchBooking.save()
       await payment.save()    
     res.status(200).json({ message:"payment success", data:payment,sessionId:session.id});
     
