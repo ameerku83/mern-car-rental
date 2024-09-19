@@ -21,7 +21,7 @@ export const WishlistPage = () => {
                   
                     const response = await axiosInstance.get(`user/wishlist/${userId}`);
                     setWishlist(response?.data?.data);
-                    console.log(response.data);
+                    
                     
                 } catch (error) {
                     console.error('Error fetching wishlist:', error);
