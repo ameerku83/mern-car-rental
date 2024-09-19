@@ -1,77 +1,87 @@
-import React, { useEffect, useState } from 'react'
-import { axiosInstance } from '../../config/axiosInstance'
-import { toast } from 'react-toastify'
+import React, { useEffect, useState } from 'react';
+import { axiosInstance } from '../../config/axiosInstance';
+import { toast } from 'react-toastify';
 
 export const UsersReviews = () => {
-    const [reviews,setReviews]=useState([])
-    useEffect(()=>{
-        
-        const fetchReviews = async  ()=>{
-            try {
-                
-            const response = await axiosInstance.get( "admin/reviews" )
-            console.log(response?.data);
-            setReviews(response?.data.data)
-            
-            } catch (error) {
-                console.log(error);
-                
-            }
-        }
+    const [reviews, setReviews] = useState([]);
+    const [userName, setUserName] = useState('');
 
-        fetchReviews()
-    },[])
-
-    const deleteReview = async (id)=>{
+    // Fetch reviews from the backend
+    const fetchReviews = async (userName = '') => {
         try {
-            await axiosInstance.delete(`admin/delete-review/${id}`)
-            setReviews(reviews.filter((review)=>review._id !== id))
-            toast.success('review deleted')
+            const response = await axiosInstance.get("admin/reviews", {
+                params: { userName }
+            });
+            setReviews(response?.data?.data || []);
         } catch (error) {
+            toast.error( error.response.data.message);
+        }
+    };
+
+    useEffect(() => {
+        fetchReviews();
+    }, []);
+
+    // Handle review deletion
+    const deleteReview = async (id) => {
+        try {
+            await axiosInstance.delete(`admin/delete-review/${id}`);
+            setReviews(reviews.filter((review) => review._id !== id));
+            toast.success('Review deleted');
+        } catch (error) {
+            toast.error('Error deleting review');
             console.log(error);
-            
         }
-        
-    }
-  return (
-    <div>
-         <h1 className=' text-2xl font-bold text-center'> Users Reviews</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        {
-             reviews.map((review)=>(
-                <div className="border border-gray-200 rounded-lg  shadow-md p-4 mx-4 mt-4 md:mt-6 sm:mt-5">
-                <img src={review.car.image} alt="img" className="w-full h-40 object-contain rounded-md" />
-                <div className=' text-center mt-2 ' >
-                <h3 className="text-2xl font-bold mt-4"> {review.car.brand} {review.car.model}</h3>
-                <div className='text-md font-semibold'>
-                
-                <h5>User name : {review.user.name}</h5>
-                <h5> {review.user.email}</h5>
-                <h5>mobile : {review.user.mobile}</h5>
-                <h5>Rating : {review.rating}</h5>
-                <h5>Comment : {review.comment}</h5>
-               
-               
-                {/* <h5> fuel type : {review.fuelType}</h5>
-                <h5>capacity : {review.capacity}</h5>
-                <h5>mileage : {review.mileage}</h5> */}
-               
-                </div> 
-                </div>
-                <div className="flex justify-center items-center mt-2">
-                
-                <button className='btn btn-error' onClick={()=>deleteReview(review._id)} > Delete Review </button>
-              
-                </div>
-              </div>
+    };
 
-               ))  
-        }
+    // Handle search by username
+    const handleSearch = () => {
+        fetchReviews(userName);
+    };
+
+    return (
+        <div>
+            <h1 className="text-2xl font-bold text-center mt-4">Users Reviews</h1>
+
+            {/* Search input */}
+            <div className="flex justify-center my-4">
+                <input
+                    type="text"
+                    className="border border-gray-300 p-2 rounded"
+                    placeholder="Search by user name"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                />
+                <button onClick={handleSearch} className="btn btn-primary ml-2">Search</button>
+            </div>
+
+            {/* Reviews grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                {reviews.length > 0 ? (
+                    reviews.map((review) => (
+                        <div key={review._id} className="border border-gray-200 rounded-lg shadow-md p-4 mx-4 mt-4">
+                            <img src={review.car.image} alt="Car" className="w-full h-40 object-contain rounded-md" />
+                            <div className="text-center mt-2">
+                                <h3 className="text-2xl font-bold">{review.car.brand} {review.car.model}</h3>
+                                <div className="text-md font-semibold mt-2">
+                                    <h5>User Name: {review.user.name}</h5>
+                                    <h5>Email: {review.user.email}</h5>
+                                    <h5>Mobile: {review.user.mobile}</h5>
+                                    <h5>Rating: {review.rating}</h5>
+                                    <h5>Comment: {review.comment}</h5>
+                                </div>
+                            </div>
+                            <div className="flex justify-center items-center mt-2">
+                                <button className="btn btn-error" onClick={() => deleteReview(review._id)}>
+                                    Delete Review
+                                </button>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p className="text-center">No reviews found.</p>
+                )}
+            </div>
         </div>
-    </div>
-  )
-}
-
-
-
-
+    );
+};

@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import Review from '../../components/user/Review';
+import { FaTimes } from 'react-icons/fa'; // Importing the cross icon
 
 const MyBookings = () => {
   const navigate = useNavigate();
@@ -27,16 +28,18 @@ const MyBookings = () => {
     fetchBookings();
   }, [userId]);
 
-  const cancelBooking = async (id,paymentStatus) => {
+  const cancelBooking = async (id, paymentStatus) => {
     try {
+      const userConfirmed = window.confirm('Do you want to cancel this booking?');
+      if (!userConfirmed) {
+        return;
+      }
       await axiosInstance.put(`user/cancel-booking/${id}`);
-      setBookings(bookings.map(booking => booking._id === id ? { ...booking, status: 'cancelled' } : booking));
-       if(paymentStatus==="paid"){
-        navigate('/user/bookingcancel') 
-       }
-      
-        
-      toast.success("Booking cancelled");
+      setBookings(bookings.map((booking) => booking._id === id ? { ...booking, status: 'cancelled' } : booking));
+      if (paymentStatus === 'paid') {
+        navigate('/user/bookingcancel');
+      }
+      toast.success('Booking cancelled');
     } catch (error) {
       toast.error('Error canceling booking');
     }
@@ -56,43 +59,48 @@ const MyBookings = () => {
   // Toggle the review form for a specific booking
   const toggleReviewForm = (bookingId) => {
     if (selectedBookingId === bookingId) {
-      // If the same booking is clicked again, just toggle the visibility
-      setShow(!show);
+      setShow(!show); // Toggle the form visibility for the same booking
     } else {
-      // If a new booking is clicked, set the new booking ID and show the form
-      setSelectedBookingId(bookingId);
-      setShow(true); // Always show the form when a new booking is selected
+      setSelectedBookingId(bookingId); // Set the selected booking ID
+      setShow(true); 
     }
   };
 
+  const closeReviewForm = () => {
+    setShow(false);
+    setSelectedBookingId(null);
+  };
+
   if (bookings.length === 0) {
-    return <h1 className='pt-28 text-center'>No bookings found</h1>;
+    return <h1 className="pt-28 text-center">No bookings found</h1>;
   }
 
   return (
-    <div className=''  >
+    <div>
       <h2 className="text-2xl font-bold mx-3 text-center pt-24">My Bookings</h2>
-      <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 ${show ? "blur-md" : null} `}>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 ${show ? 'blur-md' : null}`}>
         {bookings.map((booking) => (
           <div key={booking._id} className="border border-gray-200 rounded-lg shadow-md p-4 mx-4 mt-4">
             <button
-              className={`btn btn-sm
-                ${booking.paymentStatus === "paid"
+              className={`btn btn-sm ${
+                booking.paymentStatus === 'paid'
                   ? 'bg-green-500 hover:bg-green-600'
-                  : booking.paymentStatus === "pending"
-                    ? 'bg-yellow-500 hover:bg-yellow-600'
-                    : 'bg-red-500 hover:bg-red-600'}
-                text-white rounded-md`}
+                  : booking.paymentStatus === 'pending'
+                  ? 'bg-yellow-500 hover:bg-yellow-600'
+                  : 'bg-red-500 hover:bg-red-600'
+              } text-white rounded-md`}
             >
-              {booking.paymentStatus === "paid" && " ₹ Paid"}
-              {booking.paymentStatus === "pending" && <Link to={`/user/booking/${booking._id}`}>₹ Pay Now</Link>}
-              {booking.paymentStatus === "cancelled" && " ₹ Cancelled"}
+              {booking.paymentStatus === 'paid' && ' ₹ Paid'}
+              {booking.paymentStatus === 'pending' && <Link to={`/user/booking/${booking._id}`}>₹ Pay Now</Link>}
+              {booking.paymentStatus === 'cancelled' && ' ₹ Cancelled'}
             </button>
 
             <img src={booking.car.image} alt={booking.status} className="w-full h-40 object-contain rounded-md" />
-            <div className='mt-2'>
-              <h3 className="text-2xl font-bold mt-4">{booking.car.brand} {booking.car.model}</h3>
-              <div className='text-xl font-semibold'>
+            <div className="mt-2">
+              <h3 className="text-2xl font-bold mt-4">
+                {booking.car.brand} {booking.car.model}
+              </h3>
+              <div className="text-xl font-semibold">
                 <h5>Total price: {booking.totalPrice}</h5>
                 <h5>Status: {booking.status}</h5>
                 <h5>Start date: {formatDate(booking.startDate)}</h5>
@@ -104,10 +112,14 @@ const MyBookings = () => {
               </div>
             </div>
             <div className="flex justify-between mt-2">
-              {booking.status === "booked" && <button className='btn btn-error' onClick={() => cancelBooking(booking._id,booking.paymentStatus)}>Cancel Booking</button>}
+              {booking.status === 'booked' && (
+                <button className="btn btn-error" onClick={() => cancelBooking(booking._id, booking.paymentStatus)}>
+                  Cancel Booking
+                </button>
+              )}
               <Btn>
                 <button onClick={() => toggleReviewForm(booking._id)}>
-                  {selectedBookingId === booking._id && show ? "Close" : "Add Review"}
+                  {selectedBookingId === booking._id && show ? 'Close' : 'Add Review'}
                 </button>
               </Btn>
             </div>
@@ -115,12 +127,17 @@ const MyBookings = () => {
         ))}
       </div>
 
-      {/* Only show the review form below the card list for the selected booking */}
+      {/* Modal-style review form */}
       {selectedBookingId && show && (
-        <div className=' '>
-            
-          <Review  userId={userId} carId={bookings.find(booking => booking._id === selectedBookingId)?.car._id} />
-          
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="relative bg-white md:mt-5 rounded-lg p-8 w-full max-w-lg mx-auto shadow-lg">
+            {/* Close button (cross icon) */}
+            <button className="absolute top-2 right-2 text-gray-600 hover:text-gray-800" onClick={closeReviewForm}>
+              <FaTimes size={24} />
+            </button>
+            {/* Review Form */}
+            <Review userId={userId} carId={bookings.find((booking) => booking._id === selectedBookingId)?.car._id} />
+          </div>
         </div>
       )}
     </div>

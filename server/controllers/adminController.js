@@ -102,7 +102,6 @@ export const userCreatedByAdmin = async (req, res, next) => {
         return res.status(400).json({ success: false, message: "all fields required" });
     }
    
-
     const userExist = await User.findOne({ email });
 
     if (userExist) {
@@ -146,16 +145,55 @@ export const deleteUserById = async (req, res, next) => {
 
 };
 
-//admin controll booking
+
 export const admingetAllBookings = async (req, res, next) => {
-  
-    const bookings = await Booking.find().populate('user').populate('car');
-    if (!bookings) {
-        return res.status(400).json({ success: false, message: "users bookings  not found" });
+    const { userName } = req.query;
+
+    let matchStage = {};
+    if (userName) {
+        matchStage = { 'user.name': { $regex: userName, $options: 'i' } }; // Case-insensitive search
     }
 
-    res.json({ success: true, message: 'Bookings list fetched successfully', data: bookings });
-}
+    
+        const bookings = await Booking.aggregate([
+            {
+                $lookup: {
+                    from: 'users',  
+                    localField: 'user',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            },
+            {
+                $unwind: '$user'  
+            },
+            {
+                $lookup: {
+                    from: 'cars',  
+                    localField: 'car',
+                    foreignField: '_id',
+                    as: 'car'
+                }
+            },
+            {
+                $unwind: '$car'  
+            },
+            {
+                $match: matchStage  
+            }
+        ]);
+
+        if (!bookings.length) {
+            return res.status(400).json({ success: false, message: "No bookings found" });
+        }
+
+        res.json({ success: true, message: 'Bookings list fetched successfully', data: bookings });
+    
+};
+
+
+
+
 
 //admin controll booking
 export const admingetUserBookings = async (req, res, next) => {
@@ -215,16 +253,64 @@ export const admingetBookingById = async (req, res) => {
             }
     
          // Cancel a paymen
-  export const adminGetPayments = async (req, res, next) => {
-            
-            const payments = await Payment.find().populate('user').populate('car').populate('booking');
-            
-            if (!payments) {
-                return res.status(404).json({ success: false, message: 'payment not found' });
+         export const adminGetPayments = async (req, res, next) => {
+            const { userName } = req.query;
+        
+            let matchStage = {};
+            if (userName) {
+                matchStage = { 'user.name': { $regex: userName, $options: 'i' } }; // Case-insensitive search
             }
-            
-            res.json({ success: true, message: 'payments fetched successfully!', data: payments });
+        
+            try {
+                const payments = await Payment.aggregate([
+                    {
+                        $lookup: {
+                            from: 'users',  // Join with users collection
+                            localField: 'user',
+                            foreignField: '_id',
+                            as: 'user'
+                        }
+                    },
+                    {
+                        $unwind: '$user'  // Unwind to handle the array result from lookup
+                    },
+                    {
+                        $lookup: {
+                            from: 'cars',  // Join with cars collection
+                            localField: 'car',
+                            foreignField: '_id',
+                            as: 'car'
+                        }
+                    },
+                    {
+                        $unwind: '$car'  
+                    },
+                    {
+                        $lookup: {
+                            from: 'bookings',  
+                            localField: 'booking',
+                            foreignField: '_id',
+                            as: 'booking'
+                        }
+                    },
+                    {
+                        $unwind: '$booking'  
+                    },
+                    {
+                        $match: matchStage  
+                    }
+                ]);
+        
+                if (!payments.length) {
+                    return res.status(404).json({ success: false, message: 'No payments found' });
+                }
+        
+                res.json({ success: true, message: 'Payments fetched successfully!', data: payments });
+            } catch (error) {
+                res.status(500).json({ success: false, message: "Server error" });
             }
+        };
+        
              
      export const admingetUserPayments = async (req, res, next) => {
         const {userId}= req.params
@@ -248,10 +334,56 @@ export const admingetBookingById = async (req, res) => {
 
 
  // Get all reviews
- export const adminGetReviews = async (req, res, next) => {
+//  export const adminGetReviews = async (req, res, next) => {
   
-    const reviewList = await Review.find().populate('user').populate('car');
-    res.json({ success: true, message: 'Review list fetched', data: reviewList });}
+//     const reviewList = await Review.find().populate('user').populate('car');
+//     res.json({ success: true, message: 'Review list fetched', data: reviewList });}
+    export const adminGetReviews = async (req, res, next) => {
+        const { userName } = req.query;
+    
+        let matchStage = {};
+        if (userName) {
+            matchStage = { 'user.name': { $regex: userName, $options: 'i' } }; // Case-insensitive search
+        }
+    
+        
+            const reviews = await Review.aggregate([
+                {
+                    $lookup: {
+                        from: 'users',  
+                        localField: 'user',
+                        foreignField: '_id',
+                        as: 'user'
+                    }
+                },
+                {
+                    $unwind: '$user'  
+                },
+                {
+                    $lookup: {
+                        from: 'cars',  
+                        localField: 'car',
+                        foreignField: '_id',
+                        as: 'car'
+                    }
+                },
+                {
+                    $unwind: '$car'  
+                },
+                {
+                    $match: matchStage  
+                }
+            ]);
+    
+            if (!reviews.length) {
+                return res.status(400).json({ success: false, message: "No reviews found" });
+            }
+    
+            res.json({ success: true, message: 'Bookings list fetched successfully', data: reviews });
+        
+    };
+
+
   export const admingetUserReviews = async (req, res, next) => {
     const {userId}= req.params
     const reviewList = await Review.find({user:userId});
