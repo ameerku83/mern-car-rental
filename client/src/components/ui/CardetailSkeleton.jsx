@@ -8,7 +8,6 @@ export const CardetailSkeleton = () => {
             <div className="w-72 h-72 bg-gray-300 rounded-md"></div>
             <div className="flex-1 space-y-4">
             <div className="h-12 bg-gray-300 rounded w-3/4 mx-3"></div>
-               
                 <div className="h-6 bg-gray-300 rounded w-1/2"></div>
                 <div className="h-6 bg-gray-300 rounded w-1/2"></div>
                 <div className="h-6 bg-gray-300 rounded w-1/4"></div>

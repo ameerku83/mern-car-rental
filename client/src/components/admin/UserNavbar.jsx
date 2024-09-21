@@ -1,141 +1,253 @@
 import React, { useEffect, useState } from 'react';
-import { AiOutlineHeart, AiOutlineMenu } from 'react-icons/ai'; // Importing icons from react-icons
+import { AiOutlineHeart, AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'; // Importing icons from react-icons
 import { FaUserCircle } from 'react-icons/fa';
-
-
-import car from '../../asets/images/carlogo.png'
-import Btn from '../ui/Btn';
+import car from '../../asets/images/carlogo.png';
 import { DarkMode } from '../ui/DarkMode';
 import { Link, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearUserId } from '../../redux/userSlice';
+
 const UserNavbar = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [show, setShow] = useState(false); // For mobile menu toggle
+
   const logout = async () => {
     try {
-      await axiosInstance.put('user/logout',);
+      await axiosInstance.put('user/logout');
       toast.success('Logged out successfully');
       dispatch(clearUserId());
-      navigate('/login')
-    
+      navigate('/login');
     } catch (error) {
-     // toast.error(error.response.data.message);
       console.log(error.response);
-      
     }
   };
 
-  
   const [bookings, setBookings] = useState([]);
- const [wishlist,setWishlist] =useState([])
- const userId = useSelector((state) => state.user.id); 
- 
+  const [wishlist, setWishlist] = useState([]);
+  const userId = useSelector((state) => state.user.id);
+
   useEffect(() => {
-      const fetchBookings = async () => {
-          if (userId) { 
-              try {
-                  const response = await axiosInstance.get(`user/bookings/${userId}`);
-                  setBookings(response?.data?.data);
-                  console.log(response.data);
-                  
-              } catch (error) {
-                  console.error('Error fetching bookings:', error);
-                  
-              } 
-          }
-      };
+    const fetchBookings = async () => {
+      if (userId) {
+        try {
+          const response = await axiosInstance.get(`user/bookings/${userId}`);
+          setBookings(response?.data?.data);
+        } catch (error) {
+          console.error('Error fetching bookings:', error);
+        }
+      }
+    };
+    fetchBookings();
+  }, [userId]);
 
-      fetchBookings();
-  }, [userId]); 
-  
   useEffect(() => {
-      const fetchWishlist = async () => {
-          if (userId) { 
-              try {
-                  const response = await axiosInstance.get(`user/wishlist/${userId}`);
-                  setWishlist(response?.data?.data);
-                  console.log(response.data);
-                  
-              } catch (error) {
-                  console.error('Error fetching wishlist:', error);
-                  
-              } 
-          }
-      };
-
-      fetchWishlist();
-  }, [userId]); 
-
+    const fetchWishlist = async () => {
+      if (userId) {
+        try {
+          const response = await axiosInstance.get(`user/wishlist/${userId}`);
+          setWishlist(response?.data?.data);
+        } catch (error) {
+          console.error('Error fetching wishlist:', error);
+        }
+      }
+    };
+    fetchWishlist();
+  }, [userId]);
 
   return (
-    <div className="navbar bg-base-200 px-2 shadow border-b-2 border-purple-100 fixed z-40  ">
+    <div className="navbar bg-gradient-to-r from-purple-700 via-purple-600 to-purple-500 px-4 py-3 shadow-lg border-b-2 border-purple-700 fixed z-40 w-full transition-all duration-300 ease-in-out">
       {/* Navbar Start */}
       <div className="navbar-start">
         {/* Mobile Menu Icon */}
         <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
-            <AiOutlineMenu className="h-5 w-5" />
-          </label>
-          <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-white rounded-md w-32 space-y-0.5">
-            
-         
-          <li><button className='btn btn-sm bg-purple-500 text-white hover:bg-purple-600' ><Link  to={"/user/home"}> Home</Link  > </button> </li>
-          <li><button className='btn btn-sm bg-purple-500 text-white hover:bg-purple-600' ><Link  to={"/user/about"}> About</Link  ></button></li>
-          <li><button className='btn btn-sm bg-purple-500 text-white hover:bg-purple-600' ><Link  to={"/user/services"}> Our Services</Link  ></button></li>
-          <li><button className='btn btn-sm bg-purple-500 text-white hover:bg-purple-600' ><Link to={"/user/rent"} >Rent a car</Link></button></li>
-          <li><button className='btn btn-sm bg-purple-500 text-white hover:bg-purple-600' ><Link to={"/user/contact"} >Contact us</Link></button></li>
-          </ul>
-        </div>
-        <div className=' relative'>
-        <Link to={'/user/home'} >
-  
-        <img className=' h-8 object-contain' src={car} alt="" /> 
-        </Link>
-        <i className=' text-sm text-purple-700 font-bold sm:text-sm mt-0 pt-0 absolute top-6' > FLY WHEELS</i>
+          <button
+            tabIndex={0}
+            className="btn btn-ghost lg:hidden"
+            onClick={() => setShow(!show)}
+          >
+            {show ? (
+              <AiOutlineClose className="h-6 w-6 text-white" />
+            ) : (
+              <AiOutlineMenu className="h-6 w-6 text-white" />
+            )}
+          </button>
+          {show && (
+            <ul
+              tabIndex={0}
+              className="menu menu-compact dropdown-content mt-3 p-4 shadow-lg bg-white rounded-md w-48 space-y-2"
+            >
+              <li>
+                <Link
+                  to="/user/home"
+                  className="relative text-md font-serif text-purple-700 font-bold group"
+                >
+                  Home
+                  <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-purple-700 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/user/about"
+                  className="relative text-md font-serif text-purple-700 font-bold group"
+                >
+                  About
+                  <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-purple-700 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/user/services"
+                  className="relative text-md font-serif text-purple-700 font-bold group"
+                >
+                  Our Services
+                  <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-purple-700 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/user/rent"
+                  className="relative text-md font-serif text-purple-700 font-bold group"
+                >
+                  Rent a Car
+                  <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-purple-700 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/user/contact"
+                  className="relative text-md font-serif text-purple-700 font-bold group"
+                >
+                  Contact Us
+                  <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-purple-700 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              </li>
+            </ul>
+          )}
         </div>
 
+        {/* Logo */}
+        <div className="relative">
+          <Link to="/user/home" className="flex items-center">
+            <img className="h-10 object-contain" src={car} alt="Logo" />
+            <span className="text-xs text-white font-bold absolute top-8 left-2">
+              FLY WHEELS
+            </span>
+          </Link>
+        </div>
       </div>
 
-     
-      <div className="navbar-center hidden lg:flex  ">
-        <ul className="menu menu-horizontal px-1 gap-2">
-        <li> <Btn><Link  to={"/user/home"}> Home</Link  > </Btn> </li>
-        <li><Btn><Link  to={"/user/about"}>About</Link  ></Btn></li>
-          <li><Btn><Link  to={"/user/services"}>Our Services</Link  ></Btn></li>
-          <li><Btn ><Link to={"/user/rent"} >Rent a car</Link></Btn></li>
-          <li><Btn ><Link to={"/user/contact"} >Contact us</Link></Btn></li>
+      {/* Navbar Center */}
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1 space-x-8">
+          <li>
+            <Link
+              to="/user/home"
+              className="relative text-lg text-white font-serif group overflow-hidden"
+            >
+              Home
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/user/about"
+              className="relative text-lg text-white font-serif group overflow-hidden"
+            >
+              About
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/user/services"
+              className="relative text-lg text-white font-serif group overflow-hidden"
+            >
+              Our Services
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/user/rent"
+              className="relative text-lg text-white font-serif group overflow-hidden"
+            >
+              Rent a Car
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/user/contact"
+              className="relative text-lg text-white font-serif group overflow-hidden"
+            >
+              Contact Us
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+          </li>
         </ul>
       </div>
 
-      
-      <div className="navbar-end flex items-center ">
-      <label tabIndex={0} className="btn btn-ghost btn-circle m-0 ">
-           <DarkMode   />
-          </label>
-        <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle relative">
-           <AiOutlineHeart className="h-6 w-6" /> <sup className='text-purple-600 font-bold text-md absolute left-8 top-3 ' > <p className='font-bold' >{wishlist.length}</p>  </sup>
-          </label>
-          <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-40">
-            <li><Link to={"/user/wishlist"}>Wishlist </Link></li>
-            
-          </ul>
-        </div> 
+      {/* Navbar End */}
+      <div className="navbar-end flex items-center space-x-3">
+        <label tabIndex={0} className="btn btn-sm btn-ghost btn-circle m-0 text-white">
+          <DarkMode />
+        </label>
 
+        {/* Wishlist Icon */}
+        <div className="relative">
+          <Link to="/user/wishlist" className="btn btn-sm btn-ghost btn-circle">
+            <AiOutlineHeart className="h-8 w-8 text-white" />
+            {wishlist.length > 0 && (
+              <span className="absolute bottom-8 left-4 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                {wishlist.length}
+              </span>
+            )}
+          </Link>
+        </div>
+
+        {/* User Profile Dropdown */}
         <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle ">
-            < FaUserCircle className="h-6 w-6" />
-          </label>
-          <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-40">
-            <li className='text-md font-bold' ><Link to={ "/user/profile" }> Profile</Link>  </li>
-            <li className=' font-bold' ><Link to={ "/user/bookings"}>My Bookings <sup className=' text-purple-700 text-xl font-bold' > {bookings.length} </sup> </Link></li>
-            <li> <button className='btn bg-red-500 cursor-pointer btn-sm' onClick={logout} > Log out </button> </li>
+          <button tabIndex={0} className="btn btn-sm btn-ghost btn-circle">
+            <FaUserCircle className="h-8 w-8 text-white" />
+          </button>
+          <ul
+            tabIndex={0}
+            className="menu menu-compact dropdown-content mt-3 p-2 shadow-lg bg-white rounded-md w-48 space-y-2"
+          >
+            <li>
+              <Link
+                to="/user/profile"
+                className="text-md font-bold text-purple-700 hover:text-purple-900 transition-colors duration-200"
+              >
+                Profile
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/user/bookings"
+                className="text-md font-bold text-purple-700 hover:text-purple-900 transition-colors duration-200 flex items-center"
+              >
+                My Bookings
+                {bookings.length > 0 && (
+                  <span className="ml-2 bg-red-500 text-white rounded-full px-2 py-0.5 text-xs">
+                    {bookings.length}
+                  </span>
+                )}
+              </Link>
+            </li>
+            <li>
+              <button
+                className="btn bg-red-500 text-white cursor-pointer btn-sm  w-full"
+                onClick={logout}
+              >
+                Log out
+              </button>
+            </li>
           </ul>
-        </div> 
-        
+        </div>
       </div>
     </div>
   );
