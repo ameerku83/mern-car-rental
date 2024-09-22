@@ -200,11 +200,11 @@ const UserNavbar = () => {
         <div className="relative">
           <Link to="/user/wishlist" className="btn btn-sm btn-ghost btn-circle">
             <AiOutlineHeart className="h-8 w-8 text-white" />
-            {wishlist.length > 0 && (
+            
               <span className="absolute bottom-8 left-4 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
                 {wishlist.length}
               </span>
-            )}
+            
           </Link>
         </div>
 

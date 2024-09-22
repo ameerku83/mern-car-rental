@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-
 import { axiosInstance } from '../../config/axiosInstance';
 import { Link } from 'react-router-dom';
 import Btn from '../../components/ui/Btn';
-
 
 export const UserProfile = () => {
   const userId = useSelector((state) => state.user.id); 
   const [user, setUser] = useState({});
   const [payments, setPayments] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -18,6 +17,8 @@ export const UserProfile = () => {
         setUser(response?.data?.data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchUser();
@@ -29,7 +30,6 @@ export const UserProfile = () => {
         try {
           const response = await axiosInstance.get(`user/payments/${userId}`);
           setPayments(response?.data?.data);
-          console.log(response.data);
         } catch (error) {
           console.error('Error fetching payments:', error);
         }
@@ -43,45 +43,58 @@ export const UserProfile = () => {
   };
 
   return (
-    <div>
-      <div className='md:flex md:justify-around text-center pt-24 align-center'>
-        <div>
-          <h2 className='text-xl'>Name: {user.name}</h2>
-          <h4 className='text-xl'>Email: {user.email}</h4>
-          <h4 className='text-xl'>Mobile: {user.mobile}</h4>
+    <div className=" pt-12">
+      {loading ? (
+        <div className="flex flex-col items-center justify-center">
+          <div className="w-16 h-16 border-4 border-purple-500 rounded-full animate-spin border-t-transparent mt-24"></div>
+          <span className="mt-4 text-xl">Loading...</span>
         </div>
-        <Btn>
-          <Link to={`/editprofile/${userId}`}>Edit Profile</Link>
-        </Btn>
-      </div>
+      ) : (
+        <>
+          <div className='md:flex items-center justify-center pt-12 gap-3 mx-3'>
+            <div>
+              <h2 className='text-xl'>Name: {user.name}</h2>
+              <h4 className='text-xl'>Email: {user.email}</h4>
+              <h4 className='text-xl'>Mobile: {user.mobile}</h4>
+            </div>
+            <div>
+            <Btn>
+              <Link to={`/editprofile/${userId}`}>Edit Profile</Link>
+            </Btn>
+             </div>
+          </div>
 
-    { payments.length >0 && <div className="overflow-x-auto px-4 mt-4">
-        <h1 className="text-center text-2xl my-3">Payments</h1>
-        <table className="table w-full border border-black-600">
-          <thead>
-            <tr className="text-lg font-bold">
-              <th>Index</th>
-              <th>Car</th>
-              <th>Date</th>
-              <th>Amount</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {payments.map((payment, index) => (
-              <tr key={payment.id}>
-                <td>{index + 1}</td>
-                <td>
-                  <img className='w-28 object-contain' src={payment.car.image} alt="car" /> {payment.car.brand} {payment.car.model}
-                </td>
-                <td>{formatDate(payment.paymentDate)}</td>
-                <td>{payment.amount}/-</td>
-                <td>{payment.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div> }
+          {payments.length > 0 && (
+            <div className="overflow-x-auto px-4 mt-4">
+              <h1 className="text-center text-2xl my-3">Payments</h1>
+              <table className="table w-full border border-black-600">
+                <thead>
+                  <tr className="text-lg font-bold">
+                    <th>Index</th>
+                    <th>Car</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {payments.map((payment, index) => (
+                    <tr key={payment.id}>
+                      <td>{index + 1}</td>
+                      <td>
+                        <img className='w-28 object-contain' src={payment.car.image} alt="car" /> {payment.car.brand} {payment.car.model}
+                      </td>
+                      <td>{formatDate(payment.paymentDate)}</td>
+                      <td>{payment.amount}/-</td>
+                      <td>{payment.status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };
