@@ -35,25 +35,35 @@ const Signup = () => {
 
   const onSubmit = async (data) => {
     // Remove confirmPassword before sending data to the backend
-    const { confirmPassword, ...rest } = data;
+    
+
+     const signupdata = {
+         name:data.name.trim(),
+         email:data.email.trim(),
+         password:data.password.trim(),
+         mobile:data.mobile.trim()
+
+     }
+
+     
 
     if (id) {
       try {
-        await axiosInstance.put(`user/update/${id}`, rest);
+        await axiosInstance.put(`user/update/${id}`, signupdata);
         toast.success('Account updated successfully');
         navigate('/user/profile');
       } catch (error) {
-        toast.error("Error updating data");
+        toast.error(error.response.data.error);
         console.log(error);
       }
     } else {
       try {
-        await axiosInstance.post('user/create', rest);
+        await axiosInstance.post('user/create', signupdata);
         toast.success('Account created successfully');
-        navigate('/login');
+        navigate('/user/home');
       } catch (error) {
         console.error(error.response);
-        toast.error("Error creating account");
+        toast.error(error.response.data.error);
         console.log(error);
       }
     }
@@ -102,7 +112,7 @@ const Signup = () => {
             <input
               type={showPassword ? 'text' : 'password'}
               id="password"
-              {...register('password', { required: 'Password is required', minLength: { value: 4, message: "Minimum 4 characters required" } })}
+              {...register('password', { required: 'Password is required', pattern: { value: /^[A-Za-z0-9!@#$%^&*()_+=-]{4,20}$/, message: "minimum 4 character"}})}
               className="w-full p-2 border border-gray-300 rounded"
             />
             {errors.password && <p className="text-red-500">{errors.password.message}</p>}

@@ -9,7 +9,7 @@ import { BookingDetailsSkeleton } from '../../components/ui/BookingDetailsSkelet
 import { FaStar, FaUserCircle } from 'react-icons/fa';
 export const BookingDetails = () => {
     const { id } = useParams();
-   const [show,setShow]=   useState(false);
+   
     const [booking, setBooking] = useState(null);
     
   const renderStars = (rating) => {
@@ -38,10 +38,10 @@ export const BookingDetails = () => {
         fetchBooking();
     }, [id]);
     const [reviews, setReviews] = useState([]);
-    //const carId=booking.car._id
+   
     useEffect(() => {
         const fetchReviews = async () => {
-            if (!booking?.car?._id) return; // Ensure carId is valid before making API call
+            if (!booking?.car?._id) return; 
     
             try {
                 const response = await axiosInstance.get(`user/carreviews/${booking.car._id}`);
@@ -123,14 +123,12 @@ export const BookingDetails = () => {
                     <p>Address: {booking.address}</p>
                     <p>Mobile: {booking.mobile}</p>
                     <p>status: {booking.status}</p>
-                        <div className=' justify-between flex'>
+                        <div className=' justify-center flex'>
                       {booking.status === 'booked' && <Btn onClick={makePayment} > Pay Now</Btn>}  
-                      <Btn onClick={()=>setShow(!show)} > {show? "Close Review"  : "Add Review"}</Btn>
                          </div>
                      </div>
                 </div>
                  
-             {  show? <Review  userId={booking.user._id} carId={booking.car._id} /> :null }
             
                    
     

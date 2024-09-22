@@ -49,12 +49,7 @@ const MyBookings = () => {
     return new Date(dateString).toLocaleDateString('en-CA');
   };
 
-  const HourFormat = (time24) => {
-    const [hour, minute] = time24.split(':');
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const hour12 = hour % 12 || 12;
-    return `${hour12}:${minute} ${ampm}`;
-  };
+  
 
   // Toggle the review form for a specific booking
   const toggleReviewForm = (bookingId) => {
@@ -101,14 +96,10 @@ const MyBookings = () => {
                 {booking.car.brand} {booking.car.model}
               </h3>
               <div className="text-xl font-semibold">
-                <h5>Total price: {booking.totalPrice}</h5>
+                <h5>Total Amount: {booking.totalPrice}</h5>
                 <h5>Status: {booking.status}</h5>
-                <h5>Start date: {formatDate(booking.startDate)}</h5>
-                <h5>Pickup Time: {HourFormat(booking.pickupTime)}</h5>
-                <h5>Pickup Location: {booking.pickupLocation}</h5>
-                <h5>End date: {formatDate(booking.endDate)}</h5>
-                <h5>Drop Off Time: {HourFormat(booking.dropOffTime)}</h5>
-                <h5>Drop Off Location: {booking.dropOffLocation}</h5>
+                <h5>Booked on: {formatDate(booking.startDate)}</h5>
+                
               </div>
             </div>
             <div className="flex justify-between mt-2">
@@ -119,7 +110,7 @@ const MyBookings = () => {
               )}
               <Btn>
                 <button onClick={() => toggleReviewForm(booking._id)}>
-                  {selectedBookingId === booking._id && show ? 'Close' : 'Add Review'}
+                  {selectedBookingId === booking._id && show ? 'Close' :  'Review Car'}
                 </button>
               </Btn>
             </div>
