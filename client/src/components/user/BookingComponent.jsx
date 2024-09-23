@@ -122,7 +122,7 @@ const BookingComponent = ({ id }) => {
                         type="text"
                         id="address"
                         placeholder="Enter your address"
-                        {...register('address', { required: true ,pattern: { value:  /^[A-Za-z0-9!@#$%^&*?<>,.;'":[]{}()_+=-]{4,150}$/, message: "minimum 4 character" }})}
+                        {...register('address', { required: true })}
                         className="p-2 w-full border rounded-md pl-10"
                     />
                     <AiOutlineHome className="absolute left-3 top-3 text-gray-400" />
@@ -225,7 +225,7 @@ const BookingComponent = ({ id }) => {
                             type="text"
                             id="driverLicense"
                             placeholder="Enter your driver's license number"
-                            {...register('driverLicense', { required: "enter driver's license number ", pattern: { value:  /^[A-Za-z0-9!@#$%^&*?<>,.;'":[]{}()_+=-]{10,20}$/, message: "Enter a valid licence number" } })}
+                            {...register('driverLicense', { required: "enter driver's license number " })}
                             className="p-2 w-full border rounded-md"
                         />
                     </div>
