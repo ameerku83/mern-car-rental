@@ -29,10 +29,11 @@ const webhookrouter = express.Router();
             { status: 'paid' }, 
             { new: true }
         );
-
+        await payment.save()
         const booking = await Booking.findById(payment.booking);
         booking.paymentStatus = 'paid';
         await booking.save();
+        
 
         res.status(200).json({ received: true });
     }
