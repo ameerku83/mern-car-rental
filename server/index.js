@@ -5,6 +5,7 @@ import cors from "cors"
 import mongoDb from "./config/mongoDb.js"
 import apiRouter from "./routes/index.js"
 import cookieParser from 'cookie-parser';
+import webhookrouter from "./utils/webhook.js"
 
 // import path from "path"
 // import { fileURLToPath } from "url";
@@ -33,7 +34,7 @@ const port = process.env.PORT ;
 mongoDb()
 
 app.use("/",apiRouter)
-
+app.use("/",webhookrouter)
 
 app.all("*",(req,res)=>{
   res.status(404).json({message:"end pont does not exist"})
