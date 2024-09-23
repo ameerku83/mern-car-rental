@@ -23,6 +23,7 @@ const app =express()
     }
   ))
   
+  app.use("/webhook", express.raw({ type: 'application/json' }), webhookrouter);
   app.use(express.urlencoded({ extended: true }));
 
  
@@ -34,7 +35,7 @@ const port = process.env.PORT ;
 mongoDb()
 
 app.use("/",apiRouter)
-app.use("/",webhookrouter)
+
 
 app.all("*",(req,res)=>{
   res.status(404).json({message:"end pont does not exist"})

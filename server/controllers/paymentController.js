@@ -46,13 +46,15 @@ const formatDate = (dateString) => {
     
 
 // };
+
+// const isComplete = await Payment.findOne({ booking });
+    // if (isComplete) {
+    //     return res.status(400).json({ message: 'Payment already processed' });
+    // }
 export const createPayment = async (req, res) => {
     const { car, user, booking, paymentDate } = req.body;
   
-    const isComplete = await Payment.findOne({ booking });
-    if (isComplete) {
-        return res.status(400).json({ message: 'Payment already processed' });
-    }
+    
 
     const fetchBooking = await Booking.findById(booking).populate('car');
     
@@ -74,9 +76,11 @@ export const createPayment = async (req, res) => {
         mode: "payment",
         success_url: "https://ameerku83mern-car-rental.vercel.app/user/payment/success",
         cancel_url: "https://ameerku83mern-car-rental.vercel.app/user/payment/cancel",
+        metadata: { bookingId: booking } 
     });
-
-    // Don't save payment status as "paid" here; wait for the webhook
+    const payment =  Payment({ car,user, booking,amount:fetchBooking.totalPrice,  paymentDate,status:"pending" });
+    await payment.save()  
+   
     res.status(200).json({ sessionId: session.id });
 };
 
