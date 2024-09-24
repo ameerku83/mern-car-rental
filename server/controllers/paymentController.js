@@ -75,7 +75,7 @@ export const createPayment = async (req, res) => {
         line_items: lineItems,
         mode: "payment",
         success_url: "https://ameerku83mern-car-rental.vercel.app/user/payment/success",
-        cancel_url: "https://ameerku83mern-car-rental.vercel.app/user/payment/cancel",
+         cancel_url: "https://ameerku83mern-car-rental.vercel.app/user/payment/cancel",
         metadata: { bookingId: booking } 
     });
     const payment =  Payment({ car,user, booking,amount:fetchBooking.totalPrice,  paymentDate,status:"pending" });
@@ -99,7 +99,7 @@ export const createPayment = async (req, res) => {
      
      export const getPayments = async (req, res, next) => {
         const {userId}= req.params
-        const payments = await Payment.find({user:userId}).populate("car").populate('user');
+        const payments = await Payment.find({user:userId}).populate('booking').populate("car").populate('user');
         
         if (!payments) {
             return res.status(404).json({ success: false, message: 'payment not found' });

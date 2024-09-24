@@ -43,15 +43,17 @@ export const UserProfile = () => {
   };
 
   return (
-    <div className=" pt-12">
+    <div className=" pt-12 min-h-screen">
       {loading ? (
-        <div className="flex flex-col items-center justify-center">
-          <div className="w-16 h-16 border-4 border-purple-500 rounded-full animate-spin border-t-transparent mt-24"></div>
-          <span className="mt-4 text-xl">Loading...</span>
+        <div className="flex items-center justify-center min-h-screen">
+        <div>
+        <div className="w-16 h-16 border-4 border-purple-500 rounded-full animate-spin border-t-transparent mt-24"></div>
+          <span>Loading</span>
+        </div> 
         </div>
       ) : (
         <>
-          <div className='md:flex items-center justify-center pt-12 gap-3 mx-3'>
+          <div className='md:flex items-center justify-center pt-12 gap-3 mx-3 '>
             <div>
               <h2 className='text-xl'>Name: {user.name}</h2>
               <h4 className='text-xl'>Email: {user.email}</h4>
@@ -64,7 +66,7 @@ export const UserProfile = () => {
              </div>
           </div>
 
-          {payments.length > 0 && (
+          {payments.length > 0 &&  (
             <div className="overflow-x-auto px-4 mt-4">
               <h1 className="text-center text-2xl my-3">Payments</h1>
               <table className="table w-full border border-black-600">
@@ -78,18 +80,29 @@ export const UserProfile = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {payments.map((payment, index) => (
-                    <tr key={payment.id}>
-                      <td>{index + 1}</td>
-                      <td>
-                        <img className='w-28 object-contain' src={payment.car.image} alt="car" /> {payment.car.brand} {payment.car.model}
-                      </td>
-                      <td>{formatDate(payment.paymentDate)}</td>
-                      <td>{payment.amount}/-</td>
-                      <td>{payment.status}</td>
-                    </tr>
-                  ))}
-                </tbody>
+  {payments.map((payment, index) => (
+    (payment.booking.paymentStatus === "paid" || payment.booking.paymentStatus === "cancelled" || payment.booking.paymentStatus !== "pending") && (
+      <tr key={payment.id}>
+        <td>{index + 1}</td>
+        <td>
+          {payment.car ? (
+            <>
+              <img className='w-28 object-contain' src={payment.car?.image} alt="car" /> 
+              {payment.car?.brand} {payment.car?.model}
+            </>
+          ) : (
+            'Car details not available'
+          )}
+        </td>
+        <td>{formatDate(payment.paymentDate)}</td>
+        <td>{payment.amount}/-</td>
+        <td>{payment.booking.paymentStatus}</td>
+      </tr>
+    )
+  ))}
+</tbody>
+
+  
               </table>
             </div>
           )}

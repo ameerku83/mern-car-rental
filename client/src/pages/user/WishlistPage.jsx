@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 export const WishlistPage = () => {
   const [wishlists, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state
-  const userId = useSelector((state) => state.user.id); 
+  const userId = useSelector((state) => state.user.id);
 
   useEffect(() => {
     const fetchWishlist = async () => {
@@ -27,7 +27,7 @@ export const WishlistPage = () => {
     };
 
     fetchWishlist();
-  }, [userId]); 
+  }, [userId]);
 
   const removeWishlist = async (id) => {
     try {
@@ -42,9 +42,9 @@ export const WishlistPage = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-       <div>
-        <div className="w-16 h-16 border-4 border-purple-500 rounded-full animate-spin border-t-transparent mt-24"></div>
-        <span className="mt-4 text-xl">Loading...</span>
+        <div>
+          <div className="w-16 h-16 border-4 border-purple-500 rounded-full animate-spin border-t-transparent mt-24"></div>
+          <span className="mt-4 text-xl">Loading...</span>
         </div>
       </div>
     );
@@ -56,6 +56,7 @@ export const WishlistPage = () => {
       {wishlists.length === 0 && <h2 className="text-2xl font-bold mx-3 text-center pt-24">Your Wishlist is Empty</h2>}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {wishlists.map((wishlist) => (
+          wishlist.carId ? ( // Check if carId exists before rendering
           <div key={wishlist._id} className="relative">
             <div className="rounded-lg shadow-md p-4 mx-4 mt-4 bg-base-100 border border-purple-100">
               <div className="relative">
@@ -84,6 +85,12 @@ export const WishlistPage = () => {
               </div> 
             </div>
           </div>
+          ) : ( // Handle missing carId case
+            <div key={wishlist._id} className="p-4 mx-4 mt-4 bg-red-100 border border-red-300 rounded-lg">
+              <h3 className="text-lg font-semibold text-red-600">Car information not available</h3>
+              <button className="btn btn-error mt-2" onClick={() => removeWishlist(wishlist._id)}>Remove</button>
+            </div>
+          )
         ))}
       </div>
     </div>

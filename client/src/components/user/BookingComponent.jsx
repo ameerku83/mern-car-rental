@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const BookingComponent = ({ id }) => {
+    const [isLoading, setIsLoading] = useState(false); 
     const [isDriving, setIsDriving] = useState(false); 
     const navigate= useNavigate()
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -17,6 +18,7 @@ const BookingComponent = ({ id }) => {
         return `${year}-${month}-${day}`; 
        };
     const onSubmit = async (data) => {
+        setIsLoading(true)
         try {
              const startDateFormatted = formatDate(data.startDate);
         const endDateFormatted = formatDate(data.endDate);
@@ -46,6 +48,8 @@ const BookingComponent = ({ id }) => {
         } catch (error) {
             toast.error('Error booking the car');
             console.log(error);
+        }finally{
+            setIsLoading(false)
         }
     };
   
@@ -234,7 +238,9 @@ const BookingComponent = ({ id }) => {
             )}
 
             <div className="flex justify-center">
-                <Btn type="submit" className="mt-4 p-2 rounded-md w-full">Book Now</Btn>
+                <button type="submit" className=" btn bg-purple-500 text-white mt-4 p-2 rounded-md w-full" disabled={isLoading}>
+                    {isLoading ? 'Booking...' : 'Book Now'}
+                </button>
             </div>
         </form>
     );

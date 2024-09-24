@@ -130,26 +130,29 @@ export const Cardetails = () => {
           <h2 className="text-3xl font-bold text-center mb-2 text-purple-600">Reviews ({reviews.length})</h2>
           <div className="overflow-x-auto whitespace-nowrap">
             <div className="flex space-x-4  hide-scrollbar md:justify-center">
-              {reviews.map((review, index) => (
-                <div key={index} className="bg-base-100 shadow-lg rounded-md p-3 flex-none ">
-                  <div className="w-28">
-                    <div className="flex items-center mb-2">
-                      <FaUserCircle className="h-6 mx-2 text-gray-600" />
-                      <div className="font-semibold">{review.user.name}</div>
-                    </div>
-                    <div className="text-sm mb-2">
-                      {review.car.brand} {review.car.model}
-                    </div>
-                    
-                    <div className="flex mb-2">
-                      {renderStars(review.rating)}
-                    </div>
-                    <p className="text-sm  overflow-hidden text-ellipsis whitespace-normal">"{review.comment}"</p>
-                    
-                  </div>
-                </div>
-              ))}
-            </div>
+            {reviews.map((review, index) => (
+  <div key={index} className="bg-base-100 shadow-lg rounded-md p-3 flex-none">
+    <div className="w-28">
+      <div className="flex items-center mb-2">
+        <FaUserCircle className="h-4 mx-1 text-gray-600" />
+        <div className="font-semibold text-xs">
+          {review.user?.name || 'Anonymous'}
+        </div>
+      </div>
+      <div className="text-sm mb-2 overflow-hidden text-ellipsis whitespace-normal">
+        {review.car?.brand || 'Unknown'} {review.car?.model || ''}
+      </div>
+      <div className="flex mb-2">
+        {renderStars(review.rating)}
+      </div>
+      <p className="text-sm overflow-hidden text-ellipsis whitespace-normal">
+        "{review.comment || 'No comment available'}"
+      </p>
+    </div>
+  </div>
+))}
+
+           </div>
           </div>
             </section> 
              }
