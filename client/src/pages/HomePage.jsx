@@ -6,34 +6,28 @@ import { Link, useNavigate } from "react-router-dom";
 import { Carousel } from "../components/ui/Carousel";
 import { axiosInstance } from "../config/axiosInstance";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { setUserId } from "../redux/userSlice";
+
 
 const UserHomePage = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const { handleSubmit, register, formState: { errors } } = useForm();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchReviews = async () => {
       try {
-        // Fetch user profile
-        const userResponse = await axiosInstance.get('user/profile');
-        dispatch(setUserId(userResponse?.data?.data?._id));
-
-        // Fetch reviews
-        const reviewsResponse = await axiosInstance.get("user/reviews");
-        setReviews(reviewsResponse?.data?.data);
+        const response = await axiosInstance.get("user/reviews");
+        setReviews(response?.data?.data);
       } catch (error) {
         console.log(error);
       } finally {
         setLoading(false); // Set loading to false after data fetch
       }
     };
-    fetchData();
-  }, [dispatch]);
+    fetchReviews();
+  }, []);
+
+ 
 
   const onSubmit = (data) => {
     console.log(data);
@@ -138,7 +132,6 @@ const UserHomePage = () => {
       <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 m-4">
         {/* Service Cards */}
       </section>
-
       <section className="my-16 px-5 md:px-10">
         <h2 className="text-3xl font-bold text-center mb-2 text-purple-600">What Our Clients Say</h2>
         <div className="overflow-x-auto whitespace-nowrap">
@@ -164,6 +157,9 @@ const UserHomePage = () => {
           </div>
         </div>
       </section>
+ 
+    
+
     </div>
   );
 };

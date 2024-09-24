@@ -81,7 +81,7 @@ export const UserProfile = () => {
                 </thead>
                 <tbody>
   {payments.map((payment, index) => (
-    (payment.booking.paymentStatus === "paid" || payment.booking.paymentStatus === "cancelled" || payment.booking.paymentStatus !== "pending") && (
+    (payment.status === "paid" || payment.status === "cancelled" || payment.status !== "pending") && (
       <tr key={payment.id}>
         <td>{index + 1}</td>
         <td>
@@ -96,7 +96,7 @@ export const UserProfile = () => {
         </td>
         <td>{formatDate(payment.paymentDate)}</td>
         <td>{payment.amount}/-</td>
-        <td>{payment.booking.paymentStatus}</td>
+        <td>{payment.status}</td>
       </tr>
     )
   ))}

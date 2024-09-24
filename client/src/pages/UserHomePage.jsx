@@ -62,7 +62,6 @@ const UserHomePage = () => {
       <div className="flex items-center justify-center min-h-screen">
       <div>
       <div className="w-16 h-16 border-4 border-purple-500 rounded-full animate-spin border-t-transparent mt-24"></div>
-
         <span>Loading</span>
       </div> 
       </div>
