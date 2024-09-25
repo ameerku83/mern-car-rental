@@ -70,20 +70,43 @@ export const UsersPayments = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-6">
                     {payments.map((payment) => (
                         <div key={payment._id} className="border border-gray-200 rounded-lg shadow-md p-4 mx-4">
-                            <img src={payment.car.image} alt="Car" className="w-full h-40 object-contain rounded-md" />
+                            {/* Conditional rendering for car image */}
+                            {payment.car ? (
+                                <img src={payment.car.image} alt="Car" className="w-full h-40 object-contain rounded-md" />
+                            ) : (
+                                <div className="w-full h-40 flex items-center justify-center bg-gray-200 rounded-md">
+                                    No car data available
+                                </div>
+                            )}
+
                             <div className="text-center mt-2">
-                                <h3 className="text-2xl font-bold mt-4">
-                                    {payment.car.brand} {payment.car.model}
-                                </h3>
+                                {/* Conditional rendering for car details */}
+                                {payment.car ? (
+                                    <h3 className="text-2xl font-bold mt-4">
+                                        {payment.car.brand} {payment.car.model}
+                                    </h3>
+                                ) : (
+                                    <h3 className="text-2xl font-bold mt-4">Car details not available</h3>
+                                )}
+
                                 <div className="text-md font-semibold mt-2">
-                                    <h5>User Name: {payment.user.name}</h5>
-                                    <h5>Email: {payment.user.email}</h5>
-                                    <h5>Mobile: {payment.user.mobile}</h5>
+                                    {/* Conditional rendering for user details */}
+                                    {payment.user ? (
+                                        <>
+                                            <h5>User Name: {payment.user.name}</h5>
+                                            <h5>Email: {payment.user.email}</h5>
+                                            <h5>Mobile: {payment.user.mobile}</h5>
+                                        </>
+                                    ) : (
+                                        <h5>User details not available</h5>
+                                    )}
+
                                     <h5>Amount: {payment.amount}</h5>
                                     <h5>Payment Status: {payment.status}</h5>
                                     <h5>Date: {formatDate(payment.paymentDate)}</h5>
                                 </div>
                             </div>
+
                             <div className="flex justify-center items-center mt-4">
                                 <button
                                     className="btn btn-error"
