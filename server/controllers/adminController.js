@@ -1,7 +1,9 @@
 
+
 import { userValidate } from "../joiValidations/userValidation.js";
 import { Admin } from "../models/adminModel.js";
 import { Booking } from "../models/bookingModel.js";
+import { Car } from "../models/carModel.js";
 import { Contact } from "../models/contactModel.js";
 import { Payment } from "../models/paymntModel.js";
 import { Review } from "../models/review.js";
@@ -145,6 +147,19 @@ export const deleteUserById = async (req, res, next) => {
 
 };
 
+export const admingetCarById =async(req,res)=>{
+    const {id} =req.params
+
+   const carDetail=await Car.findById(id)
+   
+   if (!carDetail) {
+       return res.status(400).json({ message: "car details not found" });
+   }
+   res.json({success:true,message:'car details fetched',data:carDetail})
+
+
+}
+
 
 export const admingetAllBookings = async (req, res, next) => {
     const { userName } = req.query;
@@ -258,7 +273,7 @@ export const admingetBookingById = async (req, res) => {
         
             let matchStage = {};
             if (userName) {
-                matchStage = { 'user.name': { $regex: userName, $options: 'i' } }; // Case-insensitive search
+                matchStage = { 'user.name': { $regex: userName, $options: 'i' } }; 
             }
         
             try {
@@ -334,54 +349,75 @@ export const admingetBookingById = async (req, res) => {
 
 
  // Get all reviews
-//  export const adminGetReviews = async (req, res, next) => {
-  
-//     const reviewList = await Review.find().populate('user').populate('car');
-//     res.json({ success: true, message: 'Review list fetched', data: reviewList });}
-    export const adminGetReviews = async (req, res, next) => {
-        const { userName } = req.query;
+
+
+
+ 
+
+ export const adminGetReviews = async (req, res, next) => {
+     const { userName } = req.query;
+ 
+     let matchStage = {};
+ 
+     if (userName) {
+         matchStage['user.name'] = { $regex: userName, $options: 'i' }; // Case-insensitive search
+     }
+ 
     
-        let matchStage = {};
-        if (userName) {
-            matchStage = { 'user.name': { $regex: userName, $options: 'i' } }; // Case-insensitive search
-        }
-    
-        
-            const reviews = await Review.aggregate([
-                {
-                    $lookup: {
-                        from: 'users',  
-                        localField: 'user',
-                        foreignField: '_id',
-                        as: 'user'
-                    }
-                },
-                {
-                    $unwind: '$user'  
-                },
-                {
-                    $lookup: {
-                        from: 'cars',  
-                        localField: 'car',
-                        foreignField: '_id',
-                        as: 'car'
-                    }
-                },
-                {
-                    $unwind: '$car'  
-                },
-                {
-                    $match: matchStage  
-                }
-            ]);
-    
-            if (!reviews.length) {
-                return res.status(400).json({ success: false, message: "No reviews found" });
-            }
-    
-            res.json({ success: true, message: 'Bookings list fetched successfully', data: reviews });
-        
-    };
+ 
+     try {
+         const reviews = await Review.aggregate([
+             {
+                 $lookup: {
+                     from: 'users',
+                     localField: 'user',
+                     foreignField: '_id',
+                     as: 'user'
+                 }
+             },
+             {
+                 $unwind: {
+                     path: '$user',
+                     preserveNullAndEmptyArrays: true  // Keep reviews even if user is null
+                 }
+             },
+             {
+                 $lookup: {
+                     from: 'cars',
+                     localField: 'car',
+                     foreignField: '_id',
+                     as: 'car'
+                 }
+             },
+             {
+                 $unwind: {
+                     path: '$car',
+                     preserveNullAndEmptyArrays: true // Keep reviews even if car is null
+                 }
+             },
+             {
+                 $match: matchStage
+             }
+         ]);
+ 
+         // Adjust the condition here
+         if ( reviews.length === 0) {
+             return res.status(200).json({ success: false, message: "No reviews found" });
+         }
+ 
+         res.json({ success: true, message: 'Reviews fetched successfully', data: reviews });
+     } catch (error) {
+         return res.status(500).json({ success: false, message: "Error fetching reviews", error: error.message });
+     }
+ };
+ export const  admingetReviewCarid= async (req, res) => {
+    const {id}= req.params
+    const reviewList = await Review.find({car:id}).populate('user').populate('car');
+    if (!reviewList) {
+      return res.status(404).json({ success: false, message: 'Review not found' });
+    }
+    res.json({ success: true, message: 'Review list fetched', data: reviewList });
+  }
 
 
   export const admingetUserReviews = async (req, res, next) => {

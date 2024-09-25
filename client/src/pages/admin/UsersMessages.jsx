@@ -45,7 +45,7 @@ export const UsersMessages = () => {
         <tbody>
           {messages.map((message) => (
             <tr key={message.id}>
-              <td>{message.user.name}</td>
+              <td>{message.user?.name || "Anonimous"}</td>
               <td>{message.email}</td>
               <td>{message.mobile}</td>
               <td>{message.message}</td>

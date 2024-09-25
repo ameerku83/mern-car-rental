@@ -30,6 +30,7 @@ import { UsersMessages } from "../pages/admin/UsersMessages";
 import CancelBooking from "../pages/user/CancelBooking";
 import { WishlistPage } from "../pages/user/WishlistPage";
 import UserErrorPage from "../pages/UserErrorPage";
+import { CarReviews } from "../pages/admin/CarReviews";
 
 const adminPath=process.env.REACT_APP_ADMIN
 export const router=createBrowserRouter([
@@ -119,6 +120,10 @@ export const router=createBrowserRouter([
         {
             path:"reviews",
             element:<UsersReviews/>
+        },
+        {
+            path:"car/:id",
+            element:<CarReviews/>
         },
         {
             path:"payments",

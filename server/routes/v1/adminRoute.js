@@ -9,9 +9,11 @@ import { adminCreate,
        adminDeleteReview, 
        admingetAllBookings,
         admingetBookingById, 
+        admingetCarById, 
         AdminGetPayment,
         adminGetPayments,
-        adminGetReviewById, 
+         
+        admingetReviewCarid, 
         adminGetReviews,
         admingetUserBookings,
          admingetUserPayments,
@@ -38,6 +40,9 @@ adminRoute.put("/adminlogout", authAdmin, errorHandler(adminLogout));
 adminRoute.get("/user-list", authAdmin, errorHandler(userList));
 adminRoute.delete("/delete-user/:id", authAdmin, errorHandler(deleteUserById)); 
 adminRoute.post("/create-user", authAdmin,errorHandler(userCreatedByAdmin));
+//car
+adminRoute.get("/car/:id", authAdmin, errorHandler(admingetCarById));
+
  //bookin 
  adminRoute.get("/bookings", authAdmin, errorHandler(admingetAllBookings));
  adminRoute.get("/bookings/:userId", authAdmin, errorHandler(admingetUserBookings));
@@ -55,9 +60,11 @@ adminRoute.post("/create-user", authAdmin,errorHandler(userCreatedByAdmin));
  //review
  adminRoute.get("/reviews", authAdmin, errorHandler(adminGetReviews));
  adminRoute.get("/reviews/:user", authAdmin, errorHandler(admingetUserReviews));
- adminRoute.get("/review/:id", authAdmin, errorHandler(adminGetReviewById));
+//  adminRoute.get("/review/:id", authAdmin, errorHandler(adminGetReviewById));
  adminRoute.delete("/delete-review/:id", authAdmin, errorHandler(adminDeleteReview));
-//contact us
+ adminRoute.get("/review/:id", authAdmin, errorHandler(admingetReviewCarid));
+ 
+//contact usadminGer
 adminRoute.get("/contact", authAdmin, errorHandler(getContacts))
 adminRoute.delete("/delete-message/:id", authAdmin, errorHandler(adminDeleteMessage))
 

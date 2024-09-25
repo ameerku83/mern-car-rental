@@ -28,9 +28,7 @@ export const AdminCarList = () => {
       }
     };
     
-    const handleDelete = (id) => {
-        setCars(cars.filter((car) => car._id !== id));
-      };
+    
 
     if(cars.length===0) return(
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" >
@@ -75,7 +73,7 @@ export const AdminCarList = () => {
         
      { cars.map(( car )=>(
 
-        <AdminCarCard key={car._id} car={car} onDelete={handleDelete} />
+        <AdminCarCard key={car._id} car={car}  />
        ))   } 
 
     </div>
