@@ -33,7 +33,7 @@ const AdminNavbar = () => {
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
             <AiOutlineMenu className="h-5 w-5" />
           </label>
-          <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+          <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-40">
             
           <li> <Link  to={"/admin/services"}>Services</Link></li>
           <li>  <Link to={"/admin/addcar"} >add car</Link></li>

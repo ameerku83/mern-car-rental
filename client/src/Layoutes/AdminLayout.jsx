@@ -2,7 +2,8 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 
 import AdminNavbar from "../components/admin/AdminNavbar";
-import Footer from "../components/Footer";
+
+import AdminFooter from "../components/admin/AdminFooter";
 
 export const AdminLayout = () => {
     return (
@@ -11,7 +12,7 @@ export const AdminLayout = () => {
             <div >
                 <Outlet />
             </div>
-            <Footer/>
+            <AdminFooter/>
             
         </div>
     );
