@@ -86,7 +86,7 @@ export const CarReviews = () => {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-base-100 rounded-lg shadow-md p-6 border border-purple-100">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div className="flex justify-center">
                         <img src={car.image} alt={car.model} className="w-full h-auto object-contain rounded-md" />
@@ -94,7 +94,7 @@ export const CarReviews = () => {
                     <div className="flex flex-col justify-between">
                         <h1 className="text-3xl font-bold">{car.brand} {car.model}</h1>
                         <div className="mt-4 space-y-2">
-                            <p><strong>Price per day:</strong> ${car.pricePerDay}</p>
+                            <p><strong>Price per day:</strong> {car.pricePerDay}</p>
                             <p><strong>Year:</strong> {car.year}</p>
                             <p><strong>Category:</strong> {car.category}</p>
                             <p><strong>Transmission:</strong> {car.transmission}</p>

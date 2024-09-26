@@ -166,7 +166,7 @@ export const admingetAllBookings = async (req, res, next) => {
 
     let matchStage = {};
     if (userName) {
-        matchStage = { 'user.name': { $regex: userName, $options: 'i' } }; // Case-insensitive search
+        matchStage = { 'user.email': { $regex: userName, $options: 'i' } }; // Case-insensitive search
     }
 
     
@@ -273,7 +273,7 @@ export const admingetBookingById = async (req, res) => {
         
             let matchStage = {};
             if (userName) {
-                matchStage = { 'user.name': { $regex: userName, $options: 'i' } }; 
+                matchStage = { 'user.email': { $regex: userName, $options: 'i' } }; 
             }
         
             try {
@@ -360,11 +360,8 @@ export const admingetBookingById = async (req, res) => {
      let matchStage = {};
  
      if (userName) {
-         matchStage['user.name'] = { $regex: userName, $options: 'i' }; // Case-insensitive search
+         matchStage['user.email'] = { $regex: userName, $options: 'i' }; // Case-insensitive search
      }
- 
-    
- 
      try {
          const reviews = await Review.aggregate([
              {
