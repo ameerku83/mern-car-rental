@@ -5,7 +5,7 @@ const AboutPage = () => {
     return (
         <div className="py-12 pt-24 ">
             <div className="max-w-7xl mx-auto px-4">
-                {/* About Section */}
+               
                 <section className="text-center mb-16">
                     <h2 className="text-4xl font-semibold text-purple-600 mb-8">
                         About Our Car Rental Service
@@ -30,7 +30,7 @@ const AboutPage = () => {
                         </div>
                     </div>
 
-                    {/* Service 2 */}
+                    
                     <div className="bg-base-200 p-6 rounded-lg shadow-md flex items-center border-purple-600 border-s-2 ">
                         <div className="text-purple-600 bg-gray-100 rounded-full p-6 mr-6">
                             <FaCar size={48} />
@@ -43,7 +43,7 @@ const AboutPage = () => {
                         </div>
                     </div>
 
-                    {/* Service 3 */}
+                  
                     <div className="bg-base-200 p-6 rounded-lg shadow-md flex items-center border-purple-600 border-s-2 ">
                         <div className="text-purple-600 bg-gray-100 rounded-full p-6 mr-6">
                             <FaUserShield size={48} />

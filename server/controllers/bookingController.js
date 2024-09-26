@@ -99,13 +99,7 @@ const booking = await Booking.findById(id);
       // if (booking.status === 'canceled') {
       //   return res.status(400).json({ message: 'Booking is already canceled' })}                                             
      
-        booking.status = 'cancelled';
-        booking.paymentStatus = 'cancelled';
-         await booking.save();
-         const payment = await Payment.findOne({ booking: booking._id })
-            if (payment) {
-              payment.status = 'cancelled';
-              await payment.save();}
+       
 
     const car = await Car.findById(booking.car);
    if (car) {
@@ -123,7 +117,13 @@ const booking = await Booking.findById(id);
                  <img src=${car.image} alt="car" />`)
 
             await car.save();  }
-              
+            booking.status = 'cancelled';
+            booking.paymentStatus = 'cancelled';
+             await booking.save();
+             const payment = await Payment.findOne({ booking: booking._id })
+                if (payment) {
+                  payment.status = 'cancelled';
+                  await payment.save();}
        res.status(200).json({ message: 'Booking canceled successfully' , data:booking    });
                                                             
   };
