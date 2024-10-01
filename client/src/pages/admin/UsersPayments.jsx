@@ -54,7 +54,7 @@ export const UsersPayments = () => {
             <div className="flex justify-center mt-4">
                 <input
                     type="text"
-                    placeholder="Search by Username"
+                    placeholder="Search by user email"
                     className="input input-bordered mr-2"
                     value={searchUserName}
                     onChange={(e) => setSearchUserName(e.target.value)}

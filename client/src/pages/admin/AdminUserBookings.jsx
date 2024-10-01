@@ -67,7 +67,7 @@ export const AdminUserBookings = () => {
                 <input
                     type="text"
                     className="border border-gray-300 p-2 rounded"
-                    placeholder="Search by user name"
+                    placeholder="Search by user email"
                     value={userName}
                     onChange={(e) => setUserName(e.target.value)}
                 />

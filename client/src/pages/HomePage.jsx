@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaCalendarAlt, FaCar, FaHeadset, FaLocationArrow, FaMapMarkedAlt, FaStar, FaUserCircle, FaUserShield } from "react-icons/fa";
+import { FaCalendarAlt, FaLocationArrow, FaStar, FaUserCircle, } from "react-icons/fa";
 import audiq7 from ".././asets/images/audi q7.png";
 import Btn from "../components/ui/Btn";
 import { Link, useNavigate } from "react-router-dom";
@@ -31,7 +31,7 @@ const UserHomePage = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    navigate('/user/rent');
+    navigate('/rent');
   }
 
   const renderStars = (rating) => {
@@ -67,7 +67,7 @@ const UserHomePage = () => {
             Discover the epitome of premium cars.,<br /> Unleash the thrill of driving around the world.<br /> Best maintenance, wide selection of vehicles.
           </p>
           <div className="space-x-4">
-            <Btn><Link to={'/user/rent'}>Book a car</Link></Btn>
+            <Btn><Link to={'/rent'}>Book a car</Link></Btn>
             <button className="btn btn-outline"><Link to={'/user/about'}>Learn more</Link></button>
           </div>
         </div>
@@ -93,7 +93,20 @@ const UserHomePage = () => {
                   {...register("pickupLocation", { required: "Pickup Location required" })}
                   className="input input-bordered w-full pl-10"
                 >
-                  {/* Options */}
+                   <option value="">Select Location</option>
+                  <option value="Bitherkad">Bitherkad</option>
+                  <option value="Nelakota">Nelakota</option>
+                  <option value="Devarshola">Devarshola</option>
+                  <option value="Gudalure">Gudalure</option>
+                  <option value="Patavayal">Patavayal</option>
+                  <option value="Padanthorai">Padanthorai</option>
+                  <option value="Cholady">Cholady</option>
+                  <option value="Uppatty">Uppatty</option>
+                  <option value="Panthalure">Panthalure</option>
+                  <option value="Pakkana">Pakkana</option>
+                  <option value="Ooty">Ooty</option>
+                  <option value="Chrambady">Chrambady</option>
+                  <option value="Oorkadavu">Oorkadavu</option>
                 </select>
               </div>
               <span className="text-red-600">{errors.pickupLocation?.message}</span>

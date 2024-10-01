@@ -53,7 +53,7 @@ export const WishlistPage = () => {
   return (
     <div>
       <h2 className="text-2xl font-bold mx-3 text-center pt-24">My Wishlist</h2>
-      {wishlists.length === 0 && <h2 className="text-2xl font-bold mx-3 text-center pt-24">Your Wishlist is Empty</h2>}
+      {wishlists.length === 0 && <h2 className="text-2xl font-bold mx-3 text-center pt-24 h-screen">Your Wishlist is Empty</h2>}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {wishlists.map((wishlist) => (
           wishlist.carId ? ( // Check if carId exists before rendering
@@ -85,7 +85,7 @@ export const WishlistPage = () => {
               </div> 
             </div>
           </div>
-          ) : ( // Handle missing carId case
+          ) : ( 
             <div key={wishlist._id} className="p-4 mx-4 mt-4 bg-red-100 border border-red-300 rounded-lg">
               <h3 className="text-lg font-semibold text-red-600">Car information not available</h3>
               <button className="btn btn-error mt-2" onClick={() => removeWishlist(wishlist._id)}>Remove</button>

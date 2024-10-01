@@ -84,7 +84,7 @@ const MyBookings = () => {
 
   if (bookings.length === 0) {
     return (
-      <div className="pt-28 text-center">
+      <div className="pt-28 text-center h-screen">
         <h1 className="text-2xl font-semibold">No bookings found</h1>
       </div>
     );
