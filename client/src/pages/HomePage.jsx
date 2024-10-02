@@ -64,7 +64,7 @@ const UserHomePage = () => {
             Book a car today, <br /> save up to <span className="text-red-500">50%</span>
           </h1>
           <p className="text-lg ">
-            Discover the epitome of premium cars.,<br /> Unleash the thrill of driving around the world.<br /> Best maintenance, wide selection of vehicles.
+            Discover the epitome of premium cars,<br /> Unleash the thrill of driving around the world.<br /> Best maintenance, wide selection of vehicles.
           </p>
           <div className="space-x-4">
             <Btn><Link to={'/rent'}>Book a car</Link></Btn>
