@@ -4,13 +4,28 @@ import { FaGasPump, FaUsers, FaTachometerAlt, FaStar } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../config/axiosInstance';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
-
 const CarCard = ({ car }) => {
   const [averageRating, setAverageRating] = useState(0);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const navigate = useNavigate();
-  const userId = useSelector((state) => state.user.id); 
+  const [userId, setUserId] = useState(null);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axiosInstance.get('user/profile');
+        const fetchedUserId = response?.data?.data?._id;
+
+       
+          setUserId(fetchedUserId);  // Set userId if found
+       
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        
+      }
+    };
+
+    fetchUser();
+  }, []);
   
   useEffect(() => {
     const checkWishlist = async () => {
@@ -51,22 +66,22 @@ const CarCard = ({ car }) => {
 
   const handleWishlistClick = async () => {
     if (!userId) {
-      navigate('/login'); 
+     await navigate('/login'); 
       return;
     }
 
     try {
       const response = await axiosInstance.post('user/add-wishlist', {
-        userId,
+        userId:userId,
         carId: car._id,
       });
 
       setIsInWishlist(true);
       toast.success("aded to wishlist");
     } catch (error) {
-      toast.error( 'please login');
+      toast.error( error.response.data.message);
       console.log(error);
-      navigate('/login')
+      
     }
   };
   const renderStars = (rating) => {

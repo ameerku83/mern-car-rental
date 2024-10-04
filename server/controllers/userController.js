@@ -92,18 +92,27 @@ export const checkUser = async (req, res, next) => {
 };
 
 export const updateUser = async (req, res, next) => {
-    const { email, password,name,mobile } = req.body;
+    const { email, password, name, mobile } = req.body;
     const { id } = req.params;
-    const salt = 10;
-    const hashedPassword = bcrypt.hashSync(password, salt);
-    const userData = await User.findByIdAndUpdate(id,{email, password:hashedPassword  ,mobile,name },{new:true})
-    if (!userData) {
-        return res.status(400).json({ success: true, message: "user not found" });
+  
+    const updateData = { email, mobile, name };
+  
+    // Only hash and update password if it's provided
+    if (password) {
+      const salt = 10;
+      const hashedPassword = bcrypt.hashSync(password, salt);
+      updateData.password = hashedPassword;
     }
-
-    res.json({ success: true, message: "user data updated", data: userData });
-
-};
+  
+    const userData = await User.findByIdAndUpdate(id, updateData, { new: true });
+    
+    if (!userData) {
+      return res.status(400).json({ success: true, message: "User not found" });
+    }
+  
+    res.json({ success: true, message: "User data updated", data: userData });
+  };
+  
 
 
 export const createContact = async (req,res)=>{

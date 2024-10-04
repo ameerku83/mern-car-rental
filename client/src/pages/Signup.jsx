@@ -11,6 +11,7 @@ const Signup = () => {
   const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [updatePassword, setUpdatePassword] = useState(false); // For controlling password update
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -34,19 +35,19 @@ const Signup = () => {
   }, [id, setValue]);
 
   const onSubmit = async (data) => {
-    // Remove confirmPassword before sending data to the backend
-    
+    // Prepare the signup data
+    const signupdata = {
+      name: data.name.trim(),
+      email: data.email.trim(),
+      mobile: data.mobile.trim(),
+    };
 
-     const signupdata = {
-         name:data.name.trim(),
-         email:data.email.trim(),
-         password:data.password.trim(),
-         mobile:data.mobile.trim()
+    // If updating password or creating a new user, add password to the data
+    if (updatePassword || !id) {
+      signupdata.password = data.password.trim();
+    }
 
-     }
-
-     
-
+    // Handle update or create
     if (id) {
       try {
         await axiosInstance.put(`user/update/${id}`, signupdata);
@@ -101,48 +102,77 @@ const Signup = () => {
             <input
               type="text"
               id="mobile"
-              {...register('mobile', { required: 'Mobile is required', pattern: { value: /^[0-9]{10}$/, message: "Enter a valid mobile number" } })}
+              {...register('mobile', {
+                required: 'Mobile is required',
+                pattern: { value: /^[0-9]{10}$/, message: "Enter a valid mobile number" }
+              })}
               className="w-full p-2 border border-gray-300 rounded"
             />
             {errors.mobile && <p className="text-red-500">{errors.mobile?.message}</p>}
           </div>
 
-          <div className="mb-2 relative">
-            <label htmlFor="password" className="block text-gray-700">Password</label>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              id="password"
-              {...register('password', { required: 'Password is required', pattern: { value: /^[A-Za-z0-9!@#$%^&*()_+=-]{4,20}$/, message: "minimum 4 character"}})}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-            {errors.password && <p className="text-red-500">{errors.password.message}</p>}
-            <span
-              className="absolute right-2 top-9 cursor-pointer"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
-          </div>
+          {/* Checkbox to update password */}
+          {id && (
+            <div className="mb-2">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  onChange={() => setUpdatePassword(!updatePassword)}
+                  className="mr-2"
+                />
+                Change Password
+              </label>
+            </div>
+          )}
 
-          <div className="mb-2 relative">
-            <label htmlFor="confirmPassword" className="block text-gray-700">Confirm Password</label>
-            <input
-              type={showConfirmPassword ? 'text' : 'password'}
-              id="confirmPassword"
-              {...register('confirmPassword', {
-                required: 'Confirm Password is required',
-                validate: (value) => value === password || "Passwords do not match"
-              })}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-            {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword.message}</p>}
-            <span
-              className="absolute right-2 top-9 cursor-pointer"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            >
-              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
-          </div>
+          {/* Conditionally render password fields */}
+          {(!id || updatePassword) && (
+            <>
+              <div className="mb-2 relative">
+                <label htmlFor="password" className="block text-gray-700">Password</label>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  {...register('password', {
+
+                    required: updatePassword || !id ? 'Password is required' : false,
+                    pattern: {
+                      value: /^[A-Za-z0-9!@#$%^&*()_+=-]{4,20}$/,
+                      message: "Minimum 4 characters"
+                    }
+                  })}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+                {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+                <span
+                  className="absolute right-2 top-9 cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
+
+              <div className="mb-2 relative">
+                <label htmlFor="confirmPassword" className="block text-gray-700">Confirm Password</label>
+                <input
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  id="confirmPassword"
+                  {...register('confirmPassword', {
+                    required: updatePassword || !id ? 'Confirm Password is required' : false,
+                    validate: (value) => value === password || "Passwords do not match"
+                  })}
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+                {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword.message}</p>}
+                <span
+                  className="absolute right-2 top-9 cursor-pointer"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
+            </>
+          )}
 
           <div className="flex justify-center">
             <Btn type="submit" className="p-2 rounded w-full">{id ? "Update" : "Sign up"}</Btn>

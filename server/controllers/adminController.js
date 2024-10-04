@@ -10,6 +10,7 @@ import { Review } from "../models/review.js";
 import { User } from "../models/userModel.js";
 import { generateToken } from "../utils/generateToken.js";
 import bcrypt from "bcrypt";
+import { sendClient } from "../utils/sendMail.js";
 
 export const adminCreate = async (req, res, next) => {
     
@@ -109,7 +110,7 @@ export const userCreatedByAdmin = async (req, res, next) => {
     if (userExist) {
         return res.status(404).json({ success: false, message: "user already exist" });
     }
-
+    sendClient(email,'FLY WHEEL','',`<h3>New account created by admin <br> your login  password is: ${password}</h3>`)
     //hashing
     const salt = 10;
     const hashedPassword = bcrypt.hashSync(password, salt);
@@ -118,10 +119,9 @@ export const userCreatedByAdmin = async (req, res, next) => {
     const newUser = new User({ name, email, password: hashedPassword,mobile  });
     await newUser.save();
 
-    //create token
-    const token = generateToken(email);
+    
 
-    res.cookie("token", token);
+    
     res.json({ success: true, message: "user created by admin", data:newUser});
 
 };
@@ -180,7 +180,8 @@ export const admingetAllBookings = async (req, res, next) => {
                 }
             },
             {
-                $unwind: '$user'  
+                $unwind: '$user'  ,
+                preserveNullAndEmptyArrays: true 
             },
             {
                 $lookup: {
@@ -191,7 +192,8 @@ export const admingetAllBookings = async (req, res, next) => {
                 }
             },
             {
-                $unwind: '$car'  
+                $unwind: '$car',
+                preserveNullAndEmptyArrays: true   
             },
             {
                 $match: matchStage  
@@ -287,7 +289,8 @@ export const admingetBookingById = async (req, res) => {
                         }
                     },
                     {
-                        $unwind: '$user'  // Unwind to handle the array result from lookup
+                        $unwind: '$user' ,
+                        preserveNullAndEmptyArrays: true  // Unwind to handle the array result from lookup
                     },
                     {
                         $lookup: {
@@ -298,7 +301,8 @@ export const admingetBookingById = async (req, res) => {
                         }
                     },
                     {
-                        $unwind: '$car'  
+                        $unwind: '$car' ,
+                        preserveNullAndEmptyArrays: true  
                     },
                     {
                         $lookup: {
@@ -309,7 +313,8 @@ export const admingetBookingById = async (req, res) => {
                         }
                     },
                     {
-                        $unwind: '$booking'  
+                        $unwind: '$booking' ,
+                        
                     },
                     {
                         $match: matchStage  
