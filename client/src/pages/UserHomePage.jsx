@@ -57,7 +57,7 @@ const UserHomePage = () => {
     return stars;
   };
 
-  if (loading) { // Loading Indicator for the entire page
+  if (loading) { 
     return (
       <div className="flex items-center justify-center min-h-screen">
       <div>

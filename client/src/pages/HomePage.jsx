@@ -57,7 +57,7 @@ const UserHomePage = () => {
 
   return (
     <div className="mx-auto py-10 pt-16">
-      {/* Hero Section */}
+      
       <div className="flex flex-col lg:flex-row items-center lg:px-6 ">
         <div className="text-center lg:text-left lg:w-1/2 space-y-6 lg:px-6 mt-3 ">
           <h1 className="text-4xl font-bold text-purple-600 ">
@@ -143,7 +143,6 @@ const UserHomePage = () => {
       </section>
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 m-4">
-        {/* Service Cards */}
       </section>
       <section className="my-16 px-5 md:px-10">
         <h2 className="text-3xl font-bold text-center mb-2 text-purple-600">What Our Clients Say</h2>
