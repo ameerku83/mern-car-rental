@@ -31,9 +31,7 @@ export const UsersPayments = () => {
         fetchPayments(searchUserName) // Fetch payments with the searched user name
     }
 
-    const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('en-CA')
-    }
+    
 
     const deletePayment = async (id) => {
         try {
@@ -67,7 +65,7 @@ export const UsersPayments = () => {
             {loading ? (
                 <div className="text-center mt-6">Loading...</div>
             ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-6">
                     {payments.map((payment) => (
                         <div key={payment._id} className="border border-gray-200 rounded-lg shadow-md p-4 mx-4">
                             {/* Conditional rendering for car image */}
@@ -103,7 +101,7 @@ export const UsersPayments = () => {
 
                                     <h5>Amount: {payment.amount}</h5>
                                     <h5>Payment Status: {payment.status}</h5>
-                                    <h5>Date: {formatDate(payment.paymentDate)}</h5>
+                                    <h5>Date: {new Date(payment.paymentDate).toDateString()}</h5>
                                 </div>
                             </div>
 

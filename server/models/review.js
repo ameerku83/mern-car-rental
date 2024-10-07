@@ -26,6 +26,11 @@ const reviewSchema = new mongoose.Schema({
         minlength: [10, 'Review must be at least 10 characters long'],
         
     },
+    date: {
+        type: Date,
+        default: Date.now,
+    }
+    
 }, {
     timestamps: true,
 });

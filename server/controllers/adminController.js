@@ -159,54 +159,71 @@ export const admingetCarById =async(req,res)=>{
 
 
 }
-
-
 export const admingetAllBookings = async (req, res, next) => {
     const { userName } = req.query;
 
     let matchStage = {};
     if (userName) {
-        matchStage = { 'user.email': { $regex: userName, $options: 'i' } }; // Case-insensitive search
+        // Case-insensitive search for user email
+        matchStage = { 'user.email': { $regex: userName, $options: 'i' } };
     }
 
-    
+    try {
+        // Aggregate bookings, users, and cars
         const bookings = await Booking.aggregate([
             {
                 $lookup: {
-                    from: 'users',  
-                    localField: 'user',
+                    from: 'users', // Fetch related user data
+                    localField: 'user', 
                     foreignField: '_id',
                     as: 'user'
                 }
             },
             {
-                $unwind: '$user'  ,
-                preserveNullAndEmptyArrays: true 
+                // Unwind the array of user objects, allowing nulls
+                $unwind: {
+                    path: '$user', 
+                    preserveNullAndEmptyArrays: true 
+                }
             },
             {
                 $lookup: {
-                    from: 'cars',  
+                    from: 'cars', // Fetch related car data
                     localField: 'car',
                     foreignField: '_id',
                     as: 'car'
                 }
             },
             {
-                $unwind: '$car',
-                preserveNullAndEmptyArrays: true   
+                // Unwind the array of car objects, allowing nulls
+                $unwind: {
+                    path: '$car',
+                    preserveNullAndEmptyArrays: true
+                }
             },
             {
-                $match: matchStage  
+                $match: matchStage // Apply the match filter based on userName
+            },
+            {
+                $sort: { createdAt: -1 }  // Sort by `createdAt` field in descending order (newest first)
             }
         ]);
 
-        if (!bookings.length) {
+        // Check if no bookings found
+        if (bookings.length === 0) {
             return res.status(400).json({ success: false, message: "No bookings found" });
         }
 
+        // Return successful response with bookings
         res.json({ success: true, message: 'Bookings list fetched successfully', data: bookings });
-    
+        
+    } catch (error) {
+        // Handle any errors that occur during the aggregation
+        next(error);
+    }
 };
+
+
 
 
 
@@ -269,8 +286,8 @@ export const admingetBookingById = async (req, res) => {
             res.json({ success: true, message: 'payment deleted successfully!', data: payment });
             }
     
-         // Cancel a paymen
-         export const adminGetPayments = async (req, res, next) => {
+        // Cancel a payment
+        export const adminGetPayments = async (req, res, next) => {
             const { userName } = req.query;
         
             let matchStage = {};
@@ -289,8 +306,10 @@ export const admingetBookingById = async (req, res) => {
                         }
                     },
                     {
-                        $unwind: '$user' ,
-                        preserveNullAndEmptyArrays: true  // Unwind to handle the array result from lookup
+                        $unwind: {
+                            path: '$user',
+                            preserveNullAndEmptyArrays: true  // Properly handle null users
+                        }
                     },
                     {
                         $lookup: {
@@ -301,23 +320,30 @@ export const admingetBookingById = async (req, res) => {
                         }
                     },
                     {
-                        $unwind: '$car' ,
-                        preserveNullAndEmptyArrays: true  
+                        $unwind: {
+                            path: '$car',
+                            preserveNullAndEmptyArrays: true  // Properly handle null cars
+                        }
                     },
                     {
                         $lookup: {
-                            from: 'bookings',  
+                            from: 'bookings',  // Join with bookings collection
                             localField: 'booking',
                             foreignField: '_id',
                             as: 'booking'
                         }
                     },
                     {
-                        $unwind: '$booking' ,
-                        
+                        $unwind: {
+                            path: '$booking',
+                            preserveNullAndEmptyArrays: true  // Properly handle null bookings
+                        }
                     },
                     {
-                        $match: matchStage  
+                        $match: matchStage  // Apply search filter (if any)
+                    },
+                    {
+                        $sort: { createdAt: -1 }  // Sort by `createdAt` field in descending order (newest first)
                     }
                 ]);
         
@@ -327,9 +353,12 @@ export const admingetBookingById = async (req, res) => {
         
                 res.json({ success: true, message: 'Payments fetched successfully!', data: payments });
             } catch (error) {
+                console.error('Error fetching payments:', error);
                 res.status(500).json({ success: false, message: "Server error" });
             }
         };
+        
+
         
              
      export const admingetUserPayments = async (req, res, next) => {
@@ -399,7 +428,10 @@ export const admingetBookingById = async (req, res) => {
              },
              {
                  $match: matchStage
-             }
+             },
+             {
+                $sort: { createdAt: -1 }  // Sort by `createdAt` field in descending order (newest first)
+            }
          ]);
  
          // Adjust the condition here

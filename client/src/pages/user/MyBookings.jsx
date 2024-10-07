@@ -12,7 +12,7 @@ const MyBookings = () => {
   const [selectedBookingId, setSelectedBookingId] = useState(null);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(true); // Loading state
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState("");
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -72,11 +72,6 @@ const MyBookings = () => {
       toast.error('Error canceling booking');
     }
   };
-
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-CA');
-  };
-
   const toggleReviewForm = (bookingId) => {
     if (selectedBookingId === bookingId) {
       setShow(!show);
@@ -137,9 +132,9 @@ const MyBookings = () => {
                   <h3 className="text-xl font-bold mt-4">
                     {booking.car.brand} {booking.car.model}
                   </h3>
-                  <div className="text-xl font-semibold">
+                  <div className="text-md font-semibold">
                     <h5>Total Amount: {booking.totalPrice}</h5>
-                    <h5>Booked on: {formatDate(booking.startDate)}</h5>
+                    <h5>Booked on: {new Date(booking.startDate).toDateString()}</h5>
                   </div>
                 </div>
               </>

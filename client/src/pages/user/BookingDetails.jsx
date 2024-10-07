@@ -53,10 +53,6 @@ export const BookingDetails = () => {
     const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
     const averageRating = reviews.length > 0 ? totalRating / reviews.length : 0;
 
-    const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('en-CA');
-    };
-
     const makePayment = async () => {
         try {
             const stripe = await loadStripe(process.env.REACT_APP_stripe_publishable_key);
@@ -64,7 +60,7 @@ export const BookingDetails = () => {
                 car: booking.car?._id,
                 booking: booking._id,
                 user: booking.user._id,
-                paymentDate: formatDate(booking.startDate),
+                paymentDate: new Date(booking.startDate).toDateString(),
             };
 
             const response = await axiosInstance.post("user/payment", paymentData);
@@ -116,9 +112,9 @@ export const BookingDetails = () => {
                             {booking.car && <p>Car: {booking.car.brand} {booking.car.model}</p>}
                             <p>Total Price: {booking.totalPrice}</p>
                             <p>Pickup Location: {booking.pickupLocation}</p>
-                            <p>Pickup Date: {formatDate(booking.startDate)}</p>
+                            <p>Pickup Date: {new Date(booking.startDate).toDateString()}</p>
                             <h5>Pickup Time: {HourFormat(booking.pickupTime)}</h5>
-                            <p>End Date: {formatDate(booking.endDate)}</p>
+                            <p>End Date: {new Date(booking.endDate).toDateString()}</p>
                             <h5>Drop Off Time: {HourFormat(booking.dropOffTime)}</h5>
                             <h5>Drop Off Location: {booking.dropOffLocation}</h5>
                             <p>Address: {booking.address}</p>

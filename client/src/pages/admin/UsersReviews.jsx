@@ -43,6 +43,7 @@ export const UsersReviews = () => {
         fetchReviews(userName);
     };
 
+
     return (
         <div>
             <h1 className="text-2xl font-bold text-center mt-4">Users Reviews</h1>
@@ -60,7 +61,7 @@ export const UsersReviews = () => {
             </div>
 
             {/* Reviews grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {reviews.length > 0 ? (
                     reviews.map((review) => (
                         <div key={review._id} className="border border-gray-200 rounded-lg shadow-md p-4 mx-4 mt-4">
@@ -96,6 +97,7 @@ export const UsersReviews = () => {
 
                                     <h5>Rating: {review.rating || 'No rating available'}</h5>
                                     <h5>Comment: {review.comment || 'No comment available'}</h5>
+                                    <h5>Date: { new Date(review.date).toDateString() || 'No date available'}</h5>
                                 </div>
                             </div>
                             <div className="flex justify-center items-center mt-2">

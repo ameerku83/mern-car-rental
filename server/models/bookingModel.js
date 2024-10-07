@@ -16,6 +16,8 @@ const bookingSchema = new mongoose.Schema({
     status: { type: String, default: 'pending' },
     driverLicense:{ type: String }, 
 
-});
+},{
+    timestamps: true,
+  });
 
 export const Booking = mongoose.model('Booking', bookingSchema);
