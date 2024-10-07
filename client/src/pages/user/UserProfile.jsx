@@ -1,14 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { axiosInstance } from '../../config/axiosInstance';
 import { Link } from 'react-router-dom';
 import Btn from '../../components/ui/Btn';
-
 export const UserProfile = () => {
-  const userId = useSelector((state) => state.user.id); 
+
   const [user, setUser] = useState({});
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState(null);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axiosInstance.get('user/profile');
+        const fetchedUserId = response?.data?.data?._id;
+
+       
+          setUserId(fetchedUserId);  // Set userId if found
+       
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {

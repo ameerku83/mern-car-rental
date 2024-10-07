@@ -3,9 +3,8 @@ import { axiosInstance } from '../../config/axiosInstance';
 import Btn from '../../components/ui/Btn';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
-import Review from '../../components/user/Review';
 import { FaTimes } from 'react-icons/fa';
+import Review from '../../components/user/Review';
 
 const MyBookings = () => {
   const navigate = useNavigate();
@@ -13,7 +12,27 @@ const MyBookings = () => {
   const [selectedBookingId, setSelectedBookingId] = useState(null);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(true); // Loading state
-  const userId = useSelector((state) => state.user.id);
+  const [userId, setUserId] = useState(null);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axiosInstance.get('user/profile');
+        const fetchedUserId = response?.data?.data?._id;
+        
+        if (fetchedUserId) {
+          setUserId(fetchedUserId);  // Set userId if found
+        } else {
+          throw new Error('User ID not found');
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        toast.error('User not found');
+        setLoading(false);  // Stop loading if an error occurs
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -26,12 +45,13 @@ const MyBookings = () => {
         } finally {
           setLoading(false); // Set loading to false after fetching
         }
-      } else {
-        setLoading(false); // Ensure loading is false if no userId
-        toast.error('User not found');
       }
     };
-    fetchBookings();
+
+    // Fetch bookings only when userId is available
+    if (userId) {
+      fetchBookings();
+    }
   }, [userId]);
 
   const cancelBooking = async (id, paymentStatus) => {
@@ -96,7 +116,6 @@ const MyBookings = () => {
       <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 ${show ? 'blur-md' : ''}`}>
         {bookings.map((booking) => (
           <div key={booking._id} className="border border-gray-200 rounded-lg shadow-md p-4 mx-4 mt-4">
-            {/* Conditional rendering if car details are not available */}
             {booking.car ? (
               <>
                 <button

@@ -6,19 +6,16 @@ import { DarkMode } from '../ui/DarkMode';
 import { Link, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearUserId } from '../../redux/userSlice';
-
 const UserNavbar = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  
   const [show, setShow] = useState(false); // For mobile menu toggle
 
   const logout = async () => {
     try {
       await axiosInstance.put('user/logout');
       toast.success('Logged out successfully');
-      dispatch(clearUserId());
+      
       navigate('/login');
     } catch (error) {
       console.log(error.response);
@@ -27,7 +24,30 @@ const UserNavbar = () => {
 
   const [bookings, setBookings] = useState([]);
   const [wishlist, setWishlist] = useState([]);
-  const userId = useSelector((state) => state.user.id);
+  
+
+  const [userId, setUserId] = useState(''); // Initialize as an empty string instead of an object
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axiosInstance.get('user/profile');
+        const fetchedUserId = response?.data?.data?._id;
+  
+        if (fetchedUserId) {
+          setUserId(fetchedUserId);  // Set userId as a string
+        } else {
+          throw new Error('User ID not found');
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        toast.error('User not found');
+      }
+    };
+  
+    fetchUser();
+  }, []);
+  
 
   useEffect(() => {
     const fetchBookings = async () => {

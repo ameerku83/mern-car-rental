@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { toast } from 'react-toastify'; // Install react-toastify for notifications
+import { toast } from 'react-toastify'; 
 
 import { Link, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../config/axiosInstance';
@@ -58,7 +58,7 @@ const Login = () => {
           </div>
           <div className='flex justify-center' > <Btn type="submit" > Login </Btn></div> 
 
-          <label  > <Link to={ "/signup" } className='text-blue-800 flex justify-center text-sm mt-3 hover:underline '>New Sign up Now </Link>  </label>
+          <label  > <Link to={ "/signup" } className='text-blue-800 flex justify-center text-sm mt-3 hover:underline '>New? Sign up Now </Link>  </label>
         </form>
       </div>
     </div>

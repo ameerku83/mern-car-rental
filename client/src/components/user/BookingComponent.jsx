@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiOutlineCalendar, AiOutlineHome, AiOutlinePhone, AiOutlineEnvironment } from 'react-icons/ai';
 import Btn from '../ui/Btn';
@@ -12,7 +12,24 @@ const BookingComponent = ({ id }) => {
     const [isDriving, setIsDriving] = useState(false); 
     const navigate= useNavigate()
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const userId = useSelector((state) => state.user.id); 
+    const [userId, setUserId] = useState(null);
+    useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const response = await axiosInstance.get('user/profile');
+          const fetchedUserId = response?.data?.data?._id;
+  
+         
+            setUserId(fetchedUserId);  // Set userId if found
+         
+        } catch (error) {
+          console.error('Error fetching user profile:', error);
+          
+        }
+      };
+  
+      fetchUser();
+    }, []);
     const formatDate = (dateStr) => {
         const [day, month, year] = dateStr.split('/'); 
         return `${year}-${month}-${day}`; 

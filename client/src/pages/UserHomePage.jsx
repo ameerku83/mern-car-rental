@@ -1,33 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { FaCalendarAlt, FaCar, FaHeadset, FaLocationArrow, FaMapMarkedAlt, FaStar, FaUserCircle, FaUserShield } from "react-icons/fa";
+import { FaCalendarAlt, FaLocationArrow , FaStar, FaUserCircle, } from "react-icons/fa";
 import audiq7 from ".././asets/images/audi q7.png";
 import Btn from "../components/ui/Btn";
 import { Link, useNavigate } from "react-router-dom";
 import { Carousel } from "../components/ui/Carousel";
 import { axiosInstance } from "../config/axiosInstance";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { setUserId } from "../redux/userSlice";
-
 const UserHomePage = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const { handleSubmit, register, formState: { errors } } = useForm();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axiosInstance.get('user/profile');
-        dispatch(setUserId(response?.data?.data?._id));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchUser();
-  }, [dispatch]);
-
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -57,7 +40,7 @@ const UserHomePage = () => {
     return stars;
   };
 
-  if (loading) { // Loading Indicator for the entire page
+  if (loading) { 
     return (
       <div className="flex items-center justify-center min-h-screen">
       <div>
