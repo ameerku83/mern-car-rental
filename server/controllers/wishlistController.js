@@ -6,7 +6,7 @@ export const addToWishlist = async (req, res) => {
   const { userId, carId } = req.body;
 
   
-    const existingWishlistItem = await Wishlist.findOne({ carId });
+    const existingWishlistItem = await Wishlist.findOne({ carId,userId });
     if (existingWishlistItem) {
       return res.status(404).json({  success: false,  message: 'Car already added  wishlist' });
     }
@@ -29,12 +29,16 @@ export const getUserWishlist = async (req, res) => {
 
 export const isCarInWishlist = async (req, res) => {
   const { userId, carId } = req.params;
-  
-  
-    const wishlistItem = await Wishlist.findOne({  carId });
+
+  try {
+    // Check if the specific user has added this car to their wishlist
+    const wishlistItem = await Wishlist.findOne({ userId, carId });
     res.json({ success: true, isInWishlist: !!wishlistItem });
- 
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error checking wishlist status' });
+  }
 };
+
 
 export const removecarFormWishlist = async (req, res, next) => {
     const { id } = req.params;

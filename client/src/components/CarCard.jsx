@@ -4,45 +4,51 @@ import { FaGasPump, FaUsers, FaTachometerAlt, FaStar } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../config/axiosInstance';
 import { toast } from 'react-toastify';
+
 const CarCard = ({ car }) => {
   const [averageRating, setAverageRating] = useState(0);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const navigate = useNavigate();
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState('');
+
+  // Fetch the current user
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axiosInstance.get('user/profile');
         const fetchedUserId = response?.data?.data?._id;
 
-       
+        if (fetchedUserId) {
           setUserId(fetchedUserId);  // Set userId if found
-       
+        } else {
+          setUserId('');  // Reset userId if not found (e.g., user logged out)
+        }
       } catch (error) {
         console.error('Error fetching user profile:', error);
-        
       }
     };
 
     fetchUser();
   }, []);
-  
   useEffect(() => {
     const checkWishlist = async () => {
+      // Reset the isInWishlist state
+      setIsInWishlist(false);
+  
       if (!userId || !car._id) return;
-
+  
       try {
+        // Fetch wishlist status for the specific user and car
         const response = await axiosInstance.get(`user/check/${userId}/${car._id}`);
         setIsInWishlist(response.data.isInWishlist);
-        
       } catch (error) {
-        console.log( "error---->"+ error);
+        console.log("Error checking wishlist status: ", error);
       }
     };
-
+  
     checkWishlist();
-  }, [userId, car._id]);
-
+  }, [userId, car._id]);  // Run whenever the user or car changes
+  
   // Fetch car reviews
   useEffect(() => {
     const fetchReviews = async () => {
@@ -66,24 +72,24 @@ const CarCard = ({ car }) => {
 
   const handleWishlistClick = async () => {
     if (!userId) {
-     await navigate('/login'); 
+       navigate('/login'); 
       return;
     }
 
     try {
       const response = await axiosInstance.post('user/add-wishlist', {
-        userId:userId,
+        userId: userId,
         carId: car._id,
       });
 
       setIsInWishlist(true);
-      toast.success("aded to wishlist");
+      toast.success("Added to wishlist");
     } catch (error) {
-      toast.error( error.response.data.message);
+      toast.error(error.response.data.message);
       console.log(error);
-      
     }
   };
+
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
@@ -97,8 +103,8 @@ const CarCard = ({ car }) => {
   };
 
   return (
-    <div className=" relative hover:scale-105 duration-300 transition transform cursor-pointer ">
-      <div className=" rounded-lg shadow-md p-3 mx-3 bg-base-100 border border-purple-100 ">
+    <div className="relative hover:scale-105 duration-300 transition transform cursor-pointer">
+      <div className="rounded-lg shadow-md p-3 mx-3 bg-base-100 border border-purple-100">
         <div className="relative">
           <img src={car.image} alt={car.model} className="w-full h-56 object-contain rounded-md" />
           <div className="absolute top-2 right-2">
