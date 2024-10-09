@@ -61,7 +61,7 @@ const UserNavbar = () => {
       }
     };
     fetchBookings();
-  }, [userId]);
+  }, [userId,bookings]);
 
   useEffect(() => {
     const fetchWishlist = async () => {
@@ -75,7 +75,7 @@ const UserNavbar = () => {
       }
     };
     fetchWishlist();
-  }, [userId]);
+  }, [userId,wishlist]);
 
   return (
     <div className="navbar bg-gradient-to-r from-purple-700 via-purple-600 to-purple-500 px-4 py-3 shadow-lg border-b-2 border-purple-700 fixed z-40 w-full transition-all duration-300 ease-in-out">
@@ -247,6 +247,7 @@ const UserNavbar = () => {
             </li>
             <li>
               <Link
+              
                 to="/user/bookings"
                 className="text-md font-bold text-purple-700 hover:text-purple-900 transition-colors duration-200 flex items-center"
               >

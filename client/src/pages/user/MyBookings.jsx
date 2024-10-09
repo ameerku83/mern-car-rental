@@ -35,6 +35,7 @@ const MyBookings = () => {
   }, []);
 
   useEffect(() => {
+    
     const fetchBookings = async () => {
       if (userId) {
         try {
@@ -87,6 +88,7 @@ const MyBookings = () => {
   };
 
   if (loading) {
+    
     return (
       <div className="flex justify-center items-center h-screen">
         <div>
