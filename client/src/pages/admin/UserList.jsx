@@ -26,7 +26,12 @@ const UserList = () => {
       
     }, [])
 const deleteUser =async(id)=>{
+
     try {
+      const confirm = window.confirm("do you want to delete this user")
+      if(!confirm){
+       return
+      }
         await axiosInstance.delete(`admin/delete-user/${id}`)
 
         toast.success("successfully Deleted ")

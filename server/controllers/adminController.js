@@ -11,6 +11,7 @@ import { User } from "../models/userModel.js";
 import { generateToken } from "../utils/generateToken.js";
 import bcrypt from "bcrypt";
 import { sendClient } from "../utils/sendMail.js";
+import { Wishlist } from "../models/wishlistModel.js";
 
 export const adminCreate = async (req, res, next) => {
     
@@ -136,16 +137,46 @@ export const userList =async(req,res,next)=>{
 
 }
 
-export const deleteUserById = async (req, res, next) => {
+// export const deleteUserById = async (req, res, next) => {
     
-    const {id} = req.params;
-     const user =await User.findByIdAndDelete(id)
-    if (!user) {
-        return res.status(400).json({ success: false, message: "user not found" });
-    }
-    res.json({ success: true, message: " user account deleted by admin" });
+//     const {id} = req.params;
+//      const user =await User.findByIdAndDelete(id)
+//     if (!user) {
+//         return res.status(400).json({ success: false, message: "user not found" });
+//     }
+//     res.json({ success: true, message: " user account deleted by admin" });
 
+// };
+export const deleteUserById = async (req, res, next) => {
+   
+    const { id } = req.params;
+
+    try {
+      
+
+        const user = await User.findByIdAndDelete(id);
+        if (!user) {
+            return res.status(400).json({ success: false, message: "User not found" });
+        }
+
+        // Delete the user's bookings
+        // await Booking.deleteMany({ user: id });
+
+        // // Delete the user's payments
+        // await Payment.deleteMany({ user: id });
+
+        // // Delete the user's reviews
+        // await Review.deleteMany({ user: id });
+        // await Wishlist.deleteMany({ userId: id });
+
+        res.json({ success: true, message: "User account  deleted by admin" });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
 };
+
 
 export const admingetCarById =async(req,res)=>{
     const {id} =req.params
