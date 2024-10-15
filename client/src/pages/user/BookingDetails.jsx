@@ -59,7 +59,6 @@ export const BookingDetails = () => {
             const paymentData = {
                 car: booking.car?._id,
                 booking: booking._id,
-                user: booking.user._id,
                 paymentDate: new Date(booking.startDate).toDateString(),
             };
 

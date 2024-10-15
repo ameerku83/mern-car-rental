@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
- const mongoDb = ()=>{
+ export  const mongoDb = ()=>{
      mongoose.connect( process.env.MONGO_URL)
      .then(()=>{
         console.log("db connected");
@@ -11,5 +11,4 @@ import mongoose from "mongoose"
         
      })
 
-}
-export default mongoDb
+} 

@@ -3,6 +3,7 @@ import {Booking} from '../models/bookingModel.js';
 import { Car } from '../models/carModel.js';
 import { Payment } from '../models/paymntModel.js';
 import { User } from '../models/userModel.js';
+import { getUserIdByEmail } from '../utils/getUserId.js';
 import { sendClient } from '../utils/sendMail.js';
 
 const formatDate = (dateString) => {
@@ -10,10 +11,11 @@ const formatDate = (dateString) => {
 };
 
 export const createBooking = async (req, res) => {
-        const { car,user, startDate, endDate,address,pickupLocation,mobile,pickupTime,dropOffTime,dropOffLocation,driverLicense } = req.body;
+        const { car, startDate, endDate,address,pickupLocation,mobile,pickupTime,dropOffTime,dropOffLocation,driverLicense } = req.body;
+        const userId = await getUserIdByEmail(req.user.email);
         await bookingValiadation.validateAsync({ startDate, endDate,address,pickupLocation,mobile })
        const isCar= await Car.findById(car)
-       const isUser= await User.findById(user)
+       const isUser= await User.findById(userId)
 
        if (!isUser ) {
         return res.status(400).json({ error: 'user not found' });
@@ -55,7 +57,7 @@ export const createBooking = async (req, res) => {
             <img src=${isCar.image} alt="car" />`)
 
         const newBooking = new Booking({
-            user,
+            user:userId,
             car,
             startDate,
             endDate,
@@ -130,7 +132,7 @@ const booking = await Booking.findById(id);
 
 
   export const getAllBookings = async (req, res) => {
-    const {userId}= req.params
+    const userId = await getUserIdByEmail(req.user.email);
     const bookings = await Booking.find({user:userId}).populate('car');
 
     if (!bookings) {

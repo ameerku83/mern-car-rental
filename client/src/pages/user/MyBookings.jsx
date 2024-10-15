@@ -12,48 +12,48 @@ const MyBookings = () => {
   const [selectedBookingId, setSelectedBookingId] = useState(null);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(true); // Loading state
-  const [userId, setUserId] = useState("");
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axiosInstance.get('user/profile');
-        const fetchedUserId = response?.data?.data?._id;
+  // const [userId, setUserId] = useState("");
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       const response = await axiosInstance.get('user/profile');
+  //       const fetchedUserId = response?.data?.data?._id;
         
-        if (fetchedUserId) {
-          setUserId(fetchedUserId);  // Set userId if found
-        } else {
-          throw new Error('User ID not found');
-        }
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
-        toast.error('User not found');
-        setLoading(false);  // Stop loading if an error occurs
-      }
-    };
+  //       if (fetchedUserId) {
+  //         setUserId(fetchedUserId);  // Set userId if found
+  //       } else {
+  //         throw new Error('User ID not found');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching user profile:', error);
+  //       toast.error('User not found');
+  //       setLoading(false);  // Stop loading if an error occurs
+  //     }
+  //   };
 
-    fetchUser();
-  }, []);
+  //   fetchUser();
+  // }, []);
 
   useEffect(() => {
     
     const fetchBookings = async () => {
-      if (userId) {
+   
         try {
-          const response = await axiosInstance.get(`user/bookings/${userId}`);
+          const response = await axiosInstance.get(`user/bookings`);
           setBookings(response?.data?.data || []);
         } catch (error) {
           console.error('Error fetching bookings:', error);
         } finally {
           setLoading(false); // Set loading to false after fetching
         }
-      }
+    
     };
 
     // Fetch bookings only when userId is available
-    if (userId) {
+   
       fetchBookings();
-    }
-  }, [userId]);
+    
+  }, []);
 
   const cancelBooking = async (id, paymentStatus) => {
     try {
@@ -169,7 +169,7 @@ const MyBookings = () => {
             <button className="absolute top-2 right-2 text-gray-600 hover:text-gray-800" onClick={closeReviewForm}>
               <FaTimes size={24} />
             </button>
-            <Review userId={userId} carId={bookings.find((booking) => booking._id === selectedBookingId)?.car?._id} />
+            <Review carId={bookings.find((booking) => booking._id === selectedBookingId)?.car?._id} />
           </div>
         </div>
       )}

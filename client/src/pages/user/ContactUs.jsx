@@ -5,26 +5,15 @@ import { axiosInstance } from '../../config/axiosInstance';
 import Btn from '../../components/ui/Btn';
 
 const ContactUs = () => {
-    const [user, setUser] = useState({});
+    
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const response = await axiosInstance.get('user/profile');
-                setUser(response?.data?.data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchUser();
-    }, []);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
     const onSubmit = async (data) => {
         const contactData = {
-            user: user._id,
+           
             email: data.email.trim(),
             mobile: data.mobile.trim(),
             message: data.message.trim()

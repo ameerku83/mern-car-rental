@@ -5,13 +5,12 @@ import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
 import './Review.css'; // Import CSS for animation
 
-const Review = ({ userId, carId }) => {
+const Review = ({ carId }) => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const [isSubmitting, setIsSubmitting] = useState(false); // State to track submitting status
 
   const onSubmit = async (data) => {
     const reviewData = {
-      userId: userId,
       carId: carId,
       rating: data.rating,
       comment: data.comment,

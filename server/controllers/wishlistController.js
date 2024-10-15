@@ -1,18 +1,20 @@
 import { Wishlist } from "../models/wishlistModel.js";
+import { getUserIdByEmail } from "../utils/getUserId.js";
 
 
 
 export const addToWishlist = async (req, res) => {
-  const { userId, carId } = req.body;
+  const userId = await getUserIdByEmail(req.user.email);
+  const { carId } = req.body;
 
   
-    const existingWishlistItem = await Wishlist.findOne({ carId,userId });
+    const existingWishlistItem = await Wishlist.findOne({ carId,userId:userId });
     if (existingWishlistItem) {
       return res.status(404).json({  success: false,  message: 'Car already added  wishlist' });
     }
 
     const newWishlistItem = new Wishlist({
-      userId,
+      userId:userId,
       carId,
     });
 
@@ -21,18 +23,19 @@ export const addToWishlist = async (req, res) => {
 };
 
 export const getUserWishlist = async (req, res) => {
-  
-    const wishlist = await Wishlist.find({ userId: req.params.userId }).populate('carId');
+  const userId = await getUserIdByEmail(req.user.email);
+    const wishlist = await Wishlist.find({ userId:userId  }).populate('carId');
     res.json({ success: true, message:"whish list fetched", data:wishlist});
  
 };
 
 export const isCarInWishlist = async (req, res) => {
-  const { userId, carId } = req.params;
+  const userId = await getUserIdByEmail(req.user.email);
+  const { carId } = req.params;
 
   try {
     // Check if the specific user has added this car to their wishlist
-    const wishlistItem = await Wishlist.findOne({ userId, carId });
+    const wishlistItem = await Wishlist.findOne({ userId:userId, carId });
     res.json({ success: true, isInWishlist: !!wishlistItem });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error checking wishlist status' });

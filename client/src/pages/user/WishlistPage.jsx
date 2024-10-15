@@ -7,44 +7,44 @@ import { toast } from 'react-toastify';
 export const WishlistPage = () => {
   const [wishlists, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true); // Loading is true by default
-  const [userId, setUserId] = useState(null);
+  // const [userId, setUserId] = useState(null);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axiosInstance.get('user/profile');
-        const fetchedUserId = response?.data?.data?._id;
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       const response = await axiosInstance.get('user/profile');
+  //       const fetchedUserId = response?.data?.data?._id;
 
        
-          setUserId(fetchedUserId);  // Set userId if found
+  //         setUserId(fetchedUserId);  // Set userId if found
        
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
+  //     } catch (error) {
+  //       console.error('Error fetching user profile:', error);
         
-      }
-    };
+  //     }
+  //   };
 
-    fetchUser();
-  }, []);
+  //   fetchUser();
+  // }, []);
 
   useEffect(() => {
     const fetchWishlist = async () => {
-      if (userId) {
+     
         try {
-          const response = await axiosInstance.get(`user/wishlist/${userId}`);
+          const response = await axiosInstance.get(`user/wishlists`);
           setWishlist(response?.data?.data || []);
         } catch (error) {
           console.error('Error fetching wishlist:', error);
         } finally {
           setLoading(false); // Loading ends after fetching wishlist
         }
-      }
+      
     };
 
     
       fetchWishlist();
  
-  }, [userId]);
+  }, []);
 
   const removeWishlist = async (id) => {
     try {

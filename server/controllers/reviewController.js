@@ -1,17 +1,18 @@
 import { Car } from "../models/carModel.js";
 import { Review } from "../models/review.js";
 import { User } from "../models/userModel.js";
+import { getUserIdByEmail } from "../utils/getUserId.js";
 
 
 
 export const createReview = async (req, res, next) => {
   
-    
+  const userId = await getUserIdByEmail(req.user.email);
 
-    const { userId, carId, rating, comment } = req.body;
+    const {  carId, rating, comment } = req.body;
 
     // Check if user and car exist
-    const userExists = await User.findById(userId);
+    const userExists = await User.findOne(userId);
     if (!userExists) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
@@ -22,8 +23,8 @@ export const createReview = async (req, res, next) => {
     }
 
     // Create the review
-    const review = new Review({
-      user: userId,
+    const review =  Review({
+      user:userId,
       car: carId,
       rating,
       comment,
@@ -34,37 +35,6 @@ export const createReview = async (req, res, next) => {
     res.status(201).json({ success: true, message: 'Review created successfully', data: review });
   } 
 
-
-
-// Update review
-export const updateReview = async (req, res, next) => {
-  
-    
-    const { userId, carId, rating, comment } = req.body;
-    const { id } = req.params;
-
-    const updatedCarReview = await Review.findByIdAndUpdate(
-      id,
-      { user: userId, car: carId, rating, comment },
-      { new: true }
-    );
-
-    if (!updatedCarReview) {
-      return res.status(404).json({ success: false, message: 'Review not found' });
-    }
-
-    res.json({ success: true, message: 'Review updated successfully!', data: updatedCarReview });
-  } 
-
-
-export const getReviews= async (req, res) => {
-    const {userId}= req.params
-    const reviewList = await Review.find({user:userId});
-    if (!reviewList) {
-      return res.status(404).json({ success: false, message: 'Review not found' });
-    }
-    res.json({ success: true, message: 'Review list fetched', data: reviewList });
-  }
   export const getReviewCarid= async (req, res) => {
     const {carId}= req.params
     const reviewList = await Review.find({car:carId}).populate('user').populate('car');
@@ -73,28 +43,3 @@ export const getReviews= async (req, res) => {
     }
     res.json({ success: true, message: 'Review list fetched', data: reviewList });
   }
-
-export const getReviewById = async (req, res, next) => {
-  
-    const { id } = req.params;
-    const reviewById = await Review.findById(id).populate('user').populate('car');
-
-    if (!reviewById) {
-      return res.status(404).json({ success: false, message: 'Review not found' });
-    }
-
-    res.json({ success: true, message: 'Review fetched successfully', data: reviewById });
-  } 
-
-// Delete review
-export const deleteReview = async (req, res, next) => {
-  
-    const { id } = req.params;
-    const deleteReview = await Review.findByIdAndDelete(id);
-
-    if (!deleteReview) {
-      return res.status(404).json({ success: false, message: 'Review not found' });
-    }
-
-    res.json({ success: true, message: 'Review deleted successfully!', data: deleteReview });
-  } 

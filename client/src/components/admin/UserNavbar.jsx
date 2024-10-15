@@ -24,58 +24,33 @@ const UserNavbar = () => {
 
   const [bookings, setBookings] = useState([]);
   const [wishlist, setWishlist] = useState([]);
-  
-
-  const [userId, setUserId] = useState(''); // Initialize as an empty string instead of an object
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axiosInstance.get('user/profile');
-        const fetchedUserId = response?.data?.data?._id;
-  
-        if (fetchedUserId) {
-          setUserId(fetchedUserId);  // Set userId as a string
-        } else {
-          throw new Error('User ID not found');
-        }
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
-        toast.error('User not found');
-      }
-    };
-  
-    fetchUser();
-  }, []);
-  
-
   useEffect(() => {
     const fetchBookings = async () => {
-      if (userId) {
+     
         try {
-          const response = await axiosInstance.get(`user/bookings/${userId}`);
+          const response = await axiosInstance.get(`user/bookings`);
           setBookings(response?.data?.data);
         } catch (error) {
           console.error('Error fetching bookings:', error);
         }
-      }
+      
     };
     fetchBookings();
-  }, [userId,bookings]);
+  }, [bookings]);
 
   useEffect(() => {
     const fetchWishlist = async () => {
-      if (userId) {
+      
         try {
-          const response = await axiosInstance.get(`user/wishlist/${userId}`);
+          const response = await axiosInstance.get(`user/wishlists`);
           setWishlist(response?.data?.data);
         } catch (error) {
           console.error('Error fetching wishlist:', error);
         }
-      }
+     
     };
     fetchWishlist();
-  }, [userId,wishlist]);
+  }, [wishlist]);
 
   return (
     <div className="navbar bg-gradient-to-r from-purple-700 via-purple-600 to-purple-500 px-4 py-3 shadow-lg border-b-2 border-purple-700 fixed z-40 w-full transition-all duration-300 ease-in-out">

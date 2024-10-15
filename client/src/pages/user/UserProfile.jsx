@@ -7,30 +7,13 @@ export const UserProfile = () => {
   const [user, setUser] = useState({});
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [userId, setUserId] = useState(null);
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axiosInstance.get('user/profile');
-        const fetchedUserId = response?.data?.data?._id;
-
-       
-          setUserId(fetchedUserId);  // Set userId if found
-       
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
-        
-      }
-    };
-
-    fetchUser();
-  }, []);
-
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axiosInstance.get('user/profile');
         setUser(response?.data?.data);
+       
+        
       } catch (error) {
         console.log(error);
       } finally {
@@ -42,17 +25,17 @@ export const UserProfile = () => {
 
   useEffect(() => {
     const fetchPayment = async () => {
-      if (userId) {
+     
         try {
-          const response = await axiosInstance.get(`user/payments/${userId}`);
+          const response = await axiosInstance.get(`user/payments/`);
           setPayments(response?.data?.data);
         } catch (error) {
           console.error('Error fetching payments:', error);
-        }
+      
       }
     };
     fetchPayment();
-  }, [userId]);
+  }, []);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-CA');
@@ -71,13 +54,13 @@ export const UserProfile = () => {
         <>
           <div className='md:flex items-center justify-center pt-12 gap-3 mx-3 '>
             <div>
-              <h2 className='text-xl'>Name: {user.name}</h2>
-              <h4 className='text-xl'>Email: {user.email}</h4>
-              <h4 className='text-xl'>Mobile: {user.mobile}</h4>
+              <h2 className='text-xl'>Name: {user?.name}</h2>
+              <h4 className='text-xl'>Email: {user?.email}</h4>
+              <h4 className='text-xl'>Mobile: {user?.mobile}</h4>
             </div>
             <div>
             <Btn>
-              <Link to={`/editprofile/${userId}`}>Edit Profile</Link>
+              <Link to={`/user/editprofile`}>Edit Profile</Link>
             </Btn>
              </div>
           </div>

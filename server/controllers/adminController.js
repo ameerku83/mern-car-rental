@@ -69,7 +69,6 @@ export const adminLogin = async (req, res, next) => {
 export const adminProfile = async (req, res, next) => {
     
         const  user  = req.user;
-
         const useData = await Admin.find({email:user.email}).select("-password");
 
         res.json({ success: true, message: "admin data fetched", data: useData });
@@ -158,8 +157,19 @@ export const deleteUserById = async (req, res, next) => {
         if (!user) {
             return res.status(400).json({ success: false, message: "User not found" });
         }
+         // Find all the user's bookings
+        //  const bookings = await Booking.find({ user: id });
 
-        // Delete the user's bookings
+         
+        //  for (const booking of bookings) {
+        //      const car = await Car.findById(booking.car);
+        //      if (car) {
+        //          car.availability = true;
+        //          await car.save();  //
+        //      }
+        //  }
+
+       
         // await Booking.deleteMany({ user: id });
 
         // // Delete the user's payments

@@ -32,6 +32,7 @@ import { WishlistPage } from "../pages/user/WishlistPage";
 import UserErrorPage from "../pages/UserErrorPage";
 import { CarReviews } from "../pages/admin/CarReviews";
 import AdminHomePage from "../pages/admin/AdminHomePage";
+import UpdateProfile from "../pages/user/UpdateProfile";
 
 const adminPath=process.env.REACT_APP_ADMIN
 export const router=createBrowserRouter([
@@ -55,11 +56,7 @@ export const router=createBrowserRouter([
                 element:<Signup/>
                 
             },
-            {
-                path:'/editprofile/:id',
-                element:<Signup/>
-                
-            },
+           
             {
                 path:'/login',
                 element:<Login/>
@@ -210,7 +207,12 @@ export const router=createBrowserRouter([
                 path:"wishlist",
                 element:<WishlistPage/>
 
-            }
+            },
+            {
+                path:'editprofile',
+                element:<UpdateProfile/>
+                
+            },
 
         ]
     }

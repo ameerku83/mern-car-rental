@@ -2,53 +2,34 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { FaGasPump, FaUsers, FaTachometerAlt, FaStar } from 'react-icons/fa'; 
 import { Link, useNavigate } from 'react-router-dom';
-import { axiosInstance } from '../config/axiosInstance';
 import { toast } from 'react-toastify';
+import Cookies from 'js-cookie';  // Import js-cookie for handling cookies
+import { axiosInstance } from '../../config/axiosInstance';
 
-const CarCard = ({ car }) => {
+const UserCarCard = ({ car }) => {
+    const navigate = useNavigate()
   const [averageRating, setAverageRating] = useState(0);
   const [isInWishlist, setIsInWishlist] = useState(false);
-  const navigate = useNavigate();
-  // const [userId, setUserId] = useState('');
 
-  // // Fetch the current user
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const response = await axiosInstance.get('user/profile');
-  //       const fetchedUserId = response?.data?.data?._id;
+  // Check if the car is in the wishlist
+  const checkWishlist = async () => {
+    setIsInWishlist(false);
 
-  //       if (fetchedUserId) {
-  //         setUserId(fetchedUserId);  // Set userId if found
-  //       } else {
-  //         setUserId('');  // Reset userId if not found (e.g., user logged out)
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching user profile:', error);
-  //     }
-  //   };
+    const token = Cookies.get('token'); // Get the token from cookies
+    if (!token || !car._id) return;
 
-  //   fetchUser();
-  // }, []);
+    try {
+      const response = await axiosInstance.get(`user/check/${car._id}`);
+      setIsInWishlist(response.data.isInWishlist);
+    } catch (error) {
+      console.log("Error checking wishlist status: ", error);
+    }
+  };
+
   useEffect(() => {
-    const checkWishlist = async () => {
-      // Reset the isInWishlist state
-      setIsInWishlist(false);
-  
-      if ( !car._id) return;
-  
-      try {
-        // Fetch wishlist status for the specific user and car
-        const response = await axiosInstance.get(`user/check/${car._id}`);
-        setIsInWishlist(response.data.isInWishlist);
-      } catch (error) {
-        console.log("Error checking wishlist status: ", error);
-      }
-    };
-  
     checkWishlist();
-  }, [ car._id]);  // Run whenever the user or car changes
-  
+  }, [car._id]);
+
   // Fetch car reviews
   useEffect(() => {
     const fetchReviews = async () => {
@@ -74,19 +55,27 @@ const CarCard = ({ car }) => {
     
 
     try {
-      const response = await axiosInstance.post('user/add-wishlist', {
-        
-        carId: car._id,
-      });
-
-      setIsInWishlist(true);
-      toast.success("Added to wishlist");
+      if (!isInWishlist) {
+        // Add to wishlist
+        await axiosInstance.post('user/add-wishlist', {
+          carId: car._id,  // No need for userId in request
+        });
+        setIsInWishlist(true);  // Update local state immediately
+        toast.success("Added to wishlist");
+      } else {
+        // Remove from wishlist
+        await axiosInstance.delete(`user/remove-wishlist/${car._id}`);
+        setIsInWishlist(false);  // Update local state immediately
+        toast.success("Removed from wishlist");
+      }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Error updating wishlist");
+     
       if(error.response.data.message==="user not authenticated"){
         toast.error("please login");
         navigate('/login')
       }
+      
       console.log(error);
     }
   };
@@ -110,7 +99,7 @@ const CarCard = ({ car }) => {
           <img src={car.image} alt={car.model} className="w-full h-56 object-contain rounded-md" />
           <div className="absolute top-2 right-2">
             {isInWishlist ? (
-              <AiFillHeart className="text-purple-600 text-2xl" />
+              <AiFillHeart className="text-purple-600 text-2xl cursor-pointer" onClick={handleWishlistClick} />
             ) : (
               <AiOutlineHeart className="text-purple-600 text-2xl cursor-pointer hover:text-purple-800" onClick={handleWishlistClick} />
             )}
@@ -143,4 +132,4 @@ const CarCard = ({ car }) => {
   );
 };
 
-export default CarCard;
+export default UserCarCard;

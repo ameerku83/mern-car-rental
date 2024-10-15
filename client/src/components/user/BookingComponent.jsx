@@ -12,24 +12,7 @@ const BookingComponent = ({ id }) => {
     const [isDriving, setIsDriving] = useState(false); 
     const navigate= useNavigate()
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [userId, setUserId] = useState(null);
-    useEffect(() => {
-      const fetchUser = async () => {
-        try {
-          const response = await axiosInstance.get('user/profile');
-          const fetchedUserId = response?.data?.data?._id;
-  
-         
-            setUserId(fetchedUserId);  // Set userId if found
-         
-        } catch (error) {
-          console.error('Error fetching user profile:', error);
-          
-        }
-      };
-  
-      fetchUser();
-    }, []);
+    
     const formatDate = (dateStr) => {
         const [day, month, year] = dateStr.split('/'); 
         return `${year}-${month}-${day}`; 
@@ -42,7 +25,6 @@ const BookingComponent = ({ id }) => {
             const bookingData = {
                  
                 car:id,
-                user:userId,
                 startDate: startDateFormatted,
                 endDate: endDateFormatted,
                 address:data.address,
