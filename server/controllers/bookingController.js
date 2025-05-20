@@ -168,4 +168,36 @@ export const deleteBooking = async (req, res, next) => {
   res.json({ success: true, message: 'Booking deleted successfully!', data: booking });
   }
 
- 
+  export const autoCancelExpiredBookings = async () => {
+    try {
+        const now = new Date();
+        const expiredBookings = await Booking.find({ endDate: { $lt: now }, status: 'booked' });
+
+        for (const booking of expiredBookings) {
+            const car = await Car.findById(booking.car);
+            if (car) car.availability = true;
+
+            const user = await User.findById(booking.user);
+            sendClient(user.email, `FLYWHEEL`, "Booking Auto Cancelled", `
+                <h3>Hello ${user.name},</h3>
+                <p>Your booking for ${car.brand} ${car.model} has been automatically cancelled as the drop-off date has passed.</p>
+                <img src=${car.image} alt="Car" />`);
+
+            booking.status = 'cancelled';
+            booking.paymentStatus = 'cancelled';
+
+            if (car) await car.save();
+            await booking.save();
+
+            const payment = await Payment.findOne({ booking: booking._id });
+            if (payment) {
+                payment.status = 'cancelled';
+                await payment.save();
+            }
+        }
+
+        console.log('Expired bookings auto-cancelled successfully');
+    } catch (error) {
+        console.error('Error auto-cancelling expired bookings:', error.message);
+    }
+};

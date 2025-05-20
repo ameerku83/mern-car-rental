@@ -57,7 +57,7 @@ export const userLogin = async (req, res, next) => {
 
         const token = generateToken(email);
 
-        res.cookie("token", token,{ httpOnly:true,secure:true,sameSite:"None",  } );
+        res.cookie("token", token,{   httpOnly:true,secure:true,sameSite:"None", }, );
 
         res.json({ success: true, message: "user login successfully" });
     
@@ -68,7 +68,7 @@ export const userLogout = async (req, res, next) => {
        
     
         res.json({ success: true, message: "user logout successfully" });
-   
+     
 };
 
 export const userProfile = async (req, res, next) => {
@@ -98,7 +98,7 @@ export const updateUser = async (req, res, next) => {
   
     const updateData = { email, mobile, name };
   
-    // Only hash and update password if it's provided
+    
     if (password) {
       const salt = 10;
       const hashedPassword = bcrypt.hashSync(password, salt);

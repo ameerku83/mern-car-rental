@@ -32,7 +32,7 @@ import { WishlistPage } from "../pages/user/WishlistPage";
 import UserErrorPage from "../pages/UserErrorPage";
 import { CarReviews } from "../pages/admin/CarReviews";
 import AdminHomePage from "../pages/admin/AdminHomePage";
-import UpdateProfile from "../pages/user/UpdateProfile";
+import UpdateProfile from "../pages/user/UpdateProfile.jsx";
 
 const adminPath=process.env.REACT_APP_ADMIN
 export const router=createBrowserRouter([

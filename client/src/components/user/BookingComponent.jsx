@@ -39,7 +39,7 @@ const BookingComponent = ({ id }) => {
 
 
             const response = await axiosInstance.post('user/booking', bookingData);
-            console.log(response?.data?.data);
+            
               navigate(`/user/booking/${response?.data?.data._id}`)
                 toast.success('Car booked successfully!');
              
