@@ -7,7 +7,7 @@ import { CarCardSkeliton } from '../../components/ui/CarCardSkeliton'
 
 export const AdminCarList = () => {
     const [cars,setCars]=useState([])
-    const [selectedCategory, setSelectedCategory] = useState("Luxury");
+    const [selectedCategory, setSelectedCategory] = useState(  "Sedan");
 
     useEffect(() => {
       if (selectedCategory) {

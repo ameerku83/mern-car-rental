@@ -48,7 +48,7 @@ export const createCars =async(req,res,next)=>{
         // Upload an image
         const uploadResult = await cloudinaryInstance.uploader.upload(req.file.path,{folder:"cars"})
         .catch((error) => {
-            console.log(error);h
+            console.log(error);
         });
 
         //console.log(uploadResult);
