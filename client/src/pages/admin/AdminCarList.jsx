@@ -7,7 +7,7 @@ import { CarCardSkeliton } from '../../components/ui/CarCardSkeliton'
 
 export const AdminCarList = () => {
     const [cars,setCars]=useState([])
-    const [selectedCategory, setSelectedCategory] = useState(  "Sedan");
+    const [selectedCategory, setSelectedCategory] = useState( "Luxury");
 
     useEffect(() => {
       if (selectedCategory) {
@@ -31,11 +31,11 @@ export const AdminCarList = () => {
     
 
     if(cars.length===0) return(
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" >
-       <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
-       <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
-       <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
-       <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols- gap-3" >
+       <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>  
+       <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>  
+       <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>  
+       <CarCardSkeliton/>  <CarCardSkeliton/>  <CarCardSkeliton/>  
         </div>
     )
     

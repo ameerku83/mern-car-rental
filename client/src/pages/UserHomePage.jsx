@@ -180,6 +180,7 @@ const UserHomePage = () => {
         <div className="overflow-x-auto whitespace-nowrap">
           <div className="flex space-x-4 p-3 hide-scrollbar">
             { reviews&&  reviews.map((review, index) => (
+              review.car&&(
               <motion.div
                 key={index}
                 className="bg-base-100 shadow-lg rounded-lg p-2 flex-none border border-purple-100"
@@ -200,7 +201,7 @@ const UserHomePage = () => {
                   </div>
                   <p className="text-sm overflow-hidden text-ellipsis whitespace-normal">"{review.comment || 'No comment available'}"</p>
                 </div>
-              </motion.div>
+              </motion.div>)
             ))}
           </div>
         </div>
