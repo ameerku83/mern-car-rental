@@ -111,7 +111,7 @@ const UpdateProfile = () => {
           {updatePassword && (
             <>
               <div className="mb-2 relative">
-                <label htmlFor="password" className="block text-gray-700">Password</label>
+                <label htmlFor="password" className="block text-gray-700" > Enter new password</label>
                 <input
                   type={showPassword ? 'text' : 'password'}
                   id="password"
