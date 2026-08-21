@@ -2,7 +2,6 @@
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast } from 'react-toastify'; // Install react-toastify for notifications
-import {  useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../config/axiosInstance';
 import Btn from '../../components/ui/Btn';
 import { useState } from 'react';
