@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom'
 
 import Btn from '../ui/Btn';
-import { toast } from 'react-toastify';
+
 
 export const AdminCarCard = ({car}) => {
 

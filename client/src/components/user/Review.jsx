@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Btn from '../ui/Btn';
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
 import './Review.css'; // Import CSS for animation

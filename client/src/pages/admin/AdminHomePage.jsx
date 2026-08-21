@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {  FaStar, FaUserCircle, FaUserShield } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import {  FaStar, FaUserCircle } from "react-icons/fa";
 import audiq7 from "../../asets/images/audi q7.png";
 import { axiosInstance } from "../../config/axiosInstance";
 import { Carousel } from "../../components/ui/Carousel";

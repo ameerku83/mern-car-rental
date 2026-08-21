@@ -74,7 +74,7 @@ const CarCard = ({ car }) => {
     
 
     try {
-      const response = await axiosInstance.post('user/add-wishlist', {
+      await axiosInstance.post('user/add-wishlist', {
         
         carId: car._id,
       });

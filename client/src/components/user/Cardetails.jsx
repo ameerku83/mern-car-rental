@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 import {  FaGasPump, FaCogs, FaTachometerAlt, FaUsers, FaStar, FaUserCircle } from 'react-icons/fa';
 
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
+
 
 import { CardetailSkeleton } from '../ui/CardetailSkeleton';
 

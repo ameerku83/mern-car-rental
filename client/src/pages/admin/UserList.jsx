@@ -35,7 +35,7 @@ const deleteUser =async(id)=>{
         await axiosInstance.delete(`admin/delete-user/${id}`)
 
         toast.success("successfully Deleted ")
-        setUsers(users.filter((user)=> user._id != id ))
+        setUsers(users.filter((user)=> user._id !== id ))
     } catch (error) {
         console.log(error);
         

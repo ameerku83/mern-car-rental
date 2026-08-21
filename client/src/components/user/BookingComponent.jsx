@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiOutlineCalendar, AiOutlineHome, AiOutlinePhone, AiOutlineEnvironment } from 'react-icons/ai';
-import Btn from '../ui/Btn';
+
 import { axiosInstance } from '../../config/axiosInstance';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+
 
 const BookingComponent = ({ id }) => {
     const [isLoading, setIsLoading] = useState(false); 

@@ -11,8 +11,7 @@ import { useState } from 'react';
 const AdminCreateUser = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [showPassword, setShowPassword] = useState(false);
-    const navigate=useNavigate()
- 
+    
 
    
   

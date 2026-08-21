@@ -9,7 +9,7 @@ export const PaymentSucces = () => {
 
     },10000)
 
-  },[])
+  })
 
     
   return (
